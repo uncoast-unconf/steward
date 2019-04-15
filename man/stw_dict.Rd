@@ -2,7 +2,7 @@
 % Please edit documentation in R/stw_dict.R
 \name{stw_dict}
 \alias{stw_dict}
-\title{Title}
+\title{Create a new data-dictionary object}
 \usage{
 stw_dict(dictionary)
 }
@@ -13,5 +13,5 @@ stw_dict(dictionary)
 object with S3 class \code{stw_meta}
 }
 \description{
-Title
+Create a new data-dictionary object
 }
