@@ -1,0 +1,7 @@
+name: weight
+r_class: numeric
+description: Weight of chicks, gm
+
+name: feed
+r_class: factor
+description: what did the chick eat

@@ -1,0 +1,7 @@
+name: weight
+r_class: numeric
+description:
+
+name: feed
+r_class: factor
+description:

@@ -1,0 +1,33 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+require(steward)
+```
+
+
+```{r}
+head(chickwts)
+```
+
+```{r}
+cw_skeleton <- stw_df_skeleton(chickwts)
+attr(cw_skeleton, "stw_meta")
+attr(cw_skeleton, "stw_var_meta")
+
+```
+
+```{r}
+write_stw(cw_skeleton, "chickwts.csv")
+# currently vunerable to changes in path 
+```
+
+```{r}
+chickwts2 <- read_stw("chickwts2.csv")
+attr(chickwts2, "stw_meta")
+attr(chickwts2, "stw_var_meta")
+
+```
+
