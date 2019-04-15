@@ -1,0 +1,19 @@
+---
+output: github_document
+---
+
+```{r}
+library("steward")
+```
+
+```{r}
+diamonds_meta <- 
+  stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
+```
+
+```{r}
+devtools::use_data(
+  diamonds_meta, 
+  overwrite = TRUE
+)
+```
