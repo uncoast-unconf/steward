@@ -1,7 +1,7 @@
 new_stw_dict <- function(dictionary) {
   structure(
     dictionary,
-    class = unique(c(class, class(dictionary)))
+    class = unique(c("stw_dict", class(dictionary)))
   )
 }
 
@@ -14,7 +14,21 @@ new_stw_dict <- function(dictionary) {
 #'
 stw_dict <- function(dictionary) {
 
-  # validate
+  assert_name <- function(var) {
+    assertthat::assert_that(
+      rlang::has_name(dictionary, var),
+      msg = glue::glue("dictionary: does not have a `{var}` variable")
+    )
+  }
 
-  new_stw_dict(dictionary)
+  # validate
+  assert_name("name")
+  assert_name("type")
+  assert_name("description")
+
+  # coerce to character
+  d <- lapply(dictionary, as.character)
+  d <- as.data.frame(d, stringsAsFactors = FALSE)
+
+  new_stw_dict(d)
 }
