@@ -3,7 +3,15 @@ new_stw_meta <- function(name, title, description, source = NULL,
                          dictionary = NULL) {
 
   structure(
-    list(name, title, description, source, n_row, n_col, dictionary),
+    list(
+      name = name,
+      title = title,
+      description = description,
+      source = source,
+      n_row = n_row,
+      n_col = n_col,
+      dictionary
+    ),
     class = "stw_meta"
   )
 }
