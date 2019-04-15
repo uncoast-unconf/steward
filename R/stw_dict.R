@@ -1,11 +1,11 @@
-new_stw_dict <- function(dict) {
+new_stw_dict <- function(dictionary) {
   structure(
-    dict,
-    class = unique(c(class, class(dict)))
+    dictionary,
+    class = unique(c(class, class(dictionary)))
   )
 }
 
-#' Title
+#' Create a new data-dictionary object
 #'
 #' @param dictionary `data.frame` that has columns `name`, `type`, `description`
 #'
@@ -16,5 +16,5 @@ stw_dict <- function(dictionary) {
 
   # validate
 
-  new_stw_dict(dict)
+  new_stw_dict(dictionary)
 }
