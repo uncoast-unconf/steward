@@ -4,6 +4,7 @@ output: html_notebook
 ---
 
 ```{r}
+devtools::install()
 require(steward)
 ```
 
@@ -14,9 +15,13 @@ head(chickwts)
 
 ```{r}
 cw_skeleton <- stw_df_skeleton(chickwts)
+class(cw_skeleton)
+cat(all.equal(cw_skeleton, chickwts), sep = "\n")
+```
+
+```{r}
 attr(cw_skeleton, "stw_meta")
 attr(cw_skeleton, "stw_var_meta")
-
 ```
 
 ```{r}
@@ -28,6 +33,5 @@ write_stw(cw_skeleton, "chickwts.csv")
 chickwts2 <- read_stw("chickwts2.csv")
 attr(chickwts2, "stw_meta")
 attr(chickwts2, "stw_var_meta")
-
 ```
 
