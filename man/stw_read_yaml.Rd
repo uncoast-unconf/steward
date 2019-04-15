@@ -16,7 +16,7 @@ object with S3 class \code{stw_meta}
 Create metadata object from YAML
 }
 \examples{
-#stw_read_yaml('example.yaml')
+stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
 
 
 }
