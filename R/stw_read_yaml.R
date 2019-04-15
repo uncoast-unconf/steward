@@ -1,20 +1,22 @@
-#' Process YAML dictionary
+#' Create metadata object from YAML
 #'
-#' @param file_name location of yaml file
+#' @param file location of yaml file
 #'
-#' @return object with S3 class `stw_meta`
+#' @inherit stw_meta return
 #' @export
 #'
-#' @examples `stw_read_yaml('example.yaml')
-#' `
-stw_read_yaml <- function(file_name) {
+#' @examples
+#' #stw_read_yaml('example.yaml')
+#'
+#'
+stw_read_yaml <- function(file) {
 
   # read in the yaml file
-  infile = read_yaml(file_name)
+  infile = yaml::read_yaml(file)
 
   # process the dictioanry
   grande <- lapply(infile$dictionary, function(x) {
-    as.tibble(x)
+    tibble::as_tibble(x)
   })
 
   df <- do.call(rbind,grande) # this combines all the different values into 1 tibble
@@ -27,12 +29,13 @@ stw_read_yaml <- function(file_name) {
 
   # constructors
   dict <- stw_dict(df)
-  meta <- stw_meta(
-    name = dataset_name,
-    title = dataset_title,
-    description = dsc,
-    source = src,
-    dictionary = dict
+  meta <-
+    stw_meta(
+      name = dataset_name,
+      title = dataset_title,
+      description = desc,
+      source = src,
+      dictionary = dict
     )
 
   # return

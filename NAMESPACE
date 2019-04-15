@@ -2,3 +2,4 @@
 
 export(stw_dict)
 export(stw_meta)
+export(stw_read_yaml)
