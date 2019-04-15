@@ -2,7 +2,7 @@ new_stw_meta <- function(name, title, description, source = NULL,
                          n_row = NULL, n_col = NULL,
                          dictionary = NULL) {
 
-    structure(
+  structure(
     list(name, title, description, source, n_row, n_col, dictionary),
     class = "stw_meta"
   )
@@ -25,6 +25,13 @@ new_stw_meta <- function(name, title, description, source = NULL,
 stw_meta <- function(name, title, description, source = NULL,
                      n_row = NULL, n_col = NULL,
                      dictionary = NULL) {
+
+  assert_name <- function(field) {
+    assertthat::assert_that(
+      rlang::has_name(dictionary, field),
+      msg = glue::glue("metadata: does not have a `{field}` field")
+    )
+  }
 
   # validate
 
