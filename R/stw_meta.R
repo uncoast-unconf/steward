@@ -10,7 +10,7 @@ new_stw_meta <- function(name, title, description, source = NULL,
       source = source,
       n_row = n_row,
       n_col = n_col,
-      dictionary
+      dictionary = dictionary
     ),
     class = "stw_meta"
   )
