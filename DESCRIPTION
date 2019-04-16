@@ -29,5 +29,6 @@ Imports:
     purrr,
     readr,
     stringr,
-    janitor
+    janitor,
+    gt
     
