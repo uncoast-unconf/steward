@@ -24,5 +24,6 @@ Imports:
     rlang,
     yaml,
     tibble,
-    glue
-
+    glue,
+    readr,
+    stringr
