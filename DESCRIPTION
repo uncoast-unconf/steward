@@ -26,3 +26,5 @@ Imports:
     tibble,
     glue,
     purrr
+    readr,
+    stringr
