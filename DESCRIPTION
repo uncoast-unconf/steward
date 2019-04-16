@@ -25,6 +25,10 @@ Imports:
     yaml,
     tibble,
     glue,
-    purrr
+    magrittr,
+    purrr,
     readr,
-    stringr
+    stringr,
+    janitor,
+    gt
+    

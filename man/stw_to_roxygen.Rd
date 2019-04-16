@@ -15,3 +15,7 @@ stw_to_roxygen(meta)
 \description{
 Create Roxygen string
 }
+\examples{
+stw_to_roxygen(diamonds_meta)
+
+}
