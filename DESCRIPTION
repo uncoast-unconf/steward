@@ -11,7 +11,11 @@ Authors@R:
       person(given = "Amanda", 
              family = "Rae",
              role = "ctb",
-             email = "amanda.rae.50315@gmail.com")
+             email = "amanda.rae.50315@gmail.com"),
+      person(given = "Stephanie", 
+             family = "Reinders",
+             role = "ctb",
+             email = "srein@iastate.edu")
     )
 Description: This package helps you manage a metadata for datasets
  you might publish. Its goal is to help read and write flat-files as 
