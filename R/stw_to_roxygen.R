@@ -7,7 +7,8 @@
 #' @export
 #'
 #' @examples
-
+#' stw_to_roxygen(diamonds_meta)
+#'
 stw_to_roxygen <- function(meta) {
 
   top_bread <-
