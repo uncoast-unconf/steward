@@ -2,11 +2,17 @@ Package: steward
 Title: Helps you manage metadata for published datasets
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Ian",
-           family = "Lyttle",
-           role = c("aut", "cre"),
-           email = "ian.lyttle@se.com",
-           comment = c(ORCID = "0000-0001-9962-4849"))
+    c(
+      person(given = "Ian",
+             family = "Lyttle",
+             role = c("aut", "cre"),
+             email = "ian.lyttle@se.com",
+             comment = c(ORCID = "0000-0001-9962-4849")),
+      person(given = "Amanda", 
+             family = "Rae",
+             role = "ctb",
+             email = "amanda.rae.50315@gmail.com")
+    )
 Description: This package helps you manage a metadata for datasets
  you might publish. Its goal is to help read and write flat-files as 
  well as package data.
