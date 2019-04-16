@@ -10,16 +10,20 @@ Authors@R:
              comment = c(ORCID = "0000-0001-9962-4849")),
       person(given = "Amanda", 
              family = "Rae",
-             role = "ctb",
+             role = "aut",
              email = "amanda.rae.50315@gmail.com"),
       person(given = "Stephanie", 
              family = "Reinders",
-             role = "ctb",
+             role = "aut",
              email = "srein@iastate.edu"),
       person(given = "Nikhil", 
              family = "Agarwal",
              role = c("aut"),
-             email = "web@niks.me")
+             email = "web@niks.me"),
+      person(given = "Ranae", 
+             family = "Dietzel",
+             role = c("aut"),
+             email = "rdietzel@iastate.edu")
     )
 Description: This package helps you manage a metadata for datasets
  you might publish. Its goal is to help read and write flat-files as 
