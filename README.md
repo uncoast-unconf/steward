@@ -8,24 +8,21 @@
 <!-- badges: end -->
 
 The goal of steward is to enable a package developer to embed a data
-dictionary within their package using the Roxygen syntax. his is
-especially useful during package development where the developer would
-like to embed an example dataset with a data dictionary. This results in
-package users being able to pull up the data dictionary using the helper
+dictionary within their package using the Roxygen syntax. This results
+in users being able to pull up the data dictionary using the helper
 function and view the appropriate help document.
 
 In the past, the developer would have to code by hand using Roxygen
 syntax the data dictionary. This can lead to increased development time
 and frustration. However, the Steward package aims to take a data
-dictionary in either a YAML or CSV format and automatically create a new
-R file for the data dictionary contents implemented using the Roxygen
-syntax.
+dictionary in either a YAML or CSV format and automatically create a
+Roxygen output for the data dictionary contents.
 
 ## Class
 
-The steward package is equipped with its own S3 class that enables it to
-seamlessly read in either a YAML or CSV file and convert to a Roxygen
-syntax.
+The steward package is equipped with its own S3 class (called
+`"stw_meta"`) that enables it to seamlessly read in either a YAML or CSV
+file and convert to a Roxygen syntax.
 
 ## Installation
 
@@ -84,3 +81,32 @@ stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
 #> attr(,"class")
 #> [1] "stw_meta"
 ```
+
+## Example - Create Roxygen Meta
+
+``` r
+
+stw_to_roxygen(diamonds_meta)
+#> #' Prices of 50,000 round cut diamonds
+#> #' 
+#> #' A dataset containing the prices and other attributes of almost 54,000 diamonds.
+#> #' 
+#> #' @format A data frame with 53940 rows and 10 variables:
+#> #' 
+#> #' \describe{ 
+#> #'   \item{price}{price in US dollars ($326 - $18,823)}
+#> #'   \item{carat}{weight of diamond (0.2 - 5.01)}
+#> #'   \item{cut}{quality of the cut (Fair, Good, Very Good, Premium, Ideal)}
+#> #'   \item{color}{diamond color, from D (best) to J (worst)}
+#> #'   \item{clarity}{a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))}
+#> #'   \item{x}{length in mm (0-10.74)}
+#> #'   \item{y}{width in mm (0-58.9)}
+#> #'   \item{z}{depth in mm (0-31.8)}
+#> #'   \item{depth}{total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43-79)}
+#> #'   \item{table}{width of top of diamond relative to widest point (43-95)}
+#> #' }
+#> #' @source www.google.com
+#> "diamonds"
+```
+
+## Example - GT table
