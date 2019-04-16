@@ -45,3 +45,8 @@ stw_to_roxygen(diamonds_meta)
 ```
 
 ## Example - GT table
+
+```{r}
+stw_to_table(diamonds_meta)
+```
+
