@@ -19,7 +19,7 @@ Authors@R:
       person(given = "Nikhil", 
              family = "Agarwal",
              role = c("aut"),
-             email = "web@niks.me"),
+             email = "gitnik@niks.me"),
       person(given = "Ranae", 
              family = "Dietzel",
              role = c("aut"),
