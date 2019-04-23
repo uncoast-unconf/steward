@@ -49,4 +49,4 @@ Imports:
     stringr,
     janitor,
     gt
-    
+Remotes: rstudio/gt
