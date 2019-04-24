@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 The goal of steward is to enable a package developer to embed a data
@@ -36,50 +38,18 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(steward)
 stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
-#> $name
-#> [1] "diamonds"
-#> 
-#> $title
-#> [1] "Prices of 50,000 round cut diamonds"
-#> 
-#> $description
-#> [1] "A dataset containing the prices and other attributes of almost 54,000 diamonds."
-#> 
-#> $source
-#> [1] "www.google.com"
-#> 
-#> $n_row
-#> NULL
-#> 
-#> $n_col
-#> NULL
-#> 
-#> $dictionary
-#>       name      type
-#> 1    price    double
-#> 2    carat    double
-#> 3      cut character
-#> 4    color character
-#> 5  clarity character
-#> 6        x    double
-#> 7        y    double
-#> 8        z    double
-#> 9    depth    double
-#> 10   table    double
-#>                                                                                          description
-#> 1                                                               price in US dollars ($326 - $18,823)
-#> 2                                                                     weight of diamond (0.2 - 5.01)
-#> 3                                         quality of the cut (Fair, Good, Very Good, Premium, Ideal)
-#> 4                                                          diamond color, from D (best) to J (worst)
-#> 5  a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))
-#> 6                                                                             length in mm (0-10.74)
-#> 7                                                                               width in mm (0-58.9)
-#> 8                                                                               depth in mm (0-31.8)
-#> 9                                  total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43-79)
-#> 10                                          width of top of diamond relative to widest point (43-95)
-#> 
-#> attr(,"class")
-#> [1] "stw_meta"
+#> List of 7
+#>  $ name       : chr "diamonds"
+#>  $ title      : chr "Prices of 50,000 round cut diamonds"
+#>  $ description: chr "A dataset containing the prices and other attributes of almost 54,000 diamonds."
+#>  $ source     : chr "www.google.com"
+#>  $ n_row      : NULL
+#>  $ n_col      : NULL
+#>  $ dictionary :Classes 'stw_dict' and 'data.frame':  10 obs. of  3 variables:
+#>   ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...
+#>   ..$ type       : chr [1:10] "double" "double" "character" "character" ...
+#>   ..$ description: chr [1:10] "price in US dollars ($326 - $18,823)" "weight of diamond (0.2 - 5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "diamond color, from D (best) to J (worst)" ...
+#>  - attr(*, "class")= chr "stw_meta"
 ```
 
 ## Example - Create Roxygen Meta
@@ -121,7 +91,7 @@ stw_to_table(diamonds_meta)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#agautcviel .gt_table {
+#aqhksouida .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -140,13 +110,13 @@ stw_to_table(diamonds_meta)
   /* table.border.top.color */
 }
 
-#agautcviel .gt_heading {
+#aqhksouida .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#agautcviel .gt_title {
+#aqhksouida .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -157,7 +127,7 @@ stw_to_table(diamonds_meta)
   border-bottom-width: 0;
 }
 
-#agautcviel .gt_subtitle {
+#aqhksouida .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -168,7 +138,7 @@ stw_to_table(diamonds_meta)
   border-top-width: 0;
 }
 
-#agautcviel .gt_bottom_border {
+#aqhksouida .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -177,7 +147,7 @@ stw_to_table(diamonds_meta)
   /* heading.border.bottom.color */
 }
 
-#agautcviel .gt_column_spanner {
+#aqhksouida .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -185,7 +155,7 @@ stw_to_table(diamonds_meta)
   padding-bottom: 4px;
 }
 
-#agautcviel .gt_col_heading {
+#aqhksouida .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -198,11 +168,11 @@ stw_to_table(diamonds_meta)
   margin: 10px;
 }
 
-#agautcviel .gt_sep_right {
+#aqhksouida .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#agautcviel .gt_group_heading {
+#aqhksouida .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -226,7 +196,7 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#agautcviel .gt_empty_group_heading {
+#aqhksouida .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -250,37 +220,37 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#agautcviel .gt_striped {
+#aqhksouida .gt_striped {
   background-color: #f2f2f2;
 }
 
-#agautcviel .gt_from_md > :first-child {
+#aqhksouida .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#agautcviel .gt_from_md > :last-child {
+#aqhksouida .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#agautcviel .gt_row {
+#aqhksouida .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#agautcviel .gt_stub {
+#aqhksouida .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#agautcviel .gt_stub.gt_row {
+#aqhksouida .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#agautcviel .gt_summary_row {
+#aqhksouida .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -289,13 +259,13 @@ stw_to_table(diamonds_meta)
   /* summary_row.text_transform */
 }
 
-#agautcviel .gt_first_summary_row {
+#aqhksouida .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#agautcviel .gt_table_body {
+#aqhksouida .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -310,56 +280,56 @@ stw_to_table(diamonds_meta)
   /* table_body.border.bottom.color */
 }
 
-#agautcviel .gt_footnote {
+#aqhksouida .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#agautcviel .gt_sourcenote {
+#aqhksouida .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#agautcviel .gt_center {
+#aqhksouida .gt_center {
   text-align: center;
 }
 
-#agautcviel .gt_left {
+#aqhksouida .gt_left {
   text-align: left;
 }
 
-#agautcviel .gt_right {
+#aqhksouida .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#agautcviel .gt_font_normal {
+#aqhksouida .gt_font_normal {
   font-weight: normal;
 }
 
-#agautcviel .gt_font_bold {
+#aqhksouida .gt_font_bold {
   font-weight: bold;
 }
 
-#agautcviel .gt_font_italic {
+#aqhksouida .gt_font_italic {
   font-style: italic;
 }
 
-#agautcviel .gt_super {
+#aqhksouida .gt_super {
   font-size: 65%;
 }
 
-#agautcviel .gt_footnote_glyph {
+#aqhksouida .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
 
-<div id="agautcviel" style="overflow-x:auto;">
+<div id="aqhksouida" style="overflow-x:auto;">
 
 <!--gt table start-->
 

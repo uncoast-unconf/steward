@@ -18,5 +18,4 @@ Create gt table
 \examples{
   stw_to_table(diamonds_meta)
 
-
 }

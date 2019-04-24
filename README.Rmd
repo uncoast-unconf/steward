@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 # steward
 
 <!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 The goal of steward is to enable a package developer to embed a data dictionary within their package using the Roxygen syntax.  This results in users being able to pull up the data dictionary using the helper function and view the appropriate help document.
@@ -22,6 +23,7 @@ The goal of steward is to enable a package developer to embed a data dictionary 
 In the past, the developer would have to code by hand using Roxygen syntax the data dictionary. This can lead to increased development time and frustration. However, the Steward package aims to take a data dictionary in either a YAML or CSV format and automatically create a Roxygen output for the data dictionary contents.
 
 ## Class
+
 The steward package is equipped with its own S3 class (called `"stw_meta"`) that enables it to seamlessly read in either a YAML or CSV file and convert to a Roxygen syntax.
 
 ## Installation
@@ -33,7 +35,7 @@ You can install the development version of steward from [GitHub](https://github.
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example_read_yaml}
-library(steward)
+library("steward")
 stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
 ```
 

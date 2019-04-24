@@ -32,3 +32,18 @@ stw_dict <- function(dictionary) {
 
   new_stw_dict(d)
 }
+
+
+#' @export
+#'
+format.stw_dict <- function(x, ...) {
+  utils::str(x)
+}
+
+#' @export
+#'
+print.stw_dict <- function(x, ...) {
+  format(x, ...)
+}
+
+
