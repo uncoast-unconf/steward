@@ -44,9 +44,7 @@ Imports:
     tibble,
     glue,
     magrittr,
-    purrr,
     readr,
     stringr,
-    janitor,
     gt
 Remotes: rstudio/gt

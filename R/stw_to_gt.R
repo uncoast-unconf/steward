@@ -10,10 +10,14 @@
 #'
 stw_to_table <- function(meta) {
 
+  # make the title uppercase
   meta[["name"]] <- toupper(meta[["name"]])
 
-  meta$dictionary %>%
-    janitor::clean_names("upper_camel") %>%
+  # capitalize the variable-names in the dictionary, e.g. "name", "type", ...
+  names(meta[["dictionary"]]) <-
+    stringr::str_to_title(names(meta[["dictionary"]]))
+
+  meta[["dictionary"]] %>%
     gt::gt() %>%
     gt::tab_header(
       title = meta[["name"]],
