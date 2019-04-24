@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 # steward
 
 <!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 The goal of steward is to enable a package developer to embed a data dictionary within their package using the Roxygen syntax.  This results in users being able to pull up the data dictionary using the helper function and view the appropriate help document.
