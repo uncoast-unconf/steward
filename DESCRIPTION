@@ -22,13 +22,13 @@ Authors@R:
              email = "gitnik@niks.me"),
       person(given = "Ranae", 
              family = "Dietzel",
-             role = c"aut",
+             role = "aut",
              email = "rdietzel@iastate.edu"),
       person(given = "Hadley", 
              family = "Wickham",
              role = "ctb", 
              email = "hadley@rstudio.com", 
-             comment = c(ORCID = "0000-0003-4757-117X", "diamonds metadata")),
+             comment = c(ORCID = "0000-0003-4757-117X", "diamonds metadata"))
     )
 Description: This package helps you manage a metadata for datasets
  you might publish. Its goal is to help read and write flat-files as 
@@ -51,5 +51,6 @@ Imports:
     magrittr,
     readr,
     stringr,
-    gt
+    gt,
+    utils
 Remotes: rstudio/gt

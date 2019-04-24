@@ -54,3 +54,15 @@ stw_meta <- function(name, title, description, source = NULL,
     dictionary = dictionary
   )
 }
+
+#' @export
+#'
+format.stw_meta <- function(x, ...) {
+  utils::str(x)
+}
+
+#' @export
+#'
+print.stw_meta <- function(x, ...) {
+  format(x, ...)
+}
