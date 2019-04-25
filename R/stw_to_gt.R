@@ -17,6 +17,10 @@ stw_to_table <- function(meta) {
   names(meta[["dictionary"]]) <-
     stringr::str_to_title(names(meta[["dictionary"]]))
 
+  # remove angle-brackets in source (denotes URL)
+  meta[["source"]] <-
+    stringr::str_replace_all(meta[["source"]], "<([^<>\\s]*)>", "\\1")
+
   meta[["dictionary"]] %>%
     gt::gt() %>%
     gt::tab_header(

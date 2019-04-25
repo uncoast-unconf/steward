@@ -42,7 +42,6 @@ stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
 ## Example - Create Roxygen Meta
 
 ```{r example_roxygen}
-
 stw_to_roxygen(diamonds_meta)
 ```
 

@@ -55,7 +55,6 @@ stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
 ## Example - Create Roxygen Meta
 
 ``` r
-
 stw_to_roxygen(diamonds_meta)
 #> #' Prices of 50,000 round cut diamonds
 #> #' 
@@ -91,7 +90,7 @@ stw_to_table(diamonds_meta)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#umprrghcbm .gt_table {
+#kuqlthdakj .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -110,13 +109,13 @@ stw_to_table(diamonds_meta)
   /* table.border.top.color */
 }
 
-#umprrghcbm .gt_heading {
+#kuqlthdakj .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#umprrghcbm .gt_title {
+#kuqlthdakj .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -127,7 +126,7 @@ stw_to_table(diamonds_meta)
   border-bottom-width: 0;
 }
 
-#umprrghcbm .gt_subtitle {
+#kuqlthdakj .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -138,7 +137,7 @@ stw_to_table(diamonds_meta)
   border-top-width: 0;
 }
 
-#umprrghcbm .gt_bottom_border {
+#kuqlthdakj .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -147,7 +146,7 @@ stw_to_table(diamonds_meta)
   /* heading.border.bottom.color */
 }
 
-#umprrghcbm .gt_column_spanner {
+#kuqlthdakj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -155,7 +154,7 @@ stw_to_table(diamonds_meta)
   padding-bottom: 4px;
 }
 
-#umprrghcbm .gt_col_heading {
+#kuqlthdakj .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -168,11 +167,11 @@ stw_to_table(diamonds_meta)
   margin: 10px;
 }
 
-#umprrghcbm .gt_sep_right {
+#kuqlthdakj .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#umprrghcbm .gt_group_heading {
+#kuqlthdakj .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -196,7 +195,7 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#umprrghcbm .gt_empty_group_heading {
+#kuqlthdakj .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -220,37 +219,37 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#umprrghcbm .gt_striped {
+#kuqlthdakj .gt_striped {
   background-color: #f2f2f2;
 }
 
-#umprrghcbm .gt_from_md > :first-child {
+#kuqlthdakj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#umprrghcbm .gt_from_md > :last-child {
+#kuqlthdakj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#umprrghcbm .gt_row {
+#kuqlthdakj .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#umprrghcbm .gt_stub {
+#kuqlthdakj .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#umprrghcbm .gt_stub.gt_row {
+#kuqlthdakj .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#umprrghcbm .gt_summary_row {
+#kuqlthdakj .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -259,13 +258,13 @@ stw_to_table(diamonds_meta)
   /* summary_row.text_transform */
 }
 
-#umprrghcbm .gt_first_summary_row {
+#kuqlthdakj .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#umprrghcbm .gt_table_body {
+#kuqlthdakj .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -280,56 +279,56 @@ stw_to_table(diamonds_meta)
   /* table_body.border.bottom.color */
 }
 
-#umprrghcbm .gt_footnote {
+#kuqlthdakj .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#umprrghcbm .gt_sourcenote {
+#kuqlthdakj .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#umprrghcbm .gt_center {
+#kuqlthdakj .gt_center {
   text-align: center;
 }
 
-#umprrghcbm .gt_left {
+#kuqlthdakj .gt_left {
   text-align: left;
 }
 
-#umprrghcbm .gt_right {
+#kuqlthdakj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#umprrghcbm .gt_font_normal {
+#kuqlthdakj .gt_font_normal {
   font-weight: normal;
 }
 
-#umprrghcbm .gt_font_bold {
+#kuqlthdakj .gt_font_bold {
   font-weight: bold;
 }
 
-#umprrghcbm .gt_font_italic {
+#kuqlthdakj .gt_font_italic {
   font-style: italic;
 }
 
-#umprrghcbm .gt_super {
+#kuqlthdakj .gt_super {
   font-size: 65%;
 }
 
-#umprrghcbm .gt_footnote_glyph {
+#kuqlthdakj .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
 
-<div id="umprrghcbm" style="overflow-x:auto;">
+<div id="kuqlthdakj" style="overflow-x:auto;">
 
 <!--gt table start-->
 
@@ -612,7 +611,7 @@ width of top of diamond relative to widest point (43–95)
 
 <td colspan="4" class="gt_sourcenote">
 
-\<[http://www.diamondse.info/\>](http://www.diamondse.info/%3E);
+<http://www.diamondse.info/>
 
 </td>
 
