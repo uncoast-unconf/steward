@@ -2,7 +2,6 @@
 #'
 #' @param meta object with S3 class `stw_meta`
 #'
-#'
 #' @return `character` Roxygen string
 #' @export
 #'
@@ -39,6 +38,9 @@ stw_to_roxygen <- function(meta) {
       sep = "\n"
     )
 
+  # make roxygen character-substitution
+  sandwich <- roxygen_substitute(sandwich)
+
   sandwich
 }
 
@@ -71,5 +73,24 @@ dict_to_roxygen <- function(dict) {
 
   fillings
 }
+
+# deal with roxygen special characters
+# - https://r-pkgs.org/man.html#man-special
+roxygen_substitute <- function(x) {
+
+  # replace single `@` with `@@`
+  x <- stringr::str_replace_all(x, "(?<!@|#'\\s{0,10})@(?!@)", "@@")
+
+  # replace `%` with `\%`
+  x <- stringr::str_replace_all(x, "(?<!\\\\)%", "\\\\%")
+
+  # return as a glue object
+  x <- glue::as_glue(x)
+
+  x
+}
+
+
+
 
 

@@ -10,18 +10,29 @@ diamonds_meta <-
 # hard-code the dimensions
 diamonds_meta$n_row <- 53940
 diamonds_meta$n_col <- 10
+
+diamonds_meta
 ```
 
+    ## List of 7
+    ##  $ name       : chr "diamonds"
+    ##  $ title      : chr "Prices of 50,000 round cut diamonds"
+    ##  $ description: chr "A dataset containing the prices and other attributes of almost 54,000 diamonds."
+    ##  $ source     : chr "<http://www.diamondse.info/>"
+    ##  $ n_row      : num 53940
+    ##  $ n_col      : num 10
+    ##  $ dictionary :Classes 'stw_dict' and 'data.frame':  10 obs. of  3 variables:
+    ##   ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...
+    ##   ..$ type       : chr [1:10] "double" "double" "character" "character" ...
+    ##   ..$ description: chr [1:10] "price in US dollars ($326--$18,823)" "weight of diamond (0.2--5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "diamond color, from D (best) to J (worst)" ...
+    ##  - attr(*, "class")= chr "stw_meta"
+
 ``` r
-devtools::use_data(
+usethis::use_data(
   diamonds_meta, 
   overwrite = TRUE
 )
 ```
 
-    ## Warning: 'devtools::use_data' is deprecated.
-    ## Use 'usethis::use_data()' instead.
-    ## See help("Deprecated") and help("devtools-deprecated").
-
-    ## ✔ Setting active project to '/Users/ijlyttle/Documents/git/github/public_me/steward'
+    ## ✔ Setting active project to '/Users/sesa19001/Documents/repos/public/forked/steward'
     ## ✔ Saving 'diamonds_meta' to 'data/diamonds_meta.rda'
