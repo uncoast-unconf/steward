@@ -90,7 +90,7 @@ stw_to_table(diamonds_meta)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#kuqlthdakj .gt_table {
+#mxybcbvshx .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -109,13 +109,13 @@ stw_to_table(diamonds_meta)
   /* table.border.top.color */
 }
 
-#kuqlthdakj .gt_heading {
+#mxybcbvshx .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#kuqlthdakj .gt_title {
+#mxybcbvshx .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -126,7 +126,7 @@ stw_to_table(diamonds_meta)
   border-bottom-width: 0;
 }
 
-#kuqlthdakj .gt_subtitle {
+#mxybcbvshx .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -137,7 +137,7 @@ stw_to_table(diamonds_meta)
   border-top-width: 0;
 }
 
-#kuqlthdakj .gt_bottom_border {
+#mxybcbvshx .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -146,7 +146,7 @@ stw_to_table(diamonds_meta)
   /* heading.border.bottom.color */
 }
 
-#kuqlthdakj .gt_column_spanner {
+#mxybcbvshx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -154,7 +154,7 @@ stw_to_table(diamonds_meta)
   padding-bottom: 4px;
 }
 
-#kuqlthdakj .gt_col_heading {
+#mxybcbvshx .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -167,11 +167,11 @@ stw_to_table(diamonds_meta)
   margin: 10px;
 }
 
-#kuqlthdakj .gt_sep_right {
+#mxybcbvshx .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#kuqlthdakj .gt_group_heading {
+#mxybcbvshx .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -195,7 +195,7 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#kuqlthdakj .gt_empty_group_heading {
+#mxybcbvshx .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -219,37 +219,37 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#kuqlthdakj .gt_striped {
+#mxybcbvshx .gt_striped {
   background-color: #f2f2f2;
 }
 
-#kuqlthdakj .gt_from_md > :first-child {
+#mxybcbvshx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kuqlthdakj .gt_from_md > :last-child {
+#mxybcbvshx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kuqlthdakj .gt_row {
+#mxybcbvshx .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#kuqlthdakj .gt_stub {
+#mxybcbvshx .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#kuqlthdakj .gt_stub.gt_row {
+#mxybcbvshx .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#kuqlthdakj .gt_summary_row {
+#mxybcbvshx .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -258,13 +258,13 @@ stw_to_table(diamonds_meta)
   /* summary_row.text_transform */
 }
 
-#kuqlthdakj .gt_first_summary_row {
+#mxybcbvshx .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#kuqlthdakj .gt_table_body {
+#mxybcbvshx .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -279,56 +279,56 @@ stw_to_table(diamonds_meta)
   /* table_body.border.bottom.color */
 }
 
-#kuqlthdakj .gt_footnote {
+#mxybcbvshx .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#kuqlthdakj .gt_sourcenote {
+#mxybcbvshx .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#kuqlthdakj .gt_center {
+#mxybcbvshx .gt_center {
   text-align: center;
 }
 
-#kuqlthdakj .gt_left {
+#mxybcbvshx .gt_left {
   text-align: left;
 }
 
-#kuqlthdakj .gt_right {
+#mxybcbvshx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kuqlthdakj .gt_font_normal {
+#mxybcbvshx .gt_font_normal {
   font-weight: normal;
 }
 
-#kuqlthdakj .gt_font_bold {
+#mxybcbvshx .gt_font_bold {
   font-weight: bold;
 }
 
-#kuqlthdakj .gt_font_italic {
+#mxybcbvshx .gt_font_italic {
   font-style: italic;
 }
 
-#kuqlthdakj .gt_super {
+#mxybcbvshx .gt_super {
   font-size: 65%;
 }
 
-#kuqlthdakj .gt_footnote_glyph {
+#mxybcbvshx .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
 
-<div id="kuqlthdakj" style="overflow-x:auto;">
+<div id="mxybcbvshx" style="overflow-x:auto;">
 
 <!--gt table start-->
 
