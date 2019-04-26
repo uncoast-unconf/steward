@@ -4,11 +4,11 @@ output: github_document
 
 ```{r}
 library("steward")
+library("here")
 ```
 
 ```{r}
-diamonds_meta <- 
-  stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
+diamonds_meta <- stw_read_yaml(here("inst", "metadata", "diamonds.yaml"))
 
 # hard-code the dimensions
 diamonds_meta$n_row <- 53940

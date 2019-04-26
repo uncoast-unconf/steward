@@ -9,34 +9,70 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The goal of steward is to enable a package developer to embed a data
-dictionary within their package using the Roxygen syntax. This results
-in users being able to pull up the data dictionary using the helper
-function and view the appropriate help document.
+The goal of **steward** is to make it easier to import, manage, and
+publish the metadata associated with data frames. This might be useful
+for:
 
-In the past, the developer would have to code by hand using Roxygen
-syntax the data dictionary. This can lead to increased development time
-and frustration. However, the Steward package aims to take a data
-dictionary in either a YAML or CSV format and automatically create a
-Roxygen output for the data dictionary contents.
+  - [documenting a
+    dataset](https://r-pkgs.org/data.html#documenting-data) for a
+    package
+  - publishing a data dictionary in an R Markdown document
 
-## Class
-
-The steward package is equipped with its own S3 class (called
-`"stw_meta"`) that enables it to seamlessly read in either a YAML or CSV
-file and convert to a Roxygen syntax.
+The name, steward, is an homage to the [Data
+Stewardship](http://agron590-isu.github.io/) class taught by [Andee
+Kaplan](https://github.com/andeek) and [Ranae
+Dietzel](https://github.com/ranae) (also an author of this package) at
+Iowa State University in Fall 2016.
 
 ## Installation
 
 You can install the development version of steward from
 [GitHub](https://github.com/uncoast-unconf/steward) with:
 
-## Example: Read YAML
+``` r
+# install.packages("devtools")
+devtools::install_github("uncoast-unconf/steward")
+```
 
-This is a basic example which shows you how to solve a common problem:
+## Usage
 
 ``` r
 library("steward")
+```
+
+The current capabilities are:
+
+  - [read from YAML](#read-yaml)
+  - [read from CSV](#read-csv)
+  - [write to roxygen](#write-roxygen)
+  - [write to gt table](#write-gt-table)
+
+### Future capabilities
+
+  - write to YAML
+  - combine metadata with dataset
+      - read and write combined dataset from/to flat files
+  - take into account timezone as column metadata
+  - build metadata by scraping package-documentation (`.Rd` file)
+
+#### Read YAML
+
+Here are the first lines of a YAML file containing metadata from
+[ggplot2](http://ggplot2.tidyverse.org)’s `diamonds` dataset:
+
+    name: "diamonds"
+    title: "Prices of 50,000 round cut diamonds"
+    description: "A dataset containing the prices and other attributes of almost 54,000 diamonds."
+    source: "<http://www.diamondse.info/>"
+    dictionary:
+        - name: "price"
+          type: "double"
+          description: "price in US dollars ($326--$18,823)"
+        - name: "carat"
+          type: "double"
+          description: "weight of diamond (0.2--5.01)"
+
+``` r
 stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
 #> List of 7
 #>  $ name       : chr "diamonds"
@@ -52,7 +88,11 @@ stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
 #>  - attr(*, "class")= chr "stw_meta"
 ```
 
-## Example - Create Roxygen Meta
+#### Read CSV
+
+This is an emerging capability that we need to document.
+
+#### Write roxygen
 
 ``` r
 stw_to_roxygen(diamonds_meta)
@@ -78,7 +118,9 @@ stw_to_roxygen(diamonds_meta)
 #> "diamonds"
 ```
 
-## Example - GT table
+#### Write gt Table
+
+[gt table](https://gt.rstudio.com)
 
 ``` r
 stw_to_table(diamonds_meta)
@@ -90,7 +132,7 @@ stw_to_table(diamonds_meta)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#mxybcbvshx .gt_table {
+#kemknrasoc .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -109,13 +151,13 @@ stw_to_table(diamonds_meta)
   /* table.border.top.color */
 }
 
-#mxybcbvshx .gt_heading {
+#kemknrasoc .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#mxybcbvshx .gt_title {
+#kemknrasoc .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -126,7 +168,7 @@ stw_to_table(diamonds_meta)
   border-bottom-width: 0;
 }
 
-#mxybcbvshx .gt_subtitle {
+#kemknrasoc .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -137,7 +179,7 @@ stw_to_table(diamonds_meta)
   border-top-width: 0;
 }
 
-#mxybcbvshx .gt_bottom_border {
+#kemknrasoc .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -146,7 +188,7 @@ stw_to_table(diamonds_meta)
   /* heading.border.bottom.color */
 }
 
-#mxybcbvshx .gt_column_spanner {
+#kemknrasoc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -154,7 +196,7 @@ stw_to_table(diamonds_meta)
   padding-bottom: 4px;
 }
 
-#mxybcbvshx .gt_col_heading {
+#kemknrasoc .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -167,11 +209,11 @@ stw_to_table(diamonds_meta)
   margin: 10px;
 }
 
-#mxybcbvshx .gt_sep_right {
+#kemknrasoc .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#mxybcbvshx .gt_group_heading {
+#kemknrasoc .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -195,7 +237,7 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#mxybcbvshx .gt_empty_group_heading {
+#kemknrasoc .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -219,37 +261,37 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#mxybcbvshx .gt_striped {
+#kemknrasoc .gt_striped {
   background-color: #f2f2f2;
 }
 
-#mxybcbvshx .gt_from_md > :first-child {
+#kemknrasoc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mxybcbvshx .gt_from_md > :last-child {
+#kemknrasoc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mxybcbvshx .gt_row {
+#kemknrasoc .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#mxybcbvshx .gt_stub {
+#kemknrasoc .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#mxybcbvshx .gt_stub.gt_row {
+#kemknrasoc .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#mxybcbvshx .gt_summary_row {
+#kemknrasoc .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -258,13 +300,13 @@ stw_to_table(diamonds_meta)
   /* summary_row.text_transform */
 }
 
-#mxybcbvshx .gt_first_summary_row {
+#kemknrasoc .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#mxybcbvshx .gt_table_body {
+#kemknrasoc .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -279,56 +321,56 @@ stw_to_table(diamonds_meta)
   /* table_body.border.bottom.color */
 }
 
-#mxybcbvshx .gt_footnote {
+#kemknrasoc .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#mxybcbvshx .gt_sourcenote {
+#kemknrasoc .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#mxybcbvshx .gt_center {
+#kemknrasoc .gt_center {
   text-align: center;
 }
 
-#mxybcbvshx .gt_left {
+#kemknrasoc .gt_left {
   text-align: left;
 }
 
-#mxybcbvshx .gt_right {
+#kemknrasoc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mxybcbvshx .gt_font_normal {
+#kemknrasoc .gt_font_normal {
   font-weight: normal;
 }
 
-#mxybcbvshx .gt_font_bold {
+#kemknrasoc .gt_font_bold {
   font-weight: bold;
 }
 
-#mxybcbvshx .gt_font_italic {
+#kemknrasoc .gt_font_italic {
   font-style: italic;
 }
 
-#mxybcbvshx .gt_super {
+#kemknrasoc .gt_super {
   font-size: 65%;
 }
 
-#mxybcbvshx .gt_footnote_glyph {
+#kemknrasoc .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
 
-<div id="mxybcbvshx" style="overflow-x:auto;">
+<div id="kemknrasoc" style="overflow-x:auto;">
 
 <!--gt table start-->
 
