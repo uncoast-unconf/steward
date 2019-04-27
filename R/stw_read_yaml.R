@@ -8,25 +8,35 @@
 #' @examples
 #' stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
 #'
+#'
 stw_read_yaml <- function(file) {
 
   # read in the yaml file
-  infile <- yaml::read_yaml(file)
+  infile = yaml::read_yaml(file)
 
-  # process the dictioanry
-  dict <- lapply(infile$dictionary, tibble::as_tibble)
-  dict <- do.call(rbind, dict) # this combines all the different values into one tibble
-  dict <- stw_dict(dict)
+  # process the dictionary
+  grande <- lapply(infile$dictionary, tibble::as_tibble)
+  df <- do.call(rbind, grande) # this combines all the different values into 1 tibble
+  infile$dictionary <- stw_dict(df)
 
-  # constructors
-  meta <-
-    stw_meta(
-      name = infile$name,
-      title = infile$title,
-      description = infile$description,
-      source = infile$source,
-      dictionary = dict
+  # use some tidy-eval to call the constructor
+
+  # build the quosure
+  meta_quo <-
+    quo(
+      stw_meta(
+        name = name,
+        title = title,
+        n_row = n_row,
+        n_col = n_col,
+        description = description,
+        source = source,
+        dictionary = dictionary
+      )
     )
+
+  # evaluate the quosure using `infile`
+  meta <- rlang::eval_tidy(meta_quo, data = infile)
 
   # return
   meta

@@ -7,11 +7,7 @@ library("here")
     ## here() starts at /Users/sesa19001/Documents/repos/public/forked/steward
 
 ``` r
-diamonds_meta <- stw_read_yaml(here("inst", "metadata", "diamonds.yaml"))
-
-# hard-code the dimensions
-diamonds_meta$n_row <- 53940L
-diamonds_meta$n_col <- 10L
+diamonds_meta <- stw_read_yaml(here("inst", "metadata", "diamonds.yml"))
 
 diamonds_meta
 ```

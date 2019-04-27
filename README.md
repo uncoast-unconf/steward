@@ -48,6 +48,7 @@ The current capabilities all deal with metadata:
 
   - [read from YAML](#read-yaml)
   - [read from CSV](#read-csv)
+  - [write to YAML](#write-yaml)
   - [write to roxygen](#write-roxygen)
   - [write to gt table](#write-gt-table)
 
@@ -75,34 +76,33 @@ Here are the first lines of a YAML file containing metadata from
 available as:
 
 ``` r
-system.file("metadata/diamonds.yaml", package = "steward") %>%
+system.file("metadata/diamonds.yml", package = "steward") %>%
 ```
 
     name: diamonds
     title: Prices of 50,000 round cut diamonds
     description: |
      A dataset containing the prices and other attributes of almost 54,000 diamonds.
+    n_row: 53940
+    n_col: 10
     source: <http://www.diamondse.info/>
     dictionary:
         - name: price
           type: double
           description: price in US dollars ($326--$18,823)
         - name: carat
-          type: double
-          description: weight of diamond (0.2--5.01)
 
-We can read a YAML file using
-`stw_read_yaml()`:
+We can read a YAML file using `stw_read_yaml()`:
 
 ``` r
-stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
+stw_read_yaml(system.file("metadata/diamonds.yml", package = "steward"))
 #> List of 7
 #>  $ name       : chr "diamonds"
 #>  $ title      : chr "Prices of 50,000 round cut diamonds"
 #>  $ description: chr "A dataset containing the prices and other attributes of almost 54,000 diamonds."
 #>  $ source     : chr "<http://www.diamondse.info/>"
-#>  $ n_row      : NULL
-#>  $ n_col      : NULL
+#>  $ n_row      : int 53940
+#>  $ n_col      : int 10
 #>  $ dictionary :Classes 'stw_dict' and 'data.frame':  10 obs. of  3 variables:
 #>   ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...
 #>   ..$ type       : chr [1:10] "double" "double" "character" "character" ...
@@ -113,6 +113,51 @@ stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
 #### Read CSV
 
 This is an emerging capability that we need to document.
+
+#### Write YAML
+
+``` r
+stw_to_yaml(diamonds_meta) 
+#> name: diamonds
+#> title: Prices of 50,000 round cut diamonds
+#> description: A dataset containing the prices and other attributes of almost 54,000
+#>   diamonds.
+#> source: <http://www.diamondse.info/>
+#> n_row: 53940
+#> n_col: 10
+#> dictionary:
+#> - name: price
+#>   type: double
+#>   description: price in US dollars ($326--$18,823)
+#> - name: carat
+#>   type: double
+#>   description: weight of diamond (0.2--5.01)
+#> - name: cut
+#>   type: character
+#>   description: quality of the cut (Fair, Good, Very Good, Premium, Ideal)
+#> - name: color
+#>   type: character
+#>   description: diamond color, from D (best) to J (worst)
+#> - name: clarity
+#>   type: character
+#>   description: a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2,
+#>     VS1, VVS2, VVS1, IF (best))
+#> - name: x
+#>   type: double
+#>   description: length in mm (0--10.74)
+#> - name: 'y'
+#>   type: double
+#>   description: width in mm (0--58.9)
+#> - name: z
+#>   type: double
+#>   description: depth in mm (0--31.8)
+#> - name: depth
+#>   type: double
+#>   description: total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)
+#> - name: table
+#>   type: double
+#>   description: width of top of diamond relative to widest point (43--95)
+```
 
 #### Write roxygen
 
@@ -156,7 +201,7 @@ stw_to_table(diamonds_meta)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#yrktytjqeg .gt_table {
+#uleferuwvq .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -175,13 +220,13 @@ stw_to_table(diamonds_meta)
   /* table.border.top.color */
 }
 
-#yrktytjqeg .gt_heading {
+#uleferuwvq .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#yrktytjqeg .gt_title {
+#uleferuwvq .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -192,7 +237,7 @@ stw_to_table(diamonds_meta)
   border-bottom-width: 0;
 }
 
-#yrktytjqeg .gt_subtitle {
+#uleferuwvq .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -203,7 +248,7 @@ stw_to_table(diamonds_meta)
   border-top-width: 0;
 }
 
-#yrktytjqeg .gt_bottom_border {
+#uleferuwvq .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -212,7 +257,7 @@ stw_to_table(diamonds_meta)
   /* heading.border.bottom.color */
 }
 
-#yrktytjqeg .gt_column_spanner {
+#uleferuwvq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -220,7 +265,7 @@ stw_to_table(diamonds_meta)
   padding-bottom: 4px;
 }
 
-#yrktytjqeg .gt_col_heading {
+#uleferuwvq .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -233,11 +278,11 @@ stw_to_table(diamonds_meta)
   margin: 10px;
 }
 
-#yrktytjqeg .gt_sep_right {
+#uleferuwvq .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#yrktytjqeg .gt_group_heading {
+#uleferuwvq .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -261,7 +306,7 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#yrktytjqeg .gt_empty_group_heading {
+#uleferuwvq .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -285,37 +330,37 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#yrktytjqeg .gt_striped {
+#uleferuwvq .gt_striped {
   background-color: #f2f2f2;
 }
 
-#yrktytjqeg .gt_from_md > :first-child {
+#uleferuwvq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yrktytjqeg .gt_from_md > :last-child {
+#uleferuwvq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yrktytjqeg .gt_row {
+#uleferuwvq .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#yrktytjqeg .gt_stub {
+#uleferuwvq .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#yrktytjqeg .gt_stub.gt_row {
+#uleferuwvq .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#yrktytjqeg .gt_summary_row {
+#uleferuwvq .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -324,13 +369,13 @@ stw_to_table(diamonds_meta)
   /* summary_row.text_transform */
 }
 
-#yrktytjqeg .gt_first_summary_row {
+#uleferuwvq .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#yrktytjqeg .gt_table_body {
+#uleferuwvq .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -345,56 +390,56 @@ stw_to_table(diamonds_meta)
   /* table_body.border.bottom.color */
 }
 
-#yrktytjqeg .gt_footnote {
+#uleferuwvq .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#yrktytjqeg .gt_sourcenote {
+#uleferuwvq .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#yrktytjqeg .gt_center {
+#uleferuwvq .gt_center {
   text-align: center;
 }
 
-#yrktytjqeg .gt_left {
+#uleferuwvq .gt_left {
   text-align: left;
 }
 
-#yrktytjqeg .gt_right {
+#uleferuwvq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yrktytjqeg .gt_font_normal {
+#uleferuwvq .gt_font_normal {
   font-weight: normal;
 }
 
-#yrktytjqeg .gt_font_bold {
+#uleferuwvq .gt_font_bold {
   font-weight: bold;
 }
 
-#yrktytjqeg .gt_font_italic {
+#uleferuwvq .gt_font_italic {
   font-style: italic;
 }
 
-#yrktytjqeg .gt_super {
+#uleferuwvq .gt_super {
   font-size: 65%;
 }
 
-#yrktytjqeg .gt_footnote_glyph {
+#uleferuwvq .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
 
-<div id="yrktytjqeg" style="overflow-x:auto;">
+<div id="uleferuwvq" style="overflow-x:auto;">
 
 <!--gt table start-->
 

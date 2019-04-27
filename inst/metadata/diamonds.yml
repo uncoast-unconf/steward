@@ -2,6 +2,8 @@ name: diamonds
 title: Prices of 50,000 round cut diamonds
 description: |
  A dataset containing the prices and other attributes of almost 54,000 diamonds.
+n_row: 53940
+n_col: 10
 source: <http://www.diamondse.info/>
 dictionary:
     - name: price

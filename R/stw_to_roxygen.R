@@ -2,7 +2,7 @@
 #'
 #' @param meta object with S3 class `stw_meta`
 #'
-#' @return `character` Roxygen string
+#' @return object with S3 class `glue`, based on character string
 #' @export
 #'
 #' @examples
