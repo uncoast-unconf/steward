@@ -1,11 +1,13 @@
 
 ``` r
 library("steward")
+library("here")
 ```
 
+    ## here() starts at /Users/sesa19001/Documents/repos/public/forked/steward
+
 ``` r
-diamonds_meta <- 
-  stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
+diamonds_meta <- stw_read_yaml(here("inst", "metadata", "diamonds.yaml"))
 
 # hard-code the dimensions
 diamonds_meta$n_row <- 53940

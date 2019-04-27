@@ -9,34 +9,92 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The goal of steward is to enable a package developer to embed a data
-dictionary within their package using the Roxygen syntax. This results
-in users being able to pull up the data dictionary using the helper
-function and view the appropriate help document.
+The goal of **steward** is to make it easier to import, manage, and
+publish the metadata associated with data frames. This might be useful
+for:
 
-In the past, the developer would have to code by hand using Roxygen
-syntax the data dictionary. This can lead to increased development time
-and frustration. However, the Steward package aims to take a data
-dictionary in either a YAML or CSV format and automatically create a
-Roxygen output for the data dictionary contents.
+  - [documenting a
+    dataset](https://r-pkgs.org/data.html#documenting-data) for a
+    package
+  - publishing a data dictionary in an R Markdown document
 
-## Class
+Our current defintion of metadata includes the name, description and
+source of a dataset, as well as the name, type, and description of each
+of the variables in the dataset.
 
-The steward package is equipped with its own S3 class (called
-`"stw_meta"`) that enables it to seamlessly read in either a YAML or CSV
-file and convert to a Roxygen syntax.
+The name, steward, is an homage to the [Data
+Stewardship](http://agron590-isu.github.io/) class taught by [Andee
+Kaplan](https://github.com/andeek) and [Ranae
+Dietzel](https://github.com/ranae) (also an author of this package) at
+Iowa State University in Fall 2016.
 
 ## Installation
 
 You can install the development version of steward from
 [GitHub](https://github.com/uncoast-unconf/steward) with:
 
-## Example: Read YAML
+``` r
+# install.packages("devtools")
+devtools::install_github("uncoast-unconf/steward")
+```
 
-This is a basic example which shows you how to solve a common problem:
+## Usage
 
 ``` r
 library("steward")
+```
+
+The current capabilities all deal with metadata:
+
+  - [read from YAML](#read-yaml)
+  - [read from CSV](#read-csv)
+  - [write to roxygen](#write-roxygen)
+  - [write to gt table](#write-gt-table)
+
+### Future capabilities
+
+Soon, we hope to add additional capabilities:
+
+  - [write metadata to
+    YAML](https://github.com/uncoast-unconf/steward/issues/42)
+  - [combine metadata with
+    dataset](https://github.com/uncoast-unconf/steward/issues/36)
+      - [read and write combined
+        dataset](https://github.com/uncoast-unconf/steward/issues/41)
+        from/to flat files
+  - take into account [timezone as column
+    metadata](https://github.com/uncoast-unconf/steward/issues/39)
+  - [build metadata from
+    package-documentation](https://github.com/uncoast-unconf/steward/issues/43)
+    (`.Rd` file)
+
+#### Read YAML
+
+Here are the first lines of a YAML file containing metadata from
+[ggplot2](http://ggplot2.tidyverse.org)’s `diamonds` dataset, which is
+available as:
+
+``` r
+system.file("metadata/diamonds.yaml", package = "steward") %>%
+```
+
+    name: diamonds
+    title: Prices of 50,000 round cut diamonds
+    description: |
+     A dataset containing the prices and other attributes of almost 54,000 diamonds.
+    source: <http://www.diamondse.info/>
+    dictionary:
+        - name: price
+          type: double
+          description: price in US dollars ($326--$18,823)
+        - name: carat
+          type: double
+          description: weight of diamond (0.2--5.01)
+
+We can read a YAML file using
+`stw_read_yaml()`:
+
+``` r
 stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
 #> List of 7
 #>  $ name       : chr "diamonds"
@@ -52,7 +110,11 @@ stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
 #>  - attr(*, "class")= chr "stw_meta"
 ```
 
-## Example - Create Roxygen Meta
+#### Read CSV
+
+This is an emerging capability that we need to document.
+
+#### Write roxygen
 
 ``` r
 stw_to_roxygen(diamonds_meta)
@@ -69,7 +131,7 @@ stw_to_roxygen(diamonds_meta)
 #> #'   \item{color}{diamond color, from D (best) to J (worst)}
 #> #'   \item{clarity}{a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))}
 #> #'   \item{x}{length in mm (0--10.74)}
-#> #'   \item{y}{width in mm (0--58.9)}
+#> #'   \item{TRUE}{width in mm (0--58.9)}
 #> #'   \item{z}{depth in mm (0--31.8)}
 #> #'   \item{depth}{total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)}
 #> #'   \item{table}{width of top of diamond relative to widest point (43--95)}
@@ -78,7 +140,11 @@ stw_to_roxygen(diamonds_meta)
 #> "diamonds"
 ```
 
-## Example - GT table
+#### Write gt Table
+
+If you are creating an R Markdown document, you can use the
+`stw_to_table()` function to create a [gt
+table](https://gt.rstudio.com):
 
 ``` r
 stw_to_table(diamonds_meta)
@@ -90,7 +156,7 @@ stw_to_table(diamonds_meta)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#mxybcbvshx .gt_table {
+#fkxizutuhc .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -109,13 +175,13 @@ stw_to_table(diamonds_meta)
   /* table.border.top.color */
 }
 
-#mxybcbvshx .gt_heading {
+#fkxizutuhc .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#mxybcbvshx .gt_title {
+#fkxizutuhc .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -126,7 +192,7 @@ stw_to_table(diamonds_meta)
   border-bottom-width: 0;
 }
 
-#mxybcbvshx .gt_subtitle {
+#fkxizutuhc .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -137,7 +203,7 @@ stw_to_table(diamonds_meta)
   border-top-width: 0;
 }
 
-#mxybcbvshx .gt_bottom_border {
+#fkxizutuhc .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -146,7 +212,7 @@ stw_to_table(diamonds_meta)
   /* heading.border.bottom.color */
 }
 
-#mxybcbvshx .gt_column_spanner {
+#fkxizutuhc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -154,7 +220,7 @@ stw_to_table(diamonds_meta)
   padding-bottom: 4px;
 }
 
-#mxybcbvshx .gt_col_heading {
+#fkxizutuhc .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -167,11 +233,11 @@ stw_to_table(diamonds_meta)
   margin: 10px;
 }
 
-#mxybcbvshx .gt_sep_right {
+#fkxizutuhc .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#mxybcbvshx .gt_group_heading {
+#fkxizutuhc .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -195,7 +261,7 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#mxybcbvshx .gt_empty_group_heading {
+#fkxizutuhc .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -219,37 +285,37 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#mxybcbvshx .gt_striped {
+#fkxizutuhc .gt_striped {
   background-color: #f2f2f2;
 }
 
-#mxybcbvshx .gt_from_md > :first-child {
+#fkxizutuhc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mxybcbvshx .gt_from_md > :last-child {
+#fkxizutuhc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mxybcbvshx .gt_row {
+#fkxizutuhc .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#mxybcbvshx .gt_stub {
+#fkxizutuhc .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#mxybcbvshx .gt_stub.gt_row {
+#fkxizutuhc .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#mxybcbvshx .gt_summary_row {
+#fkxizutuhc .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -258,13 +324,13 @@ stw_to_table(diamonds_meta)
   /* summary_row.text_transform */
 }
 
-#mxybcbvshx .gt_first_summary_row {
+#fkxizutuhc .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#mxybcbvshx .gt_table_body {
+#fkxizutuhc .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -279,56 +345,56 @@ stw_to_table(diamonds_meta)
   /* table_body.border.bottom.color */
 }
 
-#mxybcbvshx .gt_footnote {
+#fkxizutuhc .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#mxybcbvshx .gt_sourcenote {
+#fkxizutuhc .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#mxybcbvshx .gt_center {
+#fkxizutuhc .gt_center {
   text-align: center;
 }
 
-#mxybcbvshx .gt_left {
+#fkxizutuhc .gt_left {
   text-align: left;
 }
 
-#mxybcbvshx .gt_right {
+#fkxizutuhc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mxybcbvshx .gt_font_normal {
+#fkxizutuhc .gt_font_normal {
   font-weight: normal;
 }
 
-#mxybcbvshx .gt_font_bold {
+#fkxizutuhc .gt_font_bold {
   font-weight: bold;
 }
 
-#mxybcbvshx .gt_font_italic {
+#fkxizutuhc .gt_font_italic {
   font-style: italic;
 }
 
-#mxybcbvshx .gt_super {
+#fkxizutuhc .gt_super {
   font-size: 65%;
 }
 
-#mxybcbvshx .gt_footnote_glyph {
+#fkxizutuhc .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
 
-<div id="mxybcbvshx" style="overflow-x:auto;">
+<div id="fkxizutuhc" style="overflow-x:auto;">
 
 <!--gt table start-->
 
@@ -519,7 +585,7 @@ length in mm (0–10.74)
 
 <td class="gt_row gt_left" style="font-style:italic;">
 
-y
+TRUE
 
 </td>
 
@@ -626,3 +692,8 @@ width of top of diamond relative to widest point (43–95)
 </div>
 
 <!--/html_preserve-->
+
+## Related work
+
+The [codebook](https://rubenarslan.github.io/codebook/) package can help
+you manage dataset metadata.
