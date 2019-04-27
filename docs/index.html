@@ -76,72 +76,122 @@
 <a href="#steward" class="anchor"></a>steward</h1></div>
 <!-- badges: start -->
 
-<p>The goal of steward is to enable a package developer to embed a data dictionary within their package using the Roxygen syntax. This results in users being able to pull up the data dictionary using the helper function and view the appropriate help document.</p>
-<p>In the past, the developer would have to code by hand using Roxygen syntax the data dictionary. This can lead to increased development time and frustration. However, the Steward package aims to take a data dictionary in either a YAML or CSV format and automatically create a Roxygen output for the data dictionary contents.</p>
-<div id="class" class="section level2">
-<h2 class="hasAnchor">
-<a href="#class" class="anchor"></a>Class</h2>
-<p>The steward package is equipped with its own S3 class (called <code>"stw_meta"</code>) that enables it to seamlessly read in either a YAML or CSV file and convert to a Roxygen syntax.</p>
-</div>
+<p>The goal of <strong>steward</strong> is to make it easier to import, manage, and publish the metadata associated with data frames. This might be useful for:</p>
+<ul>
+<li>
+<a href="https://r-pkgs.org/data.html#documenting-data">documenting a dataset</a> for a package</li>
+<li>publishing a data dictionary in an R Markdown document</li>
+</ul>
+<p>Our current defintion of metadata includes the name, description and source of a dataset, as well as the name, type, and description of each of the variables in the dataset.</p>
+<p>The name, steward, is an homage to the <a href="http://agron590-isu.github.io/">Data Stewardship</a> class taught by <a href="https://github.com/andeek">Andee Kaplan</a> and <a href="https://github.com/ranae">Ranae Dietzel</a> (also an author of this package) at Iowa State University in Fall 2016.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the development version of steward from <a href="https://github.com/uncoast-unconf/steward">GitHub</a> with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"uncoast-unconf/steward"</span>)</a></code></pre></div>
 </div>
-<div id="example-read-yaml" class="section level2">
+<div id="usage" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example-read-yaml" class="anchor"></a>Example: Read YAML</h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"steward"</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="reference/stw_read_yaml.html">stw_read_yaml</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"metadata/diamonds.yaml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>))</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#&gt; List of 7</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt;  $ name       : chr "diamonds"</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt;  $ title      : chr "Prices of 50,000 round cut diamonds"</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt;  $ description: chr "A dataset containing the prices and other attributes of almost 54,000 diamonds."</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">#&gt;  $ source     : chr "www.google.com"</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">#&gt;  $ n_row      : NULL</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt;  $ n_col      : NULL</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt;  $ dictionary :Classes 'stw_dict' and 'data.frame':  10 obs. of  3 variables:</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt;   ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt;   ..$ type       : chr [1:10] "double" "double" "character" "character" ...</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt;   ..$ description: chr [1:10] "price in US dollars ($326 - $18,823)" "weight of diamond (0.2 - 5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "diamond color, from D (best) to J (worst)" ...</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt;  - attr(*, "class")= chr "stw_meta"</span></a></code></pre></div>
+<a href="#usage" class="anchor"></a>Usage</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"steward"</span>)</a></code></pre></div>
+<p>The current capabilities all deal with metadata:</p>
+<ul>
+<li><a href="#read-yaml">read from YAML</a></li>
+<li><a href="#read-csv">read from CSV</a></li>
+<li><a href="#write-roxygen">write to roxygen</a></li>
+<li><a href="#write-gt-table">write to gt table</a></li>
+</ul>
+<div id="future-capabilities" class="section level3">
+<h3 class="hasAnchor">
+<a href="#future-capabilities" class="anchor"></a>Future capabilities</h3>
+<p>Soon, we hope to add additional capabilities:</p>
+<ul>
+<li><a href="https://github.com/uncoast-unconf/steward/issues/42">write metadata to YAML</a></li>
+<li>
+<a href="https://github.com/uncoast-unconf/steward/issues/36">combine metadata with dataset</a>
+<ul>
+<li>
+<a href="https://github.com/uncoast-unconf/steward/issues/41">read and write combined dataset</a> from/to flat files</li>
+</ul>
+</li>
+<li>take into account <a href="https://github.com/uncoast-unconf/steward/issues/39">timezone as column metadata</a>
+</li>
+<li>
+<a href="https://github.com/uncoast-unconf/steward/issues/43">build metadata from package-documentation</a> (<code>.Rd</code> file)</li>
+</ul>
+<div id="read-yaml" class="section level4">
+<h4 class="hasAnchor">
+<a href="#read-yaml" class="anchor"></a>Read YAML</h4>
+<p>Here are the first lines of a YAML file containing metadata from <a href="http://ggplot2.tidyverse.org">ggplot2</a>’s <code>diamonds</code> dataset, which is available as:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"metadata/diamonds.yaml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>) <span class="op">%&gt;%</span></a></code></pre></div>
+<pre><code>name: diamonds
+title: Prices of 50,000 round cut diamonds
+description: |
+ A dataset containing the prices and other attributes of almost 54,000 diamonds.
+source: &lt;http://www.diamondse.info/&gt;
+dictionary:
+    - name: price
+      type: double
+      description: price in US dollars ($326--$18,823)
+    - name: carat
+      type: double
+      description: weight of diamond (0.2--5.01)</code></pre>
+<p>We can read a YAML file using <code><a href="reference/stw_read_yaml.html">stw_read_yaml()</a></code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/stw_read_yaml.html">stw_read_yaml</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"metadata/diamonds.yaml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>))</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; List of 7</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt;  $ name       : chr "diamonds"</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt;  $ title      : chr "Prices of 50,000 round cut diamonds"</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt;  $ description: chr "A dataset containing the prices and other attributes of almost 54,000 diamonds."</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt;  $ source     : chr "&lt;http://www.diamondse.info/&gt;"</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt;  $ n_row      : NULL</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt;  $ n_col      : NULL</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt;  $ dictionary :Classes 'stw_dict' and 'data.frame':  10 obs. of  3 variables:</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt;   ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt;   ..$ type       : chr [1:10] "double" "double" "character" "character" ...</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt;   ..$ description: chr [1:10] "price in US dollars ($326--$18,823)" "weight of diamond (0.2--5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "diamond color, from D (best) to J (worst)" ...</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;  - attr(*, "class")= chr "stw_meta"</span></a></code></pre></div>
 </div>
-<div id="example---create-roxygen-meta" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example---create-roxygen-meta" class="anchor"></a>Example - Create Roxygen Meta</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="reference/stw_to_roxygen.html">stw_to_roxygen</a></span>(diamonds_meta)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; #' Prices of 50,000 round cut diamonds</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; #' </span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; #' A dataset containing the prices and other attributes of almost 54,000 diamonds.</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; #' </span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; #' @format A data frame with 53940 rows and 10 variables:</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; #' </span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; #' \describe{ </span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; #'   \item{price}{price in US dollars ($326 - $18,823)}</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; #'   \item{carat}{weight of diamond (0.2 - 5.01)}</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; #'   \item{cut}{quality of the cut (Fair, Good, Very Good, Premium, Ideal)}</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; #'   \item{color}{diamond color, from D (best) to J (worst)}</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; #'   \item{clarity}{a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))}</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; #'   \item{x}{length in mm (0-10.74)}</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; #'   \item{y}{width in mm (0-58.9)}</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; #'   \item{z}{depth in mm (0-31.8)}</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; #'   \item{depth}{total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43-79)}</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; #'   \item{table}{width of top of diamond relative to widest point (43-95)}</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; #' }</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; #' @source www.google.com</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; "diamonds"</span></a></code></pre></div>
+<div id="read-csv" class="section level4">
+<h4 class="hasAnchor">
+<a href="#read-csv" class="anchor"></a>Read CSV</h4>
+<p>This is an emerging capability that we need to document.</p>
 </div>
-<div id="example---gt-table" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example---gt-table" class="anchor"></a>Example - GT table</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/stw_to_table.html">stw_to_table</a></span>(diamonds_meta)</a></code></pre></div>
+<div id="write-roxygen" class="section level4">
+<h4 class="hasAnchor">
+<a href="#write-roxygen" class="anchor"></a>Write roxygen</h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="reference/stw_to_roxygen.html">stw_to_roxygen</a></span>(diamonds_meta)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt; #' Prices of 50,000 round cut diamonds</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; #' </span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; #' A dataset containing the prices and other attributes of almost 54,000 diamonds.</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; #' </span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; #' @format A data frame with 53940 rows and 10 variables:</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; #' </span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; #' \describe{ </span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt; #'   \item{price}{price in US dollars ($326--$18,823)}</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt; #'   \item{carat}{weight of diamond (0.2--5.01)}</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; #'   \item{cut}{quality of the cut (Fair, Good, Very Good, Premium, Ideal)}</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt; #'   \item{color}{diamond color, from D (best) to J (worst)}</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt; #'   \item{clarity}{a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))}</span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt; #'   \item{x}{length in mm (0--10.74)}</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt; #'   \item{TRUE}{width in mm (0--58.9)}</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; #'   \item{z}{depth in mm (0--31.8)}</span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt; #'   \item{depth}{total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)}</span></a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">#&gt; #'   \item{table}{width of top of diamond relative to widest point (43--95)}</span></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">#&gt; #' }</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="co">#&gt; #' @source &lt;http://www.diamondse.info/&gt;</span></a>
+<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co">#&gt; "diamonds"</span></a></code></pre></div>
+</div>
+<div id="write-gt-table" class="section level4">
+<h4 class="hasAnchor">
+<a href="#write-gt-table" class="anchor"></a>Write gt Table</h4>
+<p>If you are creating an R Markdown document, you can use the <code><a href="reference/stw_to_table.html">stw_to_table()</a></code> function to create a <a href="https://gt.rstudio.com">gt table</a>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="reference/stw_to_table.html">stw_to_table</a></span>(diamonds_meta)</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#dfisvpyioh .gt_table {
+#rslqcvbwug .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -160,13 +210,13 @@
   /* table.border.top.color */
 }
 
-#dfisvpyioh .gt_heading {
+#rslqcvbwug .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#dfisvpyioh .gt_title {
+#rslqcvbwug .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -177,7 +227,7 @@
   border-bottom-width: 0;
 }
 
-#dfisvpyioh .gt_subtitle {
+#rslqcvbwug .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -188,7 +238,7 @@
   border-top-width: 0;
 }
 
-#dfisvpyioh .gt_bottom_border {
+#rslqcvbwug .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -197,7 +247,7 @@
   /* heading.border.bottom.color */
 }
 
-#dfisvpyioh .gt_column_spanner {
+#rslqcvbwug .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -205,7 +255,7 @@
   padding-bottom: 4px;
 }
 
-#dfisvpyioh .gt_col_heading {
+#rslqcvbwug .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -218,11 +268,11 @@
   margin: 10px;
 }
 
-#dfisvpyioh .gt_sep_right {
+#rslqcvbwug .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#dfisvpyioh .gt_group_heading {
+#rslqcvbwug .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -246,7 +296,7 @@
   vertical-align: middle;
 }
 
-#dfisvpyioh .gt_empty_group_heading {
+#rslqcvbwug .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -270,37 +320,37 @@
   vertical-align: middle;
 }
 
-#dfisvpyioh .gt_striped {
+#rslqcvbwug .gt_striped {
   background-color: #f2f2f2;
 }
 
-#dfisvpyioh .gt_from_md > :first-child {
+#rslqcvbwug .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dfisvpyioh .gt_from_md > :last-child {
+#rslqcvbwug .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dfisvpyioh .gt_row {
+#rslqcvbwug .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#dfisvpyioh .gt_stub {
+#rslqcvbwug .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#dfisvpyioh .gt_stub.gt_row {
+#rslqcvbwug .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#dfisvpyioh .gt_summary_row {
+#rslqcvbwug .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -309,13 +359,13 @@
   /* summary_row.text_transform */
 }
 
-#dfisvpyioh .gt_first_summary_row {
+#rslqcvbwug .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#dfisvpyioh .gt_table_body {
+#rslqcvbwug .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -330,55 +380,55 @@
   /* table_body.border.bottom.color */
 }
 
-#dfisvpyioh .gt_footnote {
+#rslqcvbwug .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#dfisvpyioh .gt_sourcenote {
+#rslqcvbwug .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#dfisvpyioh .gt_center {
+#rslqcvbwug .gt_center {
   text-align: center;
 }
 
-#dfisvpyioh .gt_left {
+#rslqcvbwug .gt_left {
   text-align: left;
 }
 
-#dfisvpyioh .gt_right {
+#rslqcvbwug .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dfisvpyioh .gt_font_normal {
+#rslqcvbwug .gt_font_normal {
   font-weight: normal;
 }
 
-#dfisvpyioh .gt_font_bold {
+#rslqcvbwug .gt_font_bold {
   font-weight: bold;
 }
 
-#dfisvpyioh .gt_font_italic {
+#rslqcvbwug .gt_font_italic {
   font-style: italic;
 }
 
-#dfisvpyioh .gt_super {
+#rslqcvbwug .gt_super {
   font-size: 65%;
 }
 
-#dfisvpyioh .gt_footnote_glyph {
+#rslqcvbwug .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="dfisvpyioh" style="overflow-x:auto;">
+<div id="rslqcvbwug" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table table gt_table">
 <thead>
@@ -398,12 +448,12 @@
 <tr>
 <td class="gt_row gt_left" style="font-style:italic;">price</td>
 <td class="gt_row gt_left">double</td>
-<td class="gt_row gt_left">price in US dollars ($326 - $18,823)</td>
+<td class="gt_row gt_left">price in US dollars ($326--$18,823)</td>
 </tr>
 <tr>
 <td class="gt_row gt_left gt_striped" style="font-style:italic;">carat</td>
 <td class="gt_row gt_left gt_striped">double</td>
-<td class="gt_row gt_left gt_striped">weight of diamond (0.2 - 5.01)</td>
+<td class="gt_row gt_left gt_striped">weight of diamond (0.2--5.01)</td>
 </tr>
 <tr>
 <td class="gt_row gt_left" style="font-style:italic;">cut</td>
@@ -423,34 +473,36 @@
 <tr>
 <td class="gt_row gt_left gt_striped" style="font-style:italic;">x</td>
 <td class="gt_row gt_left gt_striped">double</td>
-<td class="gt_row gt_left gt_striped">length in mm (0-10.74)</td>
+<td class="gt_row gt_left gt_striped">length in mm (0--10.74)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left" style="font-style:italic;">y</td>
+<td class="gt_row gt_left" style="font-style:italic;">TRUE</td>
 <td class="gt_row gt_left">double</td>
-<td class="gt_row gt_left">width in mm (0-58.9)</td>
+<td class="gt_row gt_left">width in mm (0--58.9)</td>
 </tr>
 <tr>
 <td class="gt_row gt_left gt_striped" style="font-style:italic;">z</td>
 <td class="gt_row gt_left gt_striped">double</td>
-<td class="gt_row gt_left gt_striped">depth in mm (0-31.8)</td>
+<td class="gt_row gt_left gt_striped">depth in mm (0--31.8)</td>
 </tr>
 <tr>
 <td class="gt_row gt_left" style="font-style:italic;">depth</td>
 <td class="gt_row gt_left">double</td>
-<td class="gt_row gt_left">total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43-79)</td>
+<td class="gt_row gt_left">total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)</td>
 </tr>
 <tr>
 <td class="gt_row gt_left gt_striped" style="font-style:italic;">table</td>
 <td class="gt_row gt_left gt_striped">double</td>
-<td class="gt_row gt_left gt_striped">width of top of diamond relative to widest point (43-95)</td>
+<td class="gt_row gt_left gt_striped">width of top of diamond relative to widest point (43--95)</td>
 </tr>
 </tbody>
 <tfoot><tr>
-<td colspan="4" class="gt_sourcenote">www.google.com</td>
+<td colspan="4" class="gt_sourcenote">http://www.diamondse.info/</td>
 </tr></tfoot>
 </table>
 <!--gt table end-->
+</div>
+</div>
 </div>
 </div>
 </div>
