@@ -60,17 +60,18 @@ The current capabilities are:
 Here are the first lines of a YAML file containing metadata from
 [ggplot2](http://ggplot2.tidyverse.org)’s `diamonds` dataset:
 
-    name: "diamonds"
-    title: "Prices of 50,000 round cut diamonds"
-    description: "A dataset containing the prices and other attributes of almost 54,000 diamonds."
-    source: "<http://www.diamondse.info/>"
+    name: diamonds
+    title: Prices of 50,000 round cut diamonds
+    description: |
+     A dataset containing the prices and other attributes of almost 54,000 diamonds.
+    source: <http://www.diamondse.info/>
     dictionary:
-        - name: "price"
-          type: "double"
-          description: "price in US dollars ($326--$18,823)"
-        - name: "carat"
-          type: "double"
-          description: "weight of diamond (0.2--5.01)"
+        - name: price
+          type: double
+          description: price in US dollars ($326--$18,823)
+        - name: carat
+          type: double
+          description: weight of diamond (0.2--5.01)
 
 ``` r
 stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
@@ -109,7 +110,7 @@ stw_to_roxygen(diamonds_meta)
 #> #'   \item{color}{diamond color, from D (best) to J (worst)}
 #> #'   \item{clarity}{a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))}
 #> #'   \item{x}{length in mm (0--10.74)}
-#> #'   \item{y}{width in mm (0--58.9)}
+#> #'   \item{TRUE}{width in mm (0--58.9)}
 #> #'   \item{z}{depth in mm (0--31.8)}
 #> #'   \item{depth}{total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)}
 #> #'   \item{table}{width of top of diamond relative to widest point (43--95)}
@@ -132,7 +133,7 @@ stw_to_table(diamonds_meta)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#kemknrasoc .gt_table {
+#eckctexdmc .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -151,13 +152,13 @@ stw_to_table(diamonds_meta)
   /* table.border.top.color */
 }
 
-#kemknrasoc .gt_heading {
+#eckctexdmc .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#kemknrasoc .gt_title {
+#eckctexdmc .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -168,7 +169,7 @@ stw_to_table(diamonds_meta)
   border-bottom-width: 0;
 }
 
-#kemknrasoc .gt_subtitle {
+#eckctexdmc .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -179,7 +180,7 @@ stw_to_table(diamonds_meta)
   border-top-width: 0;
 }
 
-#kemknrasoc .gt_bottom_border {
+#eckctexdmc .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -188,7 +189,7 @@ stw_to_table(diamonds_meta)
   /* heading.border.bottom.color */
 }
 
-#kemknrasoc .gt_column_spanner {
+#eckctexdmc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -196,7 +197,7 @@ stw_to_table(diamonds_meta)
   padding-bottom: 4px;
 }
 
-#kemknrasoc .gt_col_heading {
+#eckctexdmc .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -209,11 +210,11 @@ stw_to_table(diamonds_meta)
   margin: 10px;
 }
 
-#kemknrasoc .gt_sep_right {
+#eckctexdmc .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#kemknrasoc .gt_group_heading {
+#eckctexdmc .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -237,7 +238,7 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#kemknrasoc .gt_empty_group_heading {
+#eckctexdmc .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -261,37 +262,37 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#kemknrasoc .gt_striped {
+#eckctexdmc .gt_striped {
   background-color: #f2f2f2;
 }
 
-#kemknrasoc .gt_from_md > :first-child {
+#eckctexdmc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kemknrasoc .gt_from_md > :last-child {
+#eckctexdmc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kemknrasoc .gt_row {
+#eckctexdmc .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#kemknrasoc .gt_stub {
+#eckctexdmc .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#kemknrasoc .gt_stub.gt_row {
+#eckctexdmc .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#kemknrasoc .gt_summary_row {
+#eckctexdmc .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -300,13 +301,13 @@ stw_to_table(diamonds_meta)
   /* summary_row.text_transform */
 }
 
-#kemknrasoc .gt_first_summary_row {
+#eckctexdmc .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#kemknrasoc .gt_table_body {
+#eckctexdmc .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -321,56 +322,56 @@ stw_to_table(diamonds_meta)
   /* table_body.border.bottom.color */
 }
 
-#kemknrasoc .gt_footnote {
+#eckctexdmc .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#kemknrasoc .gt_sourcenote {
+#eckctexdmc .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#kemknrasoc .gt_center {
+#eckctexdmc .gt_center {
   text-align: center;
 }
 
-#kemknrasoc .gt_left {
+#eckctexdmc .gt_left {
   text-align: left;
 }
 
-#kemknrasoc .gt_right {
+#eckctexdmc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kemknrasoc .gt_font_normal {
+#eckctexdmc .gt_font_normal {
   font-weight: normal;
 }
 
-#kemknrasoc .gt_font_bold {
+#eckctexdmc .gt_font_bold {
   font-weight: bold;
 }
 
-#kemknrasoc .gt_font_italic {
+#eckctexdmc .gt_font_italic {
   font-style: italic;
 }
 
-#kemknrasoc .gt_super {
+#eckctexdmc .gt_super {
   font-size: 65%;
 }
 
-#kemknrasoc .gt_footnote_glyph {
+#eckctexdmc .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
 
-<div id="kemknrasoc" style="overflow-x:auto;">
+<div id="eckctexdmc" style="overflow-x:auto;">
 
 <!--gt table start-->
 
@@ -561,7 +562,7 @@ length in mm (0–10.74)
 
 <td class="gt_row gt_left" style="font-style:italic;">
 
-y
+TRUE
 
 </td>
 

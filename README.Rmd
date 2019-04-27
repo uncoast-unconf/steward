@@ -62,10 +62,9 @@ Here are the first lines of a YAML file containing metadata from [ggplot2](http:
 
 ```{r yaml, comment = "", echo = FALSE}
 system.file("metadata/diamonds.yaml", package = "steward") %>%
-  readr::read_lines(n_max = 11) %>%
+  readr::read_lines(n_max = 12) %>%
   glue::glue_collapse(sep = "\n")
 ```
-
 
 ```{r example_read_yaml}
 stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
