@@ -98,6 +98,10 @@ If you are creating an R Markdown document, you can use the `stw_to_table()` fun
 stw_to_table(diamonds_meta)
 ```
 
+## Related work
+
+The [codebook](https://rubenarslan.github.io/codebook/) package can help you manage dataset metadata.
+
 
 
 

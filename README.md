@@ -156,7 +156,7 @@ stw_to_table(diamonds_meta)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#nhmhcfgkxl .gt_table {
+#fkxizutuhc .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -175,13 +175,13 @@ stw_to_table(diamonds_meta)
   /* table.border.top.color */
 }
 
-#nhmhcfgkxl .gt_heading {
+#fkxizutuhc .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#nhmhcfgkxl .gt_title {
+#fkxizutuhc .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -192,7 +192,7 @@ stw_to_table(diamonds_meta)
   border-bottom-width: 0;
 }
 
-#nhmhcfgkxl .gt_subtitle {
+#fkxizutuhc .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -203,7 +203,7 @@ stw_to_table(diamonds_meta)
   border-top-width: 0;
 }
 
-#nhmhcfgkxl .gt_bottom_border {
+#fkxizutuhc .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -212,7 +212,7 @@ stw_to_table(diamonds_meta)
   /* heading.border.bottom.color */
 }
 
-#nhmhcfgkxl .gt_column_spanner {
+#fkxizutuhc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -220,7 +220,7 @@ stw_to_table(diamonds_meta)
   padding-bottom: 4px;
 }
 
-#nhmhcfgkxl .gt_col_heading {
+#fkxizutuhc .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -233,11 +233,11 @@ stw_to_table(diamonds_meta)
   margin: 10px;
 }
 
-#nhmhcfgkxl .gt_sep_right {
+#fkxizutuhc .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#nhmhcfgkxl .gt_group_heading {
+#fkxizutuhc .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -261,7 +261,7 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#nhmhcfgkxl .gt_empty_group_heading {
+#fkxizutuhc .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -285,37 +285,37 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#nhmhcfgkxl .gt_striped {
+#fkxizutuhc .gt_striped {
   background-color: #f2f2f2;
 }
 
-#nhmhcfgkxl .gt_from_md > :first-child {
+#fkxizutuhc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nhmhcfgkxl .gt_from_md > :last-child {
+#fkxizutuhc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nhmhcfgkxl .gt_row {
+#fkxizutuhc .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#nhmhcfgkxl .gt_stub {
+#fkxizutuhc .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#nhmhcfgkxl .gt_stub.gt_row {
+#fkxizutuhc .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#nhmhcfgkxl .gt_summary_row {
+#fkxizutuhc .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -324,13 +324,13 @@ stw_to_table(diamonds_meta)
   /* summary_row.text_transform */
 }
 
-#nhmhcfgkxl .gt_first_summary_row {
+#fkxizutuhc .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#nhmhcfgkxl .gt_table_body {
+#fkxizutuhc .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -345,56 +345,56 @@ stw_to_table(diamonds_meta)
   /* table_body.border.bottom.color */
 }
 
-#nhmhcfgkxl .gt_footnote {
+#fkxizutuhc .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#nhmhcfgkxl .gt_sourcenote {
+#fkxizutuhc .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#nhmhcfgkxl .gt_center {
+#fkxizutuhc .gt_center {
   text-align: center;
 }
 
-#nhmhcfgkxl .gt_left {
+#fkxizutuhc .gt_left {
   text-align: left;
 }
 
-#nhmhcfgkxl .gt_right {
+#fkxizutuhc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nhmhcfgkxl .gt_font_normal {
+#fkxizutuhc .gt_font_normal {
   font-weight: normal;
 }
 
-#nhmhcfgkxl .gt_font_bold {
+#fkxizutuhc .gt_font_bold {
   font-weight: bold;
 }
 
-#nhmhcfgkxl .gt_font_italic {
+#fkxizutuhc .gt_font_italic {
   font-style: italic;
 }
 
-#nhmhcfgkxl .gt_super {
+#fkxizutuhc .gt_super {
   font-size: 65%;
 }
 
-#nhmhcfgkxl .gt_footnote_glyph {
+#fkxizutuhc .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
 
-<div id="nhmhcfgkxl" style="overflow-x:auto;">
+<div id="fkxizutuhc" style="overflow-x:auto;">
 
 <!--gt table start-->
 
@@ -692,3 +692,8 @@ width of top of diamond relative to widest point (43–95)
 </div>
 
 <!--/html_preserve-->
+
+## Related work
+
+The [codebook](https://rubenarslan.github.io/codebook/) package can help
+you manage dataset metadata.
