@@ -24,6 +24,8 @@ The goal of **steward** is to make it easier to import, manage, and publish the 
 - [documenting a dataset](https://r-pkgs.org/data.html#documenting-data) for a package
 - publishing a data dictionary in an R Markdown document
 
+Our current defintion of metadata includes the name, description and source of a dataset, as well as the name, type, and description of each of the variables in the dataset.
+
 The name, steward, is an homage to the [Data Stewardship](http://agron590-isu.github.io/) class taught by [Andee Kaplan](https://github.com/andeek) and [Ranae Dietzel](https://github.com/ranae) (also an author of this package) at Iowa State University in Fall 2016.
 
 ## Installation
@@ -41,7 +43,7 @@ devtools::install_github("uncoast-unconf/steward")
 library("steward")
 ```
 
-The current capabilities are:
+The current capabilities all deal with metadata:
 
 - [read from YAML](#read-yaml) 
 - [read from CSV](#read-csv) 
@@ -50,21 +52,29 @@ The current capabilities are:
 
 ### Future capabilities
 
-- write to YAML
-- combine metadata with dataset
-  - read and write combined dataset from/to flat files
-- take into account timezone as column metadata
-- build metadata by scraping package-documentation (`.Rd` file)
+Soon, we hope to add additional capabilities:
+
+- [write metadata to YAML](https://github.com/uncoast-unconf/steward/issues/42)
+- [combine metadata with dataset](https://github.com/uncoast-unconf/steward/issues/36)
+  - [read and write combined dataset](https://github.com/uncoast-unconf/steward/issues/41) from/to flat files
+- take into account [timezone as column metadata](https://github.com/uncoast-unconf/steward/issues/39)
+- [build metadata from package-documentation](https://github.com/uncoast-unconf/steward/issues/43) (`.Rd` file)
 
 #### Read YAML
 
-Here are the first lines of a YAML file containing metadata from [ggplot2](http://ggplot2.tidyverse.org)'s `diamonds` dataset:
+Here are the first lines of a YAML file containing metadata from [ggplot2](http://ggplot2.tidyverse.org)'s `diamonds` dataset, which is available as:
+
+```r
+system.file("metadata/diamonds.yaml", package = "steward") %>%
+```
 
 ```{r yaml, comment = "", echo = FALSE}
 system.file("metadata/diamonds.yaml", package = "steward") %>%
   readr::read_lines(n_max = 12) %>%
   glue::glue_collapse(sep = "\n")
 ```
+
+We can read a YAML file using `stw_read_yaml()`:
 
 ```{r example_read_yaml}
 stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
@@ -82,7 +92,7 @@ stw_to_roxygen(diamonds_meta)
 
 #### Write gt Table
 
-[gt table](https://gt.rstudio.com)
+If you are creating an R Markdown document, you can use the `stw_to_table()` function to create a [gt table](https://gt.rstudio.com):
 
 ```{r}
 stw_to_table(diamonds_meta)

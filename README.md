@@ -18,6 +18,10 @@ for:
     package
   - publishing a data dictionary in an R Markdown document
 
+Our current defintion of metadata includes the name, description and
+source of a dataset, as well as the name, type, and description of each
+of the variables in the dataset.
+
 The name, steward, is an homage to the [Data
 Stewardship](http://agron590-isu.github.io/) class taught by [Andee
 Kaplan](https://github.com/andeek) and [Ranae
@@ -40,7 +44,7 @@ devtools::install_github("uncoast-unconf/steward")
 library("steward")
 ```
 
-The current capabilities are:
+The current capabilities all deal with metadata:
 
   - [read from YAML](#read-yaml)
   - [read from CSV](#read-csv)
@@ -49,16 +53,30 @@ The current capabilities are:
 
 ### Future capabilities
 
-  - write to YAML
-  - combine metadata with dataset
-      - read and write combined dataset from/to flat files
-  - take into account timezone as column metadata
-  - build metadata by scraping package-documentation (`.Rd` file)
+Soon, we hope to add additional capabilities:
+
+  - [write metadata to
+    YAML](https://github.com/uncoast-unconf/steward/issues/42)
+  - [combine metadata with
+    dataset](https://github.com/uncoast-unconf/steward/issues/36)
+      - [read and write combined
+        dataset](https://github.com/uncoast-unconf/steward/issues/41)
+        from/to flat files
+  - take into account [timezone as column
+    metadata](https://github.com/uncoast-unconf/steward/issues/39)
+  - [build metadata from
+    package-documentation](https://github.com/uncoast-unconf/steward/issues/43)
+    (`.Rd` file)
 
 #### Read YAML
 
 Here are the first lines of a YAML file containing metadata from
-[ggplot2](http://ggplot2.tidyverse.org)’s `diamonds` dataset:
+[ggplot2](http://ggplot2.tidyverse.org)’s `diamonds` dataset, which is
+available as:
+
+``` r
+system.file("metadata/diamonds.yaml", package = "steward") %>%
+```
 
     name: diamonds
     title: Prices of 50,000 round cut diamonds
@@ -72,6 +90,9 @@ Here are the first lines of a YAML file containing metadata from
         - name: carat
           type: double
           description: weight of diamond (0.2--5.01)
+
+We can read a YAML file using
+`stw_read_yaml()`:
 
 ``` r
 stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
@@ -121,7 +142,9 @@ stw_to_roxygen(diamonds_meta)
 
 #### Write gt Table
 
-[gt table](https://gt.rstudio.com)
+If you are creating an R Markdown document, you can use the
+`stw_to_table()` function to create a [gt
+table](https://gt.rstudio.com):
 
 ``` r
 stw_to_table(diamonds_meta)
@@ -133,7 +156,7 @@ stw_to_table(diamonds_meta)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#eckctexdmc .gt_table {
+#nhmhcfgkxl .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -152,13 +175,13 @@ stw_to_table(diamonds_meta)
   /* table.border.top.color */
 }
 
-#eckctexdmc .gt_heading {
+#nhmhcfgkxl .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#eckctexdmc .gt_title {
+#nhmhcfgkxl .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -169,7 +192,7 @@ stw_to_table(diamonds_meta)
   border-bottom-width: 0;
 }
 
-#eckctexdmc .gt_subtitle {
+#nhmhcfgkxl .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -180,7 +203,7 @@ stw_to_table(diamonds_meta)
   border-top-width: 0;
 }
 
-#eckctexdmc .gt_bottom_border {
+#nhmhcfgkxl .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -189,7 +212,7 @@ stw_to_table(diamonds_meta)
   /* heading.border.bottom.color */
 }
 
-#eckctexdmc .gt_column_spanner {
+#nhmhcfgkxl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -197,7 +220,7 @@ stw_to_table(diamonds_meta)
   padding-bottom: 4px;
 }
 
-#eckctexdmc .gt_col_heading {
+#nhmhcfgkxl .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -210,11 +233,11 @@ stw_to_table(diamonds_meta)
   margin: 10px;
 }
 
-#eckctexdmc .gt_sep_right {
+#nhmhcfgkxl .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#eckctexdmc .gt_group_heading {
+#nhmhcfgkxl .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -238,7 +261,7 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#eckctexdmc .gt_empty_group_heading {
+#nhmhcfgkxl .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -262,37 +285,37 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#eckctexdmc .gt_striped {
+#nhmhcfgkxl .gt_striped {
   background-color: #f2f2f2;
 }
 
-#eckctexdmc .gt_from_md > :first-child {
+#nhmhcfgkxl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#eckctexdmc .gt_from_md > :last-child {
+#nhmhcfgkxl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#eckctexdmc .gt_row {
+#nhmhcfgkxl .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#eckctexdmc .gt_stub {
+#nhmhcfgkxl .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#eckctexdmc .gt_stub.gt_row {
+#nhmhcfgkxl .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#eckctexdmc .gt_summary_row {
+#nhmhcfgkxl .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -301,13 +324,13 @@ stw_to_table(diamonds_meta)
   /* summary_row.text_transform */
 }
 
-#eckctexdmc .gt_first_summary_row {
+#nhmhcfgkxl .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#eckctexdmc .gt_table_body {
+#nhmhcfgkxl .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -322,56 +345,56 @@ stw_to_table(diamonds_meta)
   /* table_body.border.bottom.color */
 }
 
-#eckctexdmc .gt_footnote {
+#nhmhcfgkxl .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#eckctexdmc .gt_sourcenote {
+#nhmhcfgkxl .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#eckctexdmc .gt_center {
+#nhmhcfgkxl .gt_center {
   text-align: center;
 }
 
-#eckctexdmc .gt_left {
+#nhmhcfgkxl .gt_left {
   text-align: left;
 }
 
-#eckctexdmc .gt_right {
+#nhmhcfgkxl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#eckctexdmc .gt_font_normal {
+#nhmhcfgkxl .gt_font_normal {
   font-weight: normal;
 }
 
-#eckctexdmc .gt_font_bold {
+#nhmhcfgkxl .gt_font_bold {
   font-weight: bold;
 }
 
-#eckctexdmc .gt_font_italic {
+#nhmhcfgkxl .gt_font_italic {
   font-style: italic;
 }
 
-#eckctexdmc .gt_super {
+#nhmhcfgkxl .gt_super {
   font-size: 65%;
 }
 
-#eckctexdmc .gt_footnote_glyph {
+#nhmhcfgkxl .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
 
-<div id="eckctexdmc" style="overflow-x:auto;">
+<div id="nhmhcfgkxl" style="overflow-x:auto;">
 
 <!--gt table start-->
 
