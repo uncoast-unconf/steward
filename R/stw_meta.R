@@ -41,14 +41,14 @@ stw_meta <- function(name, title, description, source = NULL,
     )
   }
 
-  # validate
+  # TODO: validate
 
   # construct
   new_stw_meta(
-    name = name,
-    title = title,
-    description = description,
-    source = source,
+    name = trimws(name),
+    title = trimws(title),
+    description = trimws(description),
+    source = trimws(source),
     n_row = n_row,
     n_col = n_col,
     dictionary = dictionary

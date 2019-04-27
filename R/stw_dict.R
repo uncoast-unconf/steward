@@ -28,6 +28,7 @@ stw_dict <- function(dictionary) {
 
   # coerce to character
   d <- lapply(dictionary, as.character)
+  d <- lapply(dictionary, trimws)
   d <- as.data.frame(d, stringsAsFactors = FALSE)
 
   new_stw_dict(d)
