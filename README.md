@@ -131,7 +131,7 @@ stw_to_roxygen(diamonds_meta)
 #> #'   \item{color}{diamond color, from D (best) to J (worst)}
 #> #'   \item{clarity}{a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))}
 #> #'   \item{x}{length in mm (0--10.74)}
-#> #'   \item{TRUE}{width in mm (0--58.9)}
+#> #'   \item{y}{width in mm (0--58.9)}
 #> #'   \item{z}{depth in mm (0--31.8)}
 #> #'   \item{depth}{total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)}
 #> #'   \item{table}{width of top of diamond relative to widest point (43--95)}
@@ -156,7 +156,7 @@ stw_to_table(diamonds_meta)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#fkxizutuhc .gt_table {
+#sgeazjcpuo .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -175,13 +175,13 @@ stw_to_table(diamonds_meta)
   /* table.border.top.color */
 }
 
-#fkxizutuhc .gt_heading {
+#sgeazjcpuo .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#fkxizutuhc .gt_title {
+#sgeazjcpuo .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -192,7 +192,7 @@ stw_to_table(diamonds_meta)
   border-bottom-width: 0;
 }
 
-#fkxizutuhc .gt_subtitle {
+#sgeazjcpuo .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -203,7 +203,7 @@ stw_to_table(diamonds_meta)
   border-top-width: 0;
 }
 
-#fkxizutuhc .gt_bottom_border {
+#sgeazjcpuo .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -212,7 +212,7 @@ stw_to_table(diamonds_meta)
   /* heading.border.bottom.color */
 }
 
-#fkxizutuhc .gt_column_spanner {
+#sgeazjcpuo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -220,7 +220,7 @@ stw_to_table(diamonds_meta)
   padding-bottom: 4px;
 }
 
-#fkxizutuhc .gt_col_heading {
+#sgeazjcpuo .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -233,11 +233,11 @@ stw_to_table(diamonds_meta)
   margin: 10px;
 }
 
-#fkxizutuhc .gt_sep_right {
+#sgeazjcpuo .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#fkxizutuhc .gt_group_heading {
+#sgeazjcpuo .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -261,7 +261,7 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#fkxizutuhc .gt_empty_group_heading {
+#sgeazjcpuo .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -285,37 +285,37 @@ stw_to_table(diamonds_meta)
   vertical-align: middle;
 }
 
-#fkxizutuhc .gt_striped {
+#sgeazjcpuo .gt_striped {
   background-color: #f2f2f2;
 }
 
-#fkxizutuhc .gt_from_md > :first-child {
+#sgeazjcpuo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fkxizutuhc .gt_from_md > :last-child {
+#sgeazjcpuo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fkxizutuhc .gt_row {
+#sgeazjcpuo .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#fkxizutuhc .gt_stub {
+#sgeazjcpuo .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#fkxizutuhc .gt_stub.gt_row {
+#sgeazjcpuo .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#fkxizutuhc .gt_summary_row {
+#sgeazjcpuo .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -324,13 +324,13 @@ stw_to_table(diamonds_meta)
   /* summary_row.text_transform */
 }
 
-#fkxizutuhc .gt_first_summary_row {
+#sgeazjcpuo .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#fkxizutuhc .gt_table_body {
+#sgeazjcpuo .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -345,56 +345,56 @@ stw_to_table(diamonds_meta)
   /* table_body.border.bottom.color */
 }
 
-#fkxizutuhc .gt_footnote {
+#sgeazjcpuo .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#fkxizutuhc .gt_sourcenote {
+#sgeazjcpuo .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#fkxizutuhc .gt_center {
+#sgeazjcpuo .gt_center {
   text-align: center;
 }
 
-#fkxizutuhc .gt_left {
+#sgeazjcpuo .gt_left {
   text-align: left;
 }
 
-#fkxizutuhc .gt_right {
+#sgeazjcpuo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fkxizutuhc .gt_font_normal {
+#sgeazjcpuo .gt_font_normal {
   font-weight: normal;
 }
 
-#fkxizutuhc .gt_font_bold {
+#sgeazjcpuo .gt_font_bold {
   font-weight: bold;
 }
 
-#fkxizutuhc .gt_font_italic {
+#sgeazjcpuo .gt_font_italic {
   font-style: italic;
 }
 
-#fkxizutuhc .gt_super {
+#sgeazjcpuo .gt_super {
   font-size: 65%;
 }
 
-#fkxizutuhc .gt_footnote_glyph {
+#sgeazjcpuo .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
 
-<div id="fkxizutuhc" style="overflow-x:auto;">
+<div id="sgeazjcpuo" style="overflow-x:auto;">
 
 <!--gt table start-->
 
@@ -585,7 +585,7 @@ length in mm (0–10.74)
 
 <td class="gt_row gt_left" style="font-style:italic;">
 
-TRUE
+y
 
 </td>
 

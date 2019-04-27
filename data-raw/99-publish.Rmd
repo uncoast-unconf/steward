@@ -11,8 +11,8 @@ library("here")
 diamonds_meta <- stw_read_yaml(here("inst", "metadata", "diamonds.yaml"))
 
 # hard-code the dimensions
-diamonds_meta$n_row <- 53940
-diamonds_meta$n_col <- 10
+diamonds_meta$n_row <- 53940L
+diamonds_meta$n_col <- 10L
 
 diamonds_meta
 ```

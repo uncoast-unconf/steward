@@ -1,0 +1,42 @@
+name: diamonds
+title: Prices of 50,000 round cut diamonds
+description: A dataset containing the prices and other attributes of almost 54,000
+  diamonds.
+source: <http://www.diamondse.info/>
+n_row: 53940
+n_col: 10
+dictionary:
+  name:
+  - price
+  - carat
+  - cut
+  - color
+  - clarity
+  - x
+  - 'y'
+  - z
+  - depth
+  - table
+  type:
+  - double
+  - double
+  - character
+  - character
+  - character
+  - double
+  - double
+  - double
+  - double
+  - double
+  description:
+  - price in US dollars ($326--$18,823)
+  - weight of diamond (0.2--5.01)
+  - quality of the cut (Fair, Good, Very Good, Premium, Ideal)
+  - diamond color, from D (best) to J (worst)
+  - a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2,
+    VVS1, IF (best))
+  - length in mm (0--10.74)
+  - width in mm (0--58.9)
+  - depth in mm (0--31.8)
+  - total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)
+  - width of top of diamond relative to widest point (43--95)

@@ -22,7 +22,7 @@ dictionary:
     - name: x
       type: double
       description: length in mm (0--10.74)
-    - name: y
+    - name: "y"
       type: double
       description: width in mm (0--58.9)
     - name: z
