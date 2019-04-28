@@ -7,11 +7,7 @@ library("here")
     ## here() starts at /Users/sesa19001/Documents/repos/public/forked/steward
 
 ``` r
-diamonds_meta <- stw_read_yaml(here("inst", "metadata", "diamonds.yaml"))
-
-# hard-code the dimensions
-diamonds_meta$n_row <- 53940
-diamonds_meta$n_col <- 10
+diamonds_meta <- stw_read_yaml(here("inst", "metadata", "diamonds.yml"))
 
 diamonds_meta
 ```
@@ -21,8 +17,8 @@ diamonds_meta
     ##  $ title      : chr "Prices of 50,000 round cut diamonds"
     ##  $ description: chr "A dataset containing the prices and other attributes of almost 54,000 diamonds."
     ##  $ source     : chr "<http://www.diamondse.info/>"
-    ##  $ n_row      : num 53940
-    ##  $ n_col      : num 10
+    ##  $ n_row      : int 53940
+    ##  $ n_col      : int 10
     ##  $ dictionary :Classes 'stw_dict' and 'data.frame':  10 obs. of  3 variables:
     ##   ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...
     ##   ..$ type       : chr [1:10] "double" "double" "character" "character" ...

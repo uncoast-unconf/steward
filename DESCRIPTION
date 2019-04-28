@@ -44,7 +44,7 @@ Depends:
     R (>= 2.10)
 Imports: 
     assertthat,
-    rlang,
+    rlang (>= 0.1.2),
     yaml,
     tibble,
     glue,
@@ -52,7 +52,9 @@ Imports:
     readr,
     stringr,
     gt,
-    utils
+    utils,
+    usethis
 Remotes: rstudio/gt
 Suggests: 
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    roxygen2

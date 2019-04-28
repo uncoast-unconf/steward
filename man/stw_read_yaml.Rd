@@ -18,4 +18,5 @@ Create metadata object from YAML
 \examples{
 stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
 
+
 }

@@ -10,7 +10,7 @@ stw_to_roxygen(meta)
 \item{meta}{object with S3 class \code{stw_meta}}
 }
 \value{
-\code{character} Roxygen string
+\code{character} string
 }
 \description{
 Create Roxygen string

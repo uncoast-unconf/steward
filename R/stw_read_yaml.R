@@ -8,25 +8,19 @@
 #' @examples
 #' stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
 #'
+#'
 stw_read_yaml <- function(file) {
 
   # read in the yaml file
   infile <- yaml::read_yaml(file)
 
-  # process the dictioanry
-  dict <- lapply(infile$dictionary, tibble::as_tibble)
-  dict <- do.call(rbind, dict) # this combines all the different values into one tibble
-  dict <- stw_dict(dict)
+  # process the dictionary
+  grande <- lapply(infile$dictionary, tibble::as_tibble)
+  df <- do.call(rbind, grande) # this combines all the different values into 1 tibble
+  infile$dictionary <- stw_dict(df)
 
-  # constructors
-  meta <-
-    stw_meta(
-      name = infile$name,
-      title = infile$title,
-      description = infile$description,
-      source = infile$source,
-      dictionary = dict
-    )
+  # create using the `infile` envronment
+  meta <- stw_meta_env(infile)
 
   # return
   meta
