@@ -112,9 +112,16 @@ This is an emerging capability that we need to document.
 
 #### Write YAML
 
+To get a YAML string from metadata, you can use the `stw_to_yaml()` function. Here are the first few lines:
+
 ```{r stw_to_yaml, output, output.lines = 11}
 cat(stw_to_yaml(diamonds_meta))
 ```
+
+Other functions in this family:
+
+- `stw_use_yaml()` copies the YAML to the clipboard.
+- `stw_write_yaml()` writes the YAML string to a file.
 
 #### Write roxygen
 
