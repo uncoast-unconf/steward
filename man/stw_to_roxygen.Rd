@@ -2,12 +2,20 @@
 % Please edit documentation in R/stw_to_roxygen.R
 \name{stw_to_roxygen}
 \alias{stw_to_roxygen}
+\alias{stw_use_roxygen}
+\alias{stw_write_roxygen}
 \title{Create Roxygen string}
 \usage{
 stw_to_roxygen(meta)
+
+stw_use_roxygen(meta)
+
+stw_write_roxygen(meta, file)
 }
 \arguments{
 \item{meta}{object with S3 class \code{stw_meta}}
+
+\item{file}{\code{character} path of file to write}
 }
 \value{
 \code{character} string
@@ -16,6 +24,12 @@ stw_to_roxygen(meta)
 Create Roxygen string
 }
 \examples{
-stw_to_roxygen(diamonds_meta)
+cat(stw_to_roxygen(diamonds_meta))
+stw_write_roxygen(diamonds_meta, tempfile(fileext = ".yml"))
+\dontrun{
+# not run because it copies text to the clipboard
+stw_use_roxygen(diamonds_meta)
+}
+
 
 }

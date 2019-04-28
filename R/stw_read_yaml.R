@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples
-#' stw_read_yaml(system.file("metadata/diamonds.yaml", package = "steward"))
+#' stw_read_yaml(system.file("metadata/diamonds.yml", package = "steward"))
 #'
 #'
 stw_read_yaml <- function(file) {
