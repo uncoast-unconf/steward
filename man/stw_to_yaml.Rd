@@ -2,20 +2,39 @@
 % Please edit documentation in R/stw_to_yaml.R
 \name{stw_to_yaml}
 \alias{stw_to_yaml}
-\title{Create YAML string}
+\alias{stw_use_yaml}
+\alias{stw_write_yaml}
+\title{Output to YAML format}
 \usage{
 stw_to_yaml(meta)
+
+stw_use_yaml(meta)
+
+stw_write_yaml(meta, file)
 }
 \arguments{
 \item{meta}{object with S3 class \code{stw_meta}}
+
+\item{file}{\code{character} path of file to write}
 }
 \value{
-object with S3 class \code{glue}, based on character string
+\describe{
+\item{\code{stw_to_yaml()}}{\code{character}, YAML string}
+\item{\code{stw_use_yaml()}}{\code{invisible(meta)}, called for side-effects}
+\item{\code{stw_write_yaml()}}{\code{invisible(meta)}, called for side-effects}
+}
 }
 \description{
-Create YAML string
+Use these functions to convert your metadata to YAML format. The function
+\code{stw_to_yaml()} returns a YAML string, \code{stw_use_yaml()} copies a YAML string
+to your clipboard, and \code{str_write_yaml()} writes a YAML string to a file.
 }
 \examples{
-  str_to_yaml(diamonds_meta)
+cat(stw_to_yaml(diamonds_meta))
+stw_write_yaml(diamonds_meta, tmpfile(fileext = ".yml"))
+\dontrun{
+# not run because it copies text to the clipboard
+stw_use_yaml(diamonds_meta)
+}
 
 }

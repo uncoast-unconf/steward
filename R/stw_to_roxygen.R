@@ -2,7 +2,7 @@
 #'
 #' @param meta object with S3 class `stw_meta`
 #'
-#' @return object with S3 class `glue`, based on character string
+#' @return `character` string
 #' @export
 #'
 #' @examples
@@ -41,7 +41,7 @@ stw_to_roxygen <- function(meta) {
   # make roxygen character-substitution
   sandwich <- roxygen_substitute(sandwich)
 
-  sandwich
+  as.character(sandwich)
 }
 
 
@@ -71,9 +71,6 @@ roxygen_substitute <- function(x) {
 
   # replace `%` with `\%`
   x <- stringr::str_replace_all(x, "(?<!\\\\)%", "\\\\%")
-
-  # return as a glue object
-  x <- glue::as_glue(x)
 
   x
 }

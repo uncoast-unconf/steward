@@ -6,10 +6,35 @@ output: github_document
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
+  collapse = FALSE,
+  comment = "",
   fig.path = "man/figures/README-",
   out.width = "100%"
+)
+
+# https://community.rstudio.com/t/showing-only-the-first-few-lines-of-the-results-of-a-code-chunk/6963/2
+#
+hook_output <- knitr::knit_hooks$get("output")
+knitr::knit_hooks$set(
+  output = function(x, options) {
+    lines <- options$output.lines
+    if (is.null(lines)) {
+      return(hook_output(x, options))  # pass to default hook
+    }
+    x <- unlist(strsplit(x, "\n"))
+    more <- "..."
+    if (length(lines)==1) {        # first n lines
+      if (length(x) > lines) {
+        # truncate the output, but add ....
+        x <- c(head(x, lines), more)
+      }
+    } else {
+      x <- c(more, x[lines], more)
+    }
+    # paste these lines together
+    x <- paste(c(x, ""), collapse = "\n")
+    hook_output(x, options)
+  }
 )
 ```
 
@@ -66,12 +91,12 @@ Soon, we hope to add additional capabilities:
 Here are the first lines of a YAML file containing metadata from [ggplot2](http://ggplot2.tidyverse.org)'s `diamonds` dataset, which is available as:
 
 ```r
-system.file("metadata/diamonds.yml", package = "steward") %>%
+system.file("metadata/diamonds.yml", package = "steward")
 ```
 
-```{r yaml, comment = "", echo = FALSE}
+```{r yaml, echo = FALSE, comment = "", output.lines = 11}
 system.file("metadata/diamonds.yml", package = "steward") %>%
-  readr::read_lines(n_max = 12) %>%
+  readr::read_lines() %>%
   glue::glue_collapse(sep = "\n")
 ```
 
@@ -87,14 +112,14 @@ This is an emerging capability that we need to document.
 
 #### Write YAML
 
-```{r stw_to_yaml}
-stw_to_yaml(diamonds_meta) 
+```{r stw_to_yaml, output, output.lines = 11}
+cat(stw_to_yaml(diamonds_meta))
 ```
 
 #### Write roxygen
 
 ```{r example_roxygen}
-stw_to_roxygen(diamonds_meta)
+cat(stw_to_roxygen(diamonds_meta))
 ```
 
 #### Write gt Table

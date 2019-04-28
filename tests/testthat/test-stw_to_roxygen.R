@@ -5,7 +5,7 @@ test_that("roxygen substitution works", {
   expect_roxygen <- function(x, y) {
     testthat::expect_identical(
       roxygen_substitute(x),
-      glue::as_glue(y)
+      y
     )
   }
 
