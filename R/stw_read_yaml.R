@@ -12,31 +12,15 @@
 stw_read_yaml <- function(file) {
 
   # read in the yaml file
-  infile = yaml::read_yaml(file)
+  infile <- yaml::read_yaml(file)
 
   # process the dictionary
   grande <- lapply(infile$dictionary, tibble::as_tibble)
   df <- do.call(rbind, grande) # this combines all the different values into 1 tibble
   infile$dictionary <- stw_dict(df)
 
-  # use some tidy-eval to call the constructor
-
-  # build the quosure
-  meta_quo <-
-    quo(
-      stw_meta(
-        name = name,
-        title = title,
-        n_row = n_row,
-        n_col = n_col,
-        description = description,
-        source = source,
-        dictionary = dictionary
-      )
-    )
-
-  # evaluate the quosure using `infile`
-  meta <- rlang::eval_tidy(meta_quo, data = infile)
+  # create using the `infile` envronment
+  meta <- stw_meta_env(infile)
 
   # return
   meta
