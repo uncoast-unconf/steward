@@ -34,7 +34,7 @@
 
 <meta property="og:description" content="Use these functions to convert your metadata to roxygen format. The function
 stw_to_roxygen() returns a roxygen string, stw_use_roxygen() copies a
-roxygen string to your clipboard, and str_write_yaml() writes a roxygen
+roxygen string to your clipboard, and str_write_roxygen() writes a roxygen
 string to a file." />
 <meta name="twitter:card" content="summary" />
 
@@ -111,12 +111,18 @@ string to a file." />
     
     <p>Use these functions to convert your metadata to roxygen format. The function
 <code>stw_to_roxygen()</code> returns a roxygen string, <code>stw_use_roxygen()</code> copies a
-roxygen string to your clipboard, and <code>str_write_yaml()</code> writes a roxygen
+roxygen string to your clipboard, and <code>str_write_roxygen()</code> writes a roxygen
 string to a file.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>stw_to_roxygen</span>(<span class='no'>meta</span>)
+    <pre class="usage"><span class='fu'>stw_to_roxygen</span>(<span class='no'>meta</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>stw_to_roxygen</span>(<span class='no'>meta</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for stw_meta</span>
+<span class='fu'>stw_to_roxygen</span>(<span class='no'>meta</span>, <span class='no'>...</span>)
 
 <span class='fu'>stw_use_roxygen</span>(<span class='no'>meta</span>)
 
@@ -128,6 +134,10 @@ string to a file.</p>
     <tr>
       <th>meta</th>
       <td><p>object with S3 class <code>stw_meta</code></p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments (not used)</p></td>
     </tr>
     <tr>
       <th>file</th>
@@ -166,7 +176,7 @@ string to a file.</p>
 #&gt; #'   \item{table}{width of top of diamond relative to widest point (43--95)}
 #&gt; #' }
 #&gt; #' @source &lt;http://www.diamondse.info/&gt;
-#&gt; "diamonds"</div><div class='input'><span class='fu'>stw_write_roxygen</span>(<span class='no'>diamonds_meta</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".yml"</span>))</div><div class='output co'>#&gt; ✔ Roxygen metadata written to '/var/folders/bw/6jvpjvd14x1534dc6zgtj3vnght7ft/T//RtmpHZ52MA/fileec715fadb359.yml'.</div><span class='co'># NOT RUN {</span>
+#&gt; "diamonds"</div><div class='input'><span class='fu'>stw_write_roxygen</span>(<span class='no'>diamonds_meta</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".yml"</span>))</div><div class='output co'>#&gt; ✔ Roxygen metadata written to '/var/folders/bw/6jvpjvd14x1534dc6zgtj3vnght7ft/T//RtmpOc0l01/filed7b36788012.yml'.</div><span class='co'># NOT RUN {</span>
 <span class='co'># not run because it copies text to the clipboard</span>
 <span class='fu'>stw_use_roxygen</span>(<span class='no'>diamonds_meta</span>)
 <span class='co'># }</span><div class='input'>

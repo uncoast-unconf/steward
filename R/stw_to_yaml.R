@@ -23,8 +23,29 @@
 #' stw_use_yaml(diamonds_meta)
 #' }
 #'
-stw_to_yaml <- function(meta) {
+stw_to_yaml <- function(meta, ...) {
+  UseMethod("stw_to_yaml")
+}
+
+#' @rdname stw_to_yaml
+#' @export
+#'
+stw_to_yaml.default <- function(meta, ...) {
+  stop(
+    glue::glue(
+      "{usethis::ui_code('stw_to_yaml()')} does not have a method ",
+      "for objects of class {usethis::ui_code(class(meta))}"
+    )
+  )
+}
+
+#' @rdname stw_to_yaml
+#' @export
+#'
+stw_to_yaml.stw_meta <- function(meta, ...) {
   yaml <- yaml::as.yaml(meta, column.major = FALSE)
+
+  yaml
 }
 
 

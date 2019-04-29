@@ -2,11 +2,12 @@
 #'
 #' Use these functions to convert your metadata to roxygen format. The function
 #' `stw_to_roxygen()` returns a roxygen string, `stw_use_roxygen()` copies a
-#' roxygen string to your clipboard, and `str_write_yaml()` writes a roxygen
+#' roxygen string to your clipboard, and `str_write_roxygen()` writes a roxygen
 #' string to a file.
 #'
 #' @param meta object with S3 class `stw_meta`
 #' @param file `character` path of file to write
+#' @param ... additional arguments (not used)
 #'
 #' @return
 #' \describe{
@@ -24,7 +25,26 @@
 #' stw_use_roxygen(diamonds_meta)
 #' }
 #'
-stw_to_roxygen <- function(meta) {
+stw_to_roxygen <- function(meta, ...) {
+  UseMethod("stw_to_roxygen")
+}
+
+#' @rdname stw_to_roxygen
+#' @export
+#'
+stw_to_roxygen.default <- function(meta, ...) {
+  stop(
+    glue::glue(
+      "{usethis::ui_code('stw_to_roxygen()')} does not have a method ",
+      "for objects of class {usethis::ui_code(class(meta))}"
+    )
+  )
+}
+
+#' @rdname stw_to_roxygen
+#' @export
+#'
+stw_to_roxygen.stw_meta <- function(meta, ...) {
 
   top_bread <-
     glue::glue(
@@ -60,37 +80,6 @@ stw_to_roxygen <- function(meta) {
   as.character(sandwich)
 }
 
-
-dict_to_roxygen <- function(dict) {
-
-  make_filling<- function(raw){
-    glue::glue(
-      "#'   \\item{{{raw$name}}}{{{raw$description}}}\n"
-    )
-  }
-
-  temp <- transpose(dict)
-
-  fillings_processed <- unlist(lapply(temp, make_filling))
-
-  fillings <- glue::glue_collapse(fillings_processed,sep = "\n")
-
-  fillings
-}
-
-# deal with roxygen special characters
-# - https://r-pkgs.org/man.html#man-special
-roxygen_substitute <- function(x) {
-
-  # replace single `@` with `@@`
-  x <- stringr::str_replace_all(x, "(?<!@|#'\\s{0,10})@(?!@)", "@@")
-
-  # replace `%` with `\%`
-  x <- stringr::str_replace_all(x, "(?<!\\\\)%", "\\\\%")
-
-  x
-}
-
 #' @rdname stw_to_roxygen
 #' @export
 #'
@@ -121,6 +110,37 @@ stw_write_roxygen <- function(meta, file) {
   usethis::ui_done("Roxygen metadata written to {usethis::ui_value(file)}.")
 
   invisible(meta)
+}
+
+
+dict_to_roxygen <- function(dict) {
+
+  make_filling<- function(raw){
+    glue::glue(
+      "#'   \\item{{{raw$name}}}{{{raw$description}}}\n"
+    )
+  }
+
+  temp <- transpose(dict)
+
+  fillings_processed <- unlist(lapply(temp, make_filling))
+
+  fillings <- glue::glue_collapse(fillings_processed,sep = "\n")
+
+  fillings
+}
+
+# deal with roxygen special characters
+# - https://r-pkgs.org/man.html#man-special
+roxygen_substitute <- function(x) {
+
+  # replace single `@` with `@@`
+  x <- stringr::str_replace_all(x, "(?<!@|#'\\s{0,10})@(?!@)", "@@")
+
+  # replace `%` with `\%`
+  x <- stringr::str_replace_all(x, "(?<!\\\\)%", "\\\\%")
+
+  x
 }
 
 

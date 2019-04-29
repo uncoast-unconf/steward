@@ -2,11 +2,17 @@
 % Please edit documentation in R/stw_to_roxygen.R
 \name{stw_to_roxygen}
 \alias{stw_to_roxygen}
+\alias{stw_to_roxygen.default}
+\alias{stw_to_roxygen.stw_meta}
 \alias{stw_use_roxygen}
 \alias{stw_write_roxygen}
 \title{Output to roxygen format}
 \usage{
-stw_to_roxygen(meta)
+stw_to_roxygen(meta, ...)
+
+\method{stw_to_roxygen}{default}(meta, ...)
+
+\method{stw_to_roxygen}{stw_meta}(meta, ...)
 
 stw_use_roxygen(meta)
 
@@ -14,6 +20,8 @@ stw_write_roxygen(meta, file)
 }
 \arguments{
 \item{meta}{object with S3 class \code{stw_meta}}
+
+\item{...}{additional arguments (not used)}
 
 \item{file}{\code{character} path of file to write}
 }
@@ -27,7 +35,7 @@ stw_write_roxygen(meta, file)
 \description{
 Use these functions to convert your metadata to roxygen format. The function
 \code{stw_to_roxygen()} returns a roxygen string, \code{stw_use_roxygen()} copies a
-roxygen string to your clipboard, and \code{str_write_yaml()} writes a roxygen
+roxygen string to your clipboard, and \code{str_write_roxygen()} writes a roxygen
 string to a file.
 }
 \examples{
