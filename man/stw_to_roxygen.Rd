@@ -2,26 +2,32 @@
 % Please edit documentation in R/stw_to_roxygen.R
 \name{stw_to_roxygen}
 \alias{stw_to_roxygen}
+\alias{stw_to_roxygen.default}
+\alias{stw_to_roxygen.stw_meta}
 \alias{stw_use_roxygen}
 \alias{stw_write_roxygen}
 \title{Output to roxygen format}
 \usage{
-stw_to_roxygen(meta)
+stw_to_roxygen(x, ...)
+
+\method{stw_to_roxygen}{default}(x, ...)
+
+\method{stw_to_roxygen}{stw_meta}(x, ...)
 
 stw_use_roxygen(meta)
 
 stw_write_roxygen(meta, file)
 }
 \arguments{
-\item{meta}{object with S3 class \code{stw_meta}}
+\item{x}{object with S3 class \code{stw_meta} or \code{stw_data}}
 
 \item{file}{\code{character} path of file to write}
 }
 \value{
 \describe{
 \item{\code{stw_to_roxygen()}}{\code{character}, roxygen string}
-\item{\code{stw_use_roxygen()}}{\code{invisible(meta)}, called for side-effects}
-\item{\code{stw_write_roxygen()}}{\code{invisible(meta)}, called for side-effects}
+\item{\code{stw_use_roxygen()}}{\code{invisible(x)}, called for side-effects}
+\item{\code{stw_write_roxygen()}}{\code{invisible(x)}, called for side-effects}
 }
 }
 \description{

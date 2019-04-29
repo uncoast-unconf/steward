@@ -6,9 +6,6 @@
 \usage{
 stw_to_table(meta)
 }
-\arguments{
-\item{meta}{object with S3 class \code{stw_meta}}
-}
 \value{
 A gt table
 }
