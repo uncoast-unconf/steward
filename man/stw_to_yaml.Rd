@@ -2,17 +2,27 @@
 % Please edit documentation in R/stw_to_yaml.R
 \name{stw_to_yaml}
 \alias{stw_to_yaml}
+\alias{stw_to_yaml.default}
+\alias{stw_to_yaml.stw_meta}
 \alias{stw_use_yaml}
 \alias{stw_write_yaml}
 \title{Output to YAML format}
 \usage{
-stw_to_yaml(meta)
+stw_to_yaml(meta, ...)
+
+\method{stw_to_yaml}{default}(meta, ...)
+
+\method{stw_to_yaml}{stw_meta}(meta, ...)
 
 stw_use_yaml(meta)
 
 stw_write_yaml(meta, file)
 }
 \arguments{
+\item{meta}{object with S3 class \code{stw_meta}}
+
+\item{...}{additional arguments (not used)}
+
 \item{file}{\code{character} path of file to write}
 }
 \value{

@@ -5,14 +5,15 @@
 #' roxygen string to your clipboard, and `str_write_roxygen()` writes a roxygen
 #' string to a file.
 #'
-#' @param x object with S3 class `stw_meta`
+#' @param meta object with S3 class `stw_meta`
 #' @param file `character` path of file to write
+#' @param ... additional arguments (not used)
 #'
 #' @return
 #' \describe{
 #'   \item{`stw_to_roxygen()`}{`character`, roxygen string}
-#'   \item{`stw_use_roxygen()`}{`invisible(x)`, called for side-effects}
-#'   \item{`stw_write_roxygen()`}{`invisible(x)`, called for side-effects}
+#'   \item{`stw_use_roxygen()`}{`invisible(meta)`, called for side-effects}
+#'   \item{`stw_write_roxygen()`}{`invisible(meta)`, called for side-effects}
 #' }
 #' @export
 #'
@@ -24,18 +25,18 @@
 #' stw_use_roxygen(diamonds_meta)
 #' }
 #'
-stw_to_roxygen <- function(x, ...) {
+stw_to_roxygen <- function(meta, ...) {
   UseMethod("stw_to_roxygen")
 }
 
 #' @rdname stw_to_roxygen
 #' @export
 #'
-stw_to_roxygen.default <- function(x, ...) {
+stw_to_roxygen.default <- function(meta, ...) {
   stop(
     glue::glue(
       "{usethis::ui_code('stw_to_roxygen()')} does not have a method ",
-      "for objects of class {usethis::ui_code(class(x))}"
+      "for objects of class {usethis::ui_code(class(meta))}"
     )
   )
 }
@@ -43,27 +44,27 @@ stw_to_roxygen.default <- function(x, ...) {
 #' @rdname stw_to_roxygen
 #' @export
 #'
-stw_to_roxygen.stw_meta <- function(x, ...) {
+stw_to_roxygen.stw_meta <- function(meta, ...) {
 
   top_bread <-
     glue::glue(
-        "#' {x$title}",
+        "#' {meta$title}",
         "#' ",
-        "#' {x$description}",
+        "#' {meta$description}",
         "#' ",
-        "#' @format A data frame with {x$n_row} rows and {x$n_col} variables:",
+        "#' @format A data frame with {meta$n_row} rows and {meta$n_col} variables:",
         "#' ",
         "#' \\describe{{ ",
         .sep = "\n"
     )
 
-  fillings <- dict_to_roxygen(x$dictionary)
+  fillings <- dict_to_roxygen(meta$dictionary)
 
   bottom_bread <-
     glue::glue(
       "#' }}",
-      "#' @source {x$source}",
-      "\"{x$name}\"",
+      "#' @source {meta$source}",
+      "\"{meta$name}\"",
       .sep = "\n"
     )
 
@@ -82,9 +83,9 @@ stw_to_roxygen.stw_meta <- function(x, ...) {
 #' @rdname stw_to_roxygen
 #' @export
 #'
-stw_use_roxygen <- function(x) {
+stw_use_roxygen <- function(meta) {
 
-  roxygen <- stw_to_roxygen(x)
+  roxygen <- stw_to_roxygen(meta)
 
   # escape curly-brackets
   roxygen <- stringr::str_replace_all(roxygen, "\\{", "{{")
@@ -93,22 +94,22 @@ stw_use_roxygen <- function(x) {
   usethis::ui_code_block(roxygen)
   usethis::ui_todo("Paste this text into a file; be sure to end the file with a newline character.")
 
-  invisible(x)
+  invisible(meta)
 }
 
 #' @rdname stw_to_roxygen
 #' @export
 #'
-stw_write_roxygen <- function(x, file) {
+stw_write_roxygen <- function(meta, file) {
 
-  roxygen <- stw_to_roxygen(x)
+  roxygen <- stw_to_roxygen(meta)
 
   roxygen <- paste0(roxygen, "\n\n") # add newlines
   readr::write_file(roxygen, file)
 
   usethis::ui_done("Roxygen metadata written to {usethis::ui_value(file)}.")
 
-  invisible(x)
+  invisible(meta)
 }
 
 

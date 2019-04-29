@@ -6,9 +6,28 @@
 #' @export
 #'
 #' @examples
-#'   stw_to_table(diamonds_meta)
+#' stw_to_table(diamonds_meta)
 #'
-stw_to_table <- function(meta) {
+stw_to_table <- function(meta, ...) {
+  UseMethod("stw_to_table")
+}
+
+#' @rdname stw_to_table
+#' @export
+#'
+stw_to_table.default <- function(meta, ...) {
+  stop(
+    glue::glue(
+      "{usethis::ui_code('stw_to_table()')} does not have a method ",
+      "for objects of class {usethis::ui_code(class(meta))}"
+    )
+  )
+}
+
+#' @rdname stw_to_table
+#' @export
+#'
+stw_to_table.stw_meta <- function(meta, ...) {
 
   # make the title uppercase
   meta[["name"]] <- toupper(meta[["name"]])

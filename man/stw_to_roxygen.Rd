@@ -8,32 +8,34 @@
 \alias{stw_write_roxygen}
 \title{Output to roxygen format}
 \usage{
-stw_to_roxygen(x, ...)
+stw_to_roxygen(meta, ...)
 
-\method{stw_to_roxygen}{default}(x, ...)
+\method{stw_to_roxygen}{default}(meta, ...)
 
-\method{stw_to_roxygen}{stw_meta}(x, ...)
+\method{stw_to_roxygen}{stw_meta}(meta, ...)
 
 stw_use_roxygen(meta)
 
 stw_write_roxygen(meta, file)
 }
 \arguments{
-\item{x}{object with S3 class \code{stw_meta} or \code{stw_data}}
+\item{meta}{object with S3 class \code{stw_meta}}
+
+\item{...}{additional arguments (not used)}
 
 \item{file}{\code{character} path of file to write}
 }
 \value{
 \describe{
 \item{\code{stw_to_roxygen()}}{\code{character}, roxygen string}
-\item{\code{stw_use_roxygen()}}{\code{invisible(x)}, called for side-effects}
-\item{\code{stw_write_roxygen()}}{\code{invisible(x)}, called for side-effects}
+\item{\code{stw_use_roxygen()}}{\code{invisible(meta)}, called for side-effects}
+\item{\code{stw_write_roxygen()}}{\code{invisible(meta)}, called for side-effects}
 }
 }
 \description{
 Use these functions to convert your metadata to roxygen format. The function
 \code{stw_to_roxygen()} returns a roxygen string, \code{stw_use_roxygen()} copies a
-roxygen string to your clipboard, and \code{str_write_yaml()} writes a roxygen
+roxygen string to your clipboard, and \code{str_write_roxygen()} writes a roxygen
 string to a file.
 }
 \examples{
