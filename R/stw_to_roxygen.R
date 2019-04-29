@@ -1,9 +1,19 @@
-#' Create Roxygen string
+#' Output to roxygen format
+#'
+#' Use these functions to convert your metadata to roxygen format. The function
+#' `stw_to_roxygen()` returns a roxygen string, `stw_use_roxygen()` copies a
+#' roxygen string to your clipboard, and `str_write_yaml()` writes a roxygen
+#' string to a file.
 #'
 #' @param meta object with S3 class `stw_meta`
 #' @param file `character` path of file to write
 #'
-#' @return `character` string
+#' @return
+#' \describe{
+#'   \item{`stw_to_roxygen()`}{`character`, roxygen string}
+#'   \item{`stw_use_roxygen()`}{`invisible(meta)`, called for side-effects}
+#'   \item{`stw_write_roxygen()`}{`invisible(meta)`, called for side-effects}
+#' }
 #' @export
 #'
 #' @examples
@@ -13,7 +23,6 @@
 #' # not run because it copies text to the clipboard
 #' stw_use_roxygen(diamonds_meta)
 #' }
-#'
 #'
 stw_to_roxygen <- function(meta) {
 

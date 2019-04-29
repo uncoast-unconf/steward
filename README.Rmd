@@ -120,14 +120,22 @@ cat(stw_to_yaml(diamonds_meta))
 
 Other functions in this family:
 
-- `stw_use_yaml()` copies the YAML to the clipboard.
+- `stw_use_yaml()` copies the YAML string to the clipboard.
 - `stw_write_yaml()` writes the YAML string to a file.
 
 #### Write roxygen
 
+To get a roxygen string from metadata, you can use the `stw_to_roxygen()` function:
+
+
 ```{r example_roxygen}
 cat(stw_to_roxygen(diamonds_meta))
 ```
+
+Other functions in this family:
+
+- `stw_use_roxygen()` copies the roxygen string to the clipboard.
+- `stw_write_roxygen()` writes the roxygen string to a file.
 
 #### Write gt Table
 
