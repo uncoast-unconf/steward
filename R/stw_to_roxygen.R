@@ -1,12 +1,28 @@
-#' Create Roxygen string
+#' Output to roxygen format
+#'
+#' Use these functions to convert your metadata to roxygen format. The function
+#' `stw_to_roxygen()` returns a roxygen string, `stw_use_roxygen()` copies a
+#' roxygen string to your clipboard, and `str_write_yaml()` writes a roxygen
+#' string to a file.
 #'
 #' @param meta object with S3 class `stw_meta`
+#' @param file `character` path of file to write
 #'
-#' @return `character` string
+#' @return
+#' \describe{
+#'   \item{`stw_to_roxygen()`}{`character`, roxygen string}
+#'   \item{`stw_use_roxygen()`}{`invisible(meta)`, called for side-effects}
+#'   \item{`stw_write_roxygen()`}{`invisible(meta)`, called for side-effects}
+#' }
 #' @export
 #'
 #' @examples
-#' stw_to_roxygen(diamonds_meta)
+#' cat(stw_to_roxygen(diamonds_meta))
+#' stw_write_roxygen(diamonds_meta, tempfile(fileext = ".yml"))
+#' \dontrun{
+#' # not run because it copies text to the clipboard
+#' stw_use_roxygen(diamonds_meta)
+#' }
 #'
 stw_to_roxygen <- function(meta) {
 
@@ -75,7 +91,37 @@ roxygen_substitute <- function(x) {
   x
 }
 
+#' @rdname stw_to_roxygen
+#' @export
+#'
+stw_use_roxygen <- function(meta) {
 
+  roxygen <- stw_to_roxygen(meta)
+
+  # escape curly-brackets
+  roxygen <- stringr::str_replace_all(roxygen, "\\{", "{{")
+  roxygen <- stringr::str_replace_all(roxygen, "\\}", "}}")
+
+  usethis::ui_code_block(roxygen)
+  usethis::ui_todo("Paste this text into a file; be sure to end the file with a newline character.")
+
+  invisible(meta)
+}
+
+#' @rdname stw_to_roxygen
+#' @export
+#'
+stw_write_roxygen <- function(meta, file) {
+
+  roxygen <- stw_to_roxygen(meta)
+
+  roxygen <- paste0(roxygen, "\n\n") # add newlines
+  readr::write_file(roxygen, file)
+
+  usethis::ui_done("Roxygen metadata written to {usethis::ui_value(file)}.")
+
+  invisible(meta)
+}
 
 
 

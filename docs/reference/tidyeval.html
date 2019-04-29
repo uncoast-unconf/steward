@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • steward</title>
+<title>Tidy eval helpers — tidyeval • steward</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,30 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Tidy eval helpers — tidyeval" />
+
+<meta property="og:description" content="
+sym() creates a symbol from a string and
+syms() creates a list of symbols from a
+character vector.
+expr() and quo() quote
+one expression. quo() wraps the quoted expression in a quosure.
+The plural variants rlang::exprs() and
+quos() return a list of quoted expressions or
+quosures.
+enexpr() and enquo()
+capture the expression supplied as argument by the user of the
+current function (enquo() wraps this expression in a quosure).
+enexprs() and enquos()
+capture multiple expressions supplied as arguments, including
+....
+" />
+
+<meta property="og:description" content="exprs() is not exported to avoid conflicts with Biobase::exprs(),
+therefore one should always use rlang::exprs().
+To learn more about tidy eval and how to use these tools, visit
+http://rlang.r-lib.org and the Metaprogramming section of Advanced R." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +70,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -94,90 +117,47 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Tidy eval helpers</h1>
+    <small class="dont-index">Source: <a href='https://github.com/uncoast-unconf/steward/blob/master/R/utils-tidy-eval.R'><code>R/utils-tidy-eval.R</code></a></small>
+    <div class="hidden name"><code>tidyeval.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <ul>
+<li><p><code><a href='https://www.rdocumentation.org/packages/rlang/topics/sym'>sym</a>()</code> creates a symbol from a string and
+<code><a href='https://rlang.r-lib.org/reference/sym.html'>syms</a>()</code> creates a list of symbols from a
+character vector.</p></li>
+<li><p><code><a href='https://rlang.r-lib.org/reference/quotation.html'>expr</a>()</code> and <code><a href='https://rlang.r-lib.org/reference/quotation.html'>quo</a>()</code> quote
+one expression. <code>quo()</code> wraps the quoted expression in a quosure.</p>
+<p>The plural variants <code><a href='https://rlang.r-lib.org/reference/quotation.html'>rlang::exprs()</a></code> and
+<code><a href='https://rlang.r-lib.org/reference/quotation.html'>quos</a>()</code> return a list of quoted expressions or
+quosures.</p></li>
+<li><p><code><a href='https://rlang.r-lib.org/reference/quotation.html'>enexpr</a>()</code> and <code><a href='https://rlang.r-lib.org/reference/quotation.html'>enquo</a>()</code>
+capture the expression supplied as argument by the user of the
+current function (<code>enquo()</code> wraps this expression in a quosure).</p>
+<p><code><a href='https://rlang.r-lib.org/reference/quotation.html'>enexprs</a>()</code> and <code><a href='https://rlang.r-lib.org/reference/quotation.html'>enquos</a>()</code>
+capture multiple expressions supplied as arguments, including
+<code>...</code>.</p></li>
+</ul>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <p><code>exprs()</code> is not exported to avoid conflicts with <code>Biobase::exprs()</code>,
+therefore one should always use <code><a href='https://rlang.r-lib.org/reference/quotation.html'>rlang::exprs()</a></code>.</p>
+<p>To learn more about tidy eval and how to use these tools, visit
+<a href='http://rlang.r-lib.org'>http://rlang.r-lib.org</a> and the <a href='https://adv-r.hadley.nz/introduction-16.html'>Metaprogramming section</a> of <a href='https://adv-r.hadley.nz'>Advanced R</a>.</p>
+    
+    </div>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
         
-        <td>
-          <p><code><a href="diamonds_meta.html">diamonds_meta</a></code> </p>
-        </td>
-        <td><p>Diamonds metadata</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="stw_dict.html">stw_dict()</a></code> </p>
-        </td>
-        <td><p>Create a new data-dictionary object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="stw_meta.html">stw_meta()</a></code> </p>
-        </td>
-        <td><p>Create a new meta-data object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="stw_meta_env.html">stw_meta_env()</a></code> </p>
-        </td>
-        <td><p>Create stw_meta from list-like object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="stw_read_csv.html">stw_read_csv()</a></code> </p>
-        </td>
-        <td><p>Create metadata object from CSV</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="stw_read_yaml.html">stw_read_yaml()</a></code> </p>
-        </td>
-        <td><p>Create metadata object from YAML</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="stw_to_roxygen.html">stw_to_roxygen()</a></code> <code><a href="stw_to_roxygen.html">stw_use_roxygen()</a></code> <code><a href="stw_to_roxygen.html">stw_write_roxygen()</a></code> </p>
-        </td>
-        <td><p>Output to roxygen format</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="stw_to_table.html">stw_to_table()</a></code> </p>
-        </td>
-        <td><p>Create gt table</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="stw_to_yaml.html">stw_to_yaml()</a></code> <code><a href="stw_to_yaml.html">stw_use_yaml()</a></code> <code><a href="stw_to_yaml.html">stw_write_yaml()</a></code> </p>
-        </td>
-        <td><p>Output to YAML format</p></td>
-      </tr>
-    </tbody>
-    </table>
+
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
-    </ul>
+                </ul>
+
   </div>
 </div>
 

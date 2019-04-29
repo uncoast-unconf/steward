@@ -31,7 +31,7 @@ to your clipboard, and \code{str_write_yaml()} writes a YAML string to a file.
 }
 \examples{
 cat(stw_to_yaml(diamonds_meta))
-stw_write_yaml(diamonds_meta, tmpfile(fileext = ".yml"))
+stw_write_yaml(diamonds_meta, tempfile(fileext = ".yml"))
 \dontrun{
 # not run because it copies text to the clipboard
 stw_use_yaml(diamonds_meta)

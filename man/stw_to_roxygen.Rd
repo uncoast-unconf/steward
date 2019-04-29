@@ -2,20 +2,40 @@
 % Please edit documentation in R/stw_to_roxygen.R
 \name{stw_to_roxygen}
 \alias{stw_to_roxygen}
-\title{Create Roxygen string}
+\alias{stw_use_roxygen}
+\alias{stw_write_roxygen}
+\title{Output to roxygen format}
 \usage{
 stw_to_roxygen(meta)
+
+stw_use_roxygen(meta)
+
+stw_write_roxygen(meta, file)
 }
 \arguments{
 \item{meta}{object with S3 class \code{stw_meta}}
+
+\item{file}{\code{character} path of file to write}
 }
 \value{
-\code{character} string
+\describe{
+\item{\code{stw_to_roxygen()}}{\code{character}, roxygen string}
+\item{\code{stw_use_roxygen()}}{\code{invisible(meta)}, called for side-effects}
+\item{\code{stw_write_roxygen()}}{\code{invisible(meta)}, called for side-effects}
+}
 }
 \description{
-Create Roxygen string
+Use these functions to convert your metadata to roxygen format. The function
+\code{stw_to_roxygen()} returns a roxygen string, \code{stw_use_roxygen()} copies a
+roxygen string to your clipboard, and \code{str_write_yaml()} writes a roxygen
+string to a file.
 }
 \examples{
-stw_to_roxygen(diamonds_meta)
+cat(stw_to_roxygen(diamonds_meta))
+stw_write_roxygen(diamonds_meta, tempfile(fileext = ".yml"))
+\dontrun{
+# not run because it copies text to the clipboard
+stw_use_roxygen(diamonds_meta)
+}
 
 }

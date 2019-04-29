@@ -66,26 +66,15 @@ stw_meta_env <- function(env) {
 
   # TODO: validate we have required elements
 
-  # use some tidy-eval to call the constructor
-
-  # build the quosure
-  meta_quo <-
-    quo(
-      stw_meta(
-        name = name,
-        title = title,
-        n_row = n_row,
-        n_col = n_col,
-        description = description,
-        source = source,
-        dictionary = dictionary
-      )
-    )
-
-  # evaluate the quosure using the environment
-  meta <- rlang::eval_tidy(meta_quo, data = env)
-
-  meta
+  stw_meta(
+    name = env[["name"]],
+    title = env[["title"]],
+    n_row = env[["n_row"]],
+    n_col = env[["n_col"]],
+    description = env[["description"]],
+    source = env[["source"]],
+    dictionary = env[["dictionary"]]
+  )
 }
 
 #' @export

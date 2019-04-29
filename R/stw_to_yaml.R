@@ -5,7 +5,6 @@
 #' to your clipboard, and `str_write_yaml()` writes a YAML string to a file.
 #'
 #' @inheritParams stw_to_roxygen
-#' @param file `character` path of file to write
 #'
 #' @return
 #' \describe{
@@ -18,16 +17,14 @@
 #'
 #' @examples
 #' cat(stw_to_yaml(diamonds_meta))
-#' stw_write_yaml(diamonds_meta, tmpfile(fileext = ".yml"))
+#' stw_write_yaml(diamonds_meta, tempfile(fileext = ".yml"))
 #' \dontrun{
 #' # not run because it copies text to the clipboard
 #' stw_use_yaml(diamonds_meta)
 #' }
 #'
 stw_to_yaml <- function(meta) {
-  yaml <- glue::as_glue(yaml::as.yaml(meta, column.major = FALSE))
-
-  as.character(yaml)
+  yaml <- yaml::as.yaml(meta, column.major = FALSE)
 }
 
 
@@ -49,7 +46,10 @@ stw_use_yaml <- function(meta) {
 stw_write_yaml <- function(meta, file) {
 
   yaml <- stw_to_yaml(meta)
+  yaml <- paste0(yaml, "\n") # add newline
   readr::write_file(yaml, file)
+
+  usethis::ui_done("YAML metadata written to {usethis::ui_value(file)}.")
 
   invisible(meta)
 }

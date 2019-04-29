@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Output to roxygen format — stw_to_roxygen • steward</title>
+<title>Output to YAML format — stw_to_yaml • steward</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,12 +30,11 @@
 
 
 
-<meta property="og:title" content="Output to roxygen format — stw_to_roxygen" />
+<meta property="og:title" content="Output to YAML format — stw_to_yaml" />
 
-<meta property="og:description" content="Use these functions to convert your metadata to roxygen format. The function
-stw_to_roxygen() returns a roxygen string, stw_use_roxygen() copies a
-roxygen string to your clipboard, and str_write_yaml() writes a roxygen
-string to a file." />
+<meta property="og:description" content="Use these functions to convert your metadata to YAML format. The function
+stw_to_yaml() returns a YAML string, stw_use_yaml() copies a YAML string
+to your clipboard, and str_write_yaml() writes a YAML string to a file." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -102,25 +101,24 @@ string to a file." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Output to roxygen format</h1>
-    <small class="dont-index">Source: <a href='https://github.com/uncoast-unconf/steward/blob/master/R/stw_to_roxygen.R'><code>R/stw_to_roxygen.R</code></a></small>
-    <div class="hidden name"><code>stw_to_roxygen.Rd</code></div>
+    <h1>Output to YAML format</h1>
+    <small class="dont-index">Source: <a href='https://github.com/uncoast-unconf/steward/blob/master/R/stw_to_yaml.R'><code>R/stw_to_yaml.R</code></a></small>
+    <div class="hidden name"><code>stw_to_yaml.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Use these functions to convert your metadata to roxygen format. The function
-<code>stw_to_roxygen()</code> returns a roxygen string, <code>stw_use_roxygen()</code> copies a
-roxygen string to your clipboard, and <code>str_write_yaml()</code> writes a roxygen
-string to a file.</p>
+    <p>Use these functions to convert your metadata to YAML format. The function
+<code>stw_to_yaml()</code> returns a YAML string, <code>stw_use_yaml()</code> copies a YAML string
+to your clipboard, and <code>str_write_yaml()</code> writes a YAML string to a file.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>stw_to_roxygen</span>(<span class='no'>meta</span>)
+    <pre class="usage"><span class='fu'>stw_to_yaml</span>(<span class='no'>meta</span>)
 
-<span class='fu'>stw_use_roxygen</span>(<span class='no'>meta</span>)
+<span class='fu'>stw_use_yaml</span>(<span class='no'>meta</span>)
 
-<span class='fu'>stw_write_roxygen</span>(<span class='no'>meta</span>, <span class='no'>file</span>)</pre>
+<span class='fu'>stw_write_yaml</span>(<span class='no'>meta</span>, <span class='no'>file</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,36 +137,55 @@ string to a file.</p>
 
     
 <dl class='dl-horizontal'>
-<dt><code>stw_to_roxygen()</code></dt><dd><p><code>character</code>, roxygen string</p></dd>
-<dt><code>stw_use_roxygen()</code></dt><dd><p><code><a href='https://www.rdocumentation.org/packages/base/topics/invisible'>invisible(meta)</a></code>, called for side-effects</p></dd>
-<dt><code>stw_write_roxygen()</code></dt><dd><p><code><a href='https://www.rdocumentation.org/packages/base/topics/invisible'>invisible(meta)</a></code>, called for side-effects</p></dd>
+<dt><code>stw_to_yaml()</code></dt><dd><p><code>character</code>, YAML string</p></dd>
+<dt><code>stw_use_yaml()</code></dt><dd><p><code><a href='https://www.rdocumentation.org/packages/base/topics/invisible'>invisible(meta)</a></code>, called for side-effects</p></dd>
+<dt><code>stw_write_yaml()</code></dt><dd><p><code><a href='https://www.rdocumentation.org/packages/base/topics/invisible'>invisible(meta)</a></code>, called for side-effects</p></dd>
 </dl>
 
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cat'>cat</a></span>(<span class='fu'>stw_to_roxygen</span>(<span class='no'>diamonds_meta</span>))</div><div class='output co'>#&gt; #' Prices of 50,000 round cut diamonds
-#&gt; #' 
-#&gt; #' A dataset containing the prices and other attributes of almost 54,000 diamonds.
-#&gt; #' 
-#&gt; #' @format A data frame with 53940 rows and 10 variables:
-#&gt; #' 
-#&gt; #' \describe{ 
-#&gt; #'   \item{price}{price in US dollars ($326--$18,823)}
-#&gt; #'   \item{carat}{weight of diamond (0.2--5.01)}
-#&gt; #'   \item{cut}{quality of the cut (Fair, Good, Very Good, Premium, Ideal)}
-#&gt; #'   \item{color}{diamond color, from D (best) to J (worst)}
-#&gt; #'   \item{clarity}{a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))}
-#&gt; #'   \item{x}{length in mm (0--10.74)}
-#&gt; #'   \item{y}{width in mm (0--58.9)}
-#&gt; #'   \item{z}{depth in mm (0--31.8)}
-#&gt; #'   \item{depth}{total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)}
-#&gt; #'   \item{table}{width of top of diamond relative to widest point (43--95)}
-#&gt; #' }
-#&gt; #' @source &lt;http://www.diamondse.info/&gt;
-#&gt; "diamonds"</div><div class='input'><span class='fu'>stw_write_roxygen</span>(<span class='no'>diamonds_meta</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".yml"</span>))</div><div class='output co'>#&gt; ✔ Roxygen metadata written to '/var/folders/bw/6jvpjvd14x1534dc6zgtj3vnght7ft/T//RtmpHZ52MA/fileec715fadb359.yml'.</div><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cat'>cat</a></span>(<span class='fu'>stw_to_yaml</span>(<span class='no'>diamonds_meta</span>))</div><div class='output co'>#&gt; name: diamonds
+#&gt; title: Prices of 50,000 round cut diamonds
+#&gt; description: A dataset containing the prices and other attributes of almost 54,000
+#&gt;   diamonds.
+#&gt; source: &lt;http://www.diamondse.info/&gt;
+#&gt; n_row: 53940
+#&gt; n_col: 10
+#&gt; dictionary:
+#&gt; - name: price
+#&gt;   type: double
+#&gt;   description: price in US dollars ($326--$18,823)
+#&gt; - name: carat
+#&gt;   type: double
+#&gt;   description: weight of diamond (0.2--5.01)
+#&gt; - name: cut
+#&gt;   type: character
+#&gt;   description: quality of the cut (Fair, Good, Very Good, Premium, Ideal)
+#&gt; - name: color
+#&gt;   type: character
+#&gt;   description: diamond color, from D (best) to J (worst)
+#&gt; - name: clarity
+#&gt;   type: character
+#&gt;   description: a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2,
+#&gt;     VS1, VVS2, VVS1, IF (best))
+#&gt; - name: x
+#&gt;   type: double
+#&gt;   description: length in mm (0--10.74)
+#&gt; - name: 'y'
+#&gt;   type: double
+#&gt;   description: width in mm (0--58.9)
+#&gt; - name: z
+#&gt;   type: double
+#&gt;   description: depth in mm (0--31.8)
+#&gt; - name: depth
+#&gt;   type: double
+#&gt;   description: total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)
+#&gt; - name: table
+#&gt;   type: double
+#&gt;   description: width of top of diamond relative to widest point (43--95)</div><div class='input'><span class='fu'>stw_write_yaml</span>(<span class='no'>diamonds_meta</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".yml"</span>))</div><div class='output co'>#&gt; ✔ YAML metadata written to '/var/folders/bw/6jvpjvd14x1534dc6zgtj3vnght7ft/T//RtmpHZ52MA/fileec718f6b76b.yml'.</div><span class='co'># NOT RUN {</span>
 <span class='co'># not run because it copies text to the clipboard</span>
-<span class='fu'>stw_use_roxygen</span>(<span class='no'>diamonds_meta</span>)
+<span class='fu'>stw_use_yaml</span>(<span class='no'>diamonds_meta</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
