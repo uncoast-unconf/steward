@@ -54,3 +54,24 @@ test_that("stw_dict method works", {
   )
 
 })
+
+
+test_that("stw_meta method works", {
+
+  diamonds_meta_combined <- diamonds_meta
+  diamonds_meta_combined$dictionary <- dict_combined
+
+  diamonds_meta_changed <- diamonds_meta
+  diamonds_meta_changed$dictionary <- dict_changed
+
+  expect_identical(
+    stw_mutate_dict(diamonds_meta, foo = "bar"),
+    diamonds_meta_combined
+  )
+
+  expect_identical(
+    stw_mutate_dict(diamonds_meta, carat = "foo", color = "bar"),
+    diamonds_meta_changed
+  )
+
+})

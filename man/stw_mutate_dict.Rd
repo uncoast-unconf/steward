@@ -4,6 +4,7 @@
 \alias{stw_mutate_dict}
 \alias{stw_mutate_dict.default}
 \alias{stw_mutate_dict.stw_dict}
+\alias{stw_mutate_dict.stw_meta}
 \title{Title}
 \usage{
 stw_mutate_dict(...)
@@ -11,17 +12,24 @@ stw_mutate_dict(...)
 \method{stw_mutate_dict}{default}(...)
 
 \method{stw_mutate_dict}{stw_dict}(dictionary, ...)
+
+\method{stw_mutate_dict}{stw_meta}(meta, ...)
 }
 \arguments{
 \item{...}{Name-value pairs of expressions}
 
-\item{dictionary}{Object with S3 class \code{stw_dict}, or \code{stw_meta}. Note that
-this need not be a \code{stw_dict} object; it can be an object like \code{stw_meta}
-that contains a \code{stw_dict} object.}
+\item{dictionary}{Object with S3 class \code{stw_dict}}
+
+\item{meta}{object with S3 class \code{stw_meta}}
 }
 \value{
-modified copy of \code{dictionary}
+modified copy of \code{dictionary} or \code{meta}
 }
 \description{
 Title
+}
+\examples{
+stw_mutate_dict(diamonds_meta$dictionary, color = "foo")
+stw_mutate_dict(diamonds_meta, color = "foo")
+
 }

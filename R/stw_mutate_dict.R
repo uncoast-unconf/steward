@@ -1,14 +1,15 @@
 #' Title
 #'
-#' @param dictionary Object with S3 class `stw_dict`, or `stw_meta`. Note that
-#'   this need not be a `stw_dict` object; it can be an object like `stw_meta`
-#'   that contains a `stw_dict` object.
+#' @param dictionary Object with S3 class `stw_dict`
+#' @inheritParams stw_to_roxygen
 #' @param ... Name-value pairs of expressions
 #'
-#' @return modified copy of `dictionary`
+#' @return modified copy of `dictionary` or `meta`
 #' @export
 #'
 #' @examples
+#' stw_mutate_dict(diamonds_meta$dictionary, color = "foo")
+#' stw_mutate_dict(diamonds_meta, color = "foo")
 #'
 stw_mutate_dict <- function(...) {
   UseMethod("stw_mutate_dict")
@@ -21,7 +22,6 @@ stw_mutate_dict.default <- function(...) {
   dots <- rlang::list2(...)
   stop(error_message_method("stw_mutate_dict()", class(dots[[1]])))
 }
-
 
 #' @rdname stw_mutate_dict
 #' @export
@@ -37,6 +37,16 @@ stw_mutate_dict.stw_dict <- function(dictionary, ...) {
   }
 
   dictionary
+}
+
+#' @rdname stw_mutate_dict
+#' @export
+#'
+stw_mutate_dict.stw_meta <- function(meta, ...) {
+
+  meta[["dictionary"]] <- stw_mutate_dict(meta[["dictionary"]], ...)
+
+  meta
 }
 
 
