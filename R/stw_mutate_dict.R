@@ -9,6 +9,7 @@
 #' @export
 #'
 #' @examples
+#'
 stw_mutate_dict <- function(...) {
   UseMethod("stw_mutate_dict")
 }
@@ -27,6 +28,15 @@ stw_mutate_dict.default <- function(...) {
 #'
 stw_mutate_dict.stw_dict <- function(dictionary, ...) {
 
+  list_mutate <- rlang::list2(...)
+  names <- names(list_mutate)
+  values <- unname(unlist(list_mutate))
+
+  for (i in seq_along(names)) {
+    dictionary <- dict_describe(dictionary, names[i], values[i])
+  }
+
+  dictionary
 }
 
 
@@ -48,7 +58,7 @@ stw_mutate_dict.stw_dict <- function(dictionary, ...) {
 #'
 dict_describe <- function(dictionary, name, description) {
 
-  index <- name %in% dictionary[["name"]]
+  index <- name == dictionary[["name"]]
 
   if (any(index)) {
     # modify description for that observation
