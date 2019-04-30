@@ -41,7 +41,8 @@ stw_meta <- function(...) {
 #' @export
 #'
 stw_meta.default <- function(...) {
-  stop(error_message_method("stw_to_meta()", class(...)))
+  dots <- rlang::list2(...)
+  stop(error_message_method("stw_to_meta()", class(dots[[1]])))
 }
 
 #' @rdname stw_meta
