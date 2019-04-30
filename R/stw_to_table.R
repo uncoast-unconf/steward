@@ -16,12 +16,7 @@ stw_to_table <- function(meta, ...) {
 #' @export
 #'
 stw_to_table.default <- function(meta, ...) {
-  stop(
-    glue::glue(
-      "{usethis::ui_code('stw_to_table()')} does not have a method ",
-      "for objects of class {usethis::ui_code(class(meta))}"
-    )
-  )
+  stop(error_message_method("stw_to_table()", class(meta)))
 }
 
 #' @rdname stw_to_table

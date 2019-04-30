@@ -31,12 +31,7 @@ stw_to_yaml <- function(meta, ...) {
 #' @export
 #'
 stw_to_yaml.default <- function(meta, ...) {
-  stop(
-    glue::glue(
-      "{usethis::ui_code('stw_to_yaml()')} does not have a method ",
-      "for objects of class {usethis::ui_code(class(meta))}"
-    )
-  )
+  stop(error_message_method("stw_to_yaml()", class(meta)))
 }
 
 #' @rdname stw_to_yaml
