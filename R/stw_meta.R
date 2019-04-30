@@ -1,3 +1,5 @@
+# intrnal constructor
+#
 new_stw_meta <- function(name, title, description, source = NULL,
                          n_row = NULL, n_col = NULL,
                          dictionary = NULL) {
@@ -16,7 +18,6 @@ new_stw_meta <- function(name, title, description, source = NULL,
   )
 }
 
-
 #' Create a new meta-data object
 #'
 #' @param name `character` name of the dataset
@@ -26,13 +27,29 @@ new_stw_meta <- function(name, title, description, source = NULL,
 #' @param n_row `integer` number of rows in the dataset
 #' @param n_col `integer` number of columns in the dataset
 #' @param dictionary `stw_dict` object, dictionary of variables in the dataset
+#' @param env `list` with elements `name`, `title`, etc.
+#' @param ... additional args (not used)
 #'
 #' @return object with S3 class `stw_meta`
 #' @export
 #'
-stw_meta <- function(name, title, description, source = NULL,
-                     n_row = NULL, n_col = NULL,
-                     dictionary = NULL) {
+stw_meta <- function(...) {
+  UseMethod("stw_meta")
+}
+
+#' @rdname stw_meta
+#' @export
+#'
+stw_meta.default <- function(...) {
+  stop(error_message_method("stw_to_meta()", class(...)))
+}
+
+#' @rdname stw_meta
+#' @export
+#'
+stw_meta.character <- function(name, title, description, source = NULL,
+                               n_row = NULL, n_col = NULL,
+                               dictionary = NULL, ...) {
 
   assert_name <- function(field) {
     assertthat::assert_that(
@@ -55,14 +72,10 @@ stw_meta <- function(name, title, description, source = NULL,
   )
 }
 
-#' Create stw_meta from list-like object
-#'
-#' @param env a list-like object with elements `name`, `title`, etc.
-#'
-#' @inherit stw_meta return
+#' @rdname stw_meta
 #' @export
 #'
-stw_meta_env <- function(env) {
+stw_meta.list <- function(env, ...) {
 
   # TODO: validate we have required elements
 

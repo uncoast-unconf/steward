@@ -33,12 +33,7 @@ stw_to_roxygen <- function(meta, ...) {
 #' @export
 #'
 stw_to_roxygen.default <- function(meta, ...) {
-  stop(
-    glue::glue(
-      "{usethis::ui_code('stw_to_roxygen()')} does not have a method ",
-      "for objects of class {usethis::ui_code(class(meta))}"
-    )
-  )
+  stop(error_message_method("stw_to_roxygen()", class(meta)))
 }
 
 #' @rdname stw_to_roxygen

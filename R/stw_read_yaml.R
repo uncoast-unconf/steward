@@ -20,7 +20,7 @@ stw_read_yaml <- function(file) {
   infile$dictionary <- stw_dict(df)
 
   # create using the `infile` envronment
-  meta <- stw_meta_env(infile)
+  meta <- stw_meta(infile)
 
   # return
   meta

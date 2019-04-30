@@ -2,12 +2,23 @@
 % Please edit documentation in R/stw_meta.R
 \name{stw_meta}
 \alias{stw_meta}
+\alias{stw_meta.default}
+\alias{stw_meta.character}
+\alias{stw_meta.list}
 \title{Create a new meta-data object}
 \usage{
-stw_meta(name, title, description, source = NULL, n_row = NULL,
-  n_col = NULL, dictionary = NULL)
+stw_meta(...)
+
+\method{stw_meta}{default}(...)
+
+\method{stw_meta}{character}(name, title, description, source = NULL,
+  n_row = NULL, n_col = NULL, dictionary = NULL, ...)
+
+\method{stw_meta}{list}(env, ...)
 }
 \arguments{
+\item{...}{additional args (not used)}
+
 \item{name}{\code{character} name of the dataset}
 
 \item{title}{\code{character} title of the dataset}
@@ -21,6 +32,8 @@ stw_meta(name, title, description, source = NULL, n_row = NULL,
 \item{n_col}{\code{integer} number of columns in the dataset}
 
 \item{dictionary}{\code{stw_dict} object, dictionary of variables in the dataset}
+
+\item{env}{\code{list} with elements \code{name}, \code{title}, etc.}
 }
 \value{
 object with S3 class \code{stw_meta}

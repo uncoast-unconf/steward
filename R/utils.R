@@ -9,3 +9,10 @@ transpose <- function(x) {
 
   lapply(seq_row, function(i) lapply(x, "[[", i))
 }
+
+error_message_method <- function(name_fn, name_class) {
+  glue::glue(
+    "{usethis::ui_code(name_fn)} does not have a method ",
+    "for objects of class {usethis::ui_code(name_class)}"
+  )
+}
