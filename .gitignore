@@ -3,3 +3,4 @@
 .RData
 scratch
 .DS_Store
+inst/doc
