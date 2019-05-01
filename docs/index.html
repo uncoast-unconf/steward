@@ -45,6 +45,9 @@
   </a>
 </li>
 <li>
+  <a href="articles/steward.html">Get started</a>
+</li>
+<li>
   <a href="reference/index.html">Reference</a>
 </li>
       </ul>
@@ -95,35 +98,18 @@
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"steward"</span>)</a></code></pre></div>
-<p>The current capabilities all deal with metadata:</p>
-<ul>
-<li><a href="#read-yaml">read from YAML</a></li>
-<li><a href="#read-csv">read from CSV</a></li>
-<li><a href="#write-yaml">write to YAML</a></li>
-<li><a href="#write-roxygen">write to roxygen</a></li>
-<li><a href="#write-gt-table">write to gt table</a></li>
-</ul>
-<div id="future-capabilities" class="section level3">
+<div id="current-capabilities" class="section level3">
 <h3 class="hasAnchor">
-<a href="#future-capabilities" class="anchor"></a>Future capabilities</h3>
-<p>Soon, we hope to add additional capabilities:</p>
+<a href="#current-capabilities" class="anchor"></a>Current capabilities</h3>
+<p>You can read about these capabilities in the <a href="https://uncoast-unconf.github.io/steward/articles/steward.html">getting started article</a>:</p>
 <ul>
-<li><a href="https://github.com/uncoast-unconf/steward/issues/42">write metadata to YAML</a></li>
-<li>
-<a href="https://github.com/uncoast-unconf/steward/issues/36">combine metadata with dataset</a>
-<ul>
-<li>
-<a href="https://github.com/uncoast-unconf/steward/issues/41">read and write combined dataset</a> from/to flat files</li>
-</ul>
+<li>read from YAML</li>
+<li>read from CSV</li>
+<li>write to YAML</li>
+<li>write to roxygen</li>
+<li>write to <a href="https://gt.rstudio.com">gt table</a>
 </li>
-<li>take into account <a href="https://github.com/uncoast-unconf/steward/issues/39">timezone as column metadata</a>
-</li>
-<li>
-<a href="https://github.com/uncoast-unconf/steward/issues/43">build metadata from package-documentation</a> (<code>.Rd</code> file)</li>
 </ul>
-<div id="read-yaml" class="section level4">
-<h4 class="hasAnchor">
-<a href="#read-yaml" class="anchor"></a>Read YAML</h4>
 <p>Here are the first lines of a YAML file containing metadata from <a href="http://ggplot2.tidyverse.org">ggplot2</a>’s <code>diamonds</code> dataset, which is available as:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"metadata/diamonds.yml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>)</a></code></pre></div>
 <pre><code>name: diamonds
@@ -138,8 +124,11 @@ dictionary:
       type: double
       description: price in US dollars ($326--$18,823)
 ...</code></pre>
-<p>We can read a YAML file using <code><a href="reference/stw_read_yaml.html">stw_read_yaml()</a></code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/stw_read_yaml.html">stw_read_yaml</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"metadata/diamonds.yml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>))</a></code></pre></div>
+<p>You can read this YAML file using <code><a href="reference/stw_read_yaml.html">stw_read_yaml()</a></code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">diamonds_meta &lt;-</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/stw_read_yaml.html">stw_read_yaml</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"metadata/diamonds.yml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>))</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(diamonds_meta)</a></code></pre></div>
 <pre><code>List of 7
  $ name       : chr "diamonds"
  $ title      : chr "Prices of 50,000 round cut diamonds"
@@ -152,42 +141,8 @@ dictionary:
   ..$ type       : chr [1:10] "double" "double" "character" "character" ...
   ..$ description: chr [1:10] "price in US dollars ($326--$18,823)" "weight of diamond (0.2--5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "diamond color, from D (best) to J (worst)" ...
  - attr(*, "class")= chr "stw_meta"</code></pre>
-</div>
-<div id="read-csv" class="section level4">
-<h4 class="hasAnchor">
-<a href="#read-csv" class="anchor"></a>Read CSV</h4>
-<p>This is an emerging capability that we need to document.</p>
-</div>
-<div id="write-yaml" class="section level4">
-<h4 class="hasAnchor">
-<a href="#write-yaml" class="anchor"></a>Write YAML</h4>
-<p>To get a YAML string from metadata, you can use the <code><a href="reference/stw_to_yaml.html">stw_to_yaml()</a></code> function. Here are the first few lines:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(<span class="kw"><a href="reference/stw_to_yaml.html">stw_to_yaml</a></span>(diamonds_meta))</a></code></pre></div>
-<pre><code>name: diamonds
-title: Prices of 50,000 round cut diamonds
-description: A dataset containing the prices and other attributes of almost 54,000
-  diamonds.
-source: &lt;http://www.diamondse.info/&gt;
-n_row: 53940
-n_col: 10
-dictionary:
-- name: price
-  type: double
-  description: price in US dollars ($326--$18,823)
-...</code></pre>
-<p>Other functions in this family:</p>
-<ul>
-<li>
-<code><a href="reference/stw_to_yaml.html">stw_use_yaml()</a></code> copies the YAML string to the clipboard.</li>
-<li>
-<code><a href="reference/stw_to_yaml.html">stw_write_yaml()</a></code> writes the YAML string to a file.</li>
-</ul>
-</div>
-<div id="write-roxygen" class="section level4">
-<h4 class="hasAnchor">
-<a href="#write-roxygen" class="anchor"></a>Write roxygen</h4>
 <p>To get a roxygen string from metadata, you can use the <code><a href="reference/stw_to_roxygen.html">stw_to_roxygen()</a></code> function:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(<span class="kw"><a href="reference/stw_to_roxygen.html">stw_to_roxygen</a></span>(diamonds_meta))</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(<span class="kw"><a href="reference/stw_to_roxygen.html">stw_to_roxygen</a></span>(diamonds_meta))</a></code></pre></div>
 <pre><code>#' Prices of 50,000 round cut diamonds
 #' 
 #' A dataset containing the prices and other attributes of almost 54,000 diamonds.
@@ -208,335 +163,25 @@ dictionary:
 #' }
 #' @source &lt;http://www.diamondse.info/&gt;
 "diamonds"</code></pre>
-<p>Other functions in this family:</p>
+<p>You may also be interested in the related functions: <code><a href="reference/stw_to_roxygen.html">stw_use_roxygen()</a></code> and <code><a href="reference/stw_to_roxygen.html">stw_write_roxygen()</a></code>.</p>
+</div>
+<div id="future-capabilities" class="section level3">
+<h3 class="hasAnchor">
+<a href="#future-capabilities" class="anchor"></a>Future capabilities</h3>
+<p>Soon, we hope to add additional capabilities:</p>
 <ul>
 <li>
-<code><a href="reference/stw_to_roxygen.html">stw_use_roxygen()</a></code> copies the roxygen string to the clipboard.</li>
+<a href="https://github.com/uncoast-unconf/steward/issues/36">combine metadata with dataset</a>
+<ul>
 <li>
-<code><a href="reference/stw_to_roxygen.html">stw_write_roxygen()</a></code> writes the roxygen string to a file.</li>
+<a href="https://github.com/uncoast-unconf/steward/issues/41">read and write combined dataset</a> from/to flat files</li>
 </ul>
-</div>
-<div id="write-gt-table" class="section level4">
-<h4 class="hasAnchor">
-<a href="#write-gt-table" class="anchor"></a>Write gt Table</h4>
-<p>If you are creating an R Markdown document, you can use the <code><a href="reference/stw_to_table.html">stw_to_table()</a></code> function to create a <a href="https://gt.rstudio.com">gt table</a>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="reference/stw_to_table.html">stw_to_table</a></span>(diamonds_meta)</a></code></pre></div>
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
-}
-
-#jqbtdtocre .gt_table {
-  display: table;
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
-  color: #000000;
-  font-size: 16px;
-  background-color: #FFFFFF;
-  /* table.background.color */
-  width: auto;
-  /* table.width */
-  border-top-style: solid;
-  /* table.border.top.style */
-  border-top-width: 2px;
-  /* table.border.top.width */
-  border-top-color: #A8A8A8;
-  /* table.border.top.color */
-}
-
-#jqbtdtocre .gt_heading {
-  background-color: #FFFFFF;
-  /* heading.background.color */
-  border-bottom-color: #FFFFFF;
-}
-
-#jqbtdtocre .gt_title {
-  color: #000000;
-  font-size: 125%;
-  /* heading.title.font.size */
-  padding-top: 4px;
-  /* heading.top.padding */
-  padding-bottom: 1px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#jqbtdtocre .gt_subtitle {
-  color: #000000;
-  font-size: 85%;
-  /* heading.subtitle.font.size */
-  padding-top: 1px;
-  padding-bottom: 4px;
-  /* heading.bottom.padding */
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#jqbtdtocre .gt_bottom_border {
-  border-bottom-style: solid;
-  /* heading.border.bottom.style */
-  border-bottom-width: 2px;
-  /* heading.border.bottom.width */
-  border-bottom-color: #A8A8A8;
-  /* heading.border.bottom.color */
-}
-
-#jqbtdtocre .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#jqbtdtocre .gt_col_heading {
-  color: #000000;
-  background-color: #FFFFFF;
-  /* column_labels.background.color */
-  font-size: 16px;
-  /* column_labels.font.size */
-  font-weight: initial;
-  /* column_labels.font.weight */
-  vertical-align: middle;
-  padding: 10px;
-  margin: 10px;
-}
-
-#jqbtdtocre .gt_sep_right {
-  border-right: 5px solid #FFFFFF;
-}
-
-#jqbtdtocre .gt_group_heading {
-  padding: 8px;
-  color: #000000;
-  background-color: #FFFFFF;
-  /* row_group.background.color */
-  font-size: 16px;
-  /* row_group.font.size */
-  font-weight: initial;
-  /* row_group.font.weight */
-  border-top-style: solid;
-  /* row_group.border.top.style */
-  border-top-width: 2px;
-  /* row_group.border.top.width */
-  border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
-  border-bottom-style: solid;
-  /* row_group.border.bottom.style */
-  border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
-  border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
-  vertical-align: middle;
-}
-
-#jqbtdtocre .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #000000;
-  background-color: #FFFFFF;
-  /* row_group.background.color */
-  font-size: 16px;
-  /* row_group.font.size */
-  font-weight: initial;
-  /* row_group.font.weight */
-  border-top-style: solid;
-  /* row_group.border.top.style */
-  border-top-width: 2px;
-  /* row_group.border.top.width */
-  border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
-  border-bottom-style: solid;
-  /* row_group.border.bottom.style */
-  border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
-  border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
-  vertical-align: middle;
-}
-
-#jqbtdtocre .gt_striped {
-  background-color: #f2f2f2;
-}
-
-#jqbtdtocre .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#jqbtdtocre .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#jqbtdtocre .gt_row {
-  padding: 10px;
-  /* row.padding */
-  margin: 10px;
-  vertical-align: middle;
-}
-
-#jqbtdtocre .gt_stub {
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #A8A8A8;
-  padding-left: 12px;
-}
-
-#jqbtdtocre .gt_stub.gt_row {
-  background-color: #FFFFFF;
-}
-
-#jqbtdtocre .gt_summary_row {
-  background-color: #FFFFFF;
-  /* summary_row.background.color */
-  padding: 6px;
-  /* summary_row.padding */
-  text-transform: inherit;
-  /* summary_row.text_transform */
-}
-
-#jqbtdtocre .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-}
-
-#jqbtdtocre .gt_table_body {
-  border-top-style: solid;
-  /* table_body.border.top.style */
-  border-top-width: 2px;
-  /* table_body.border.top.width */
-  border-top-color: #A8A8A8;
-  /* table_body.border.top.color */
-  border-bottom-style: solid;
-  /* table_body.border.bottom.style */
-  border-bottom-width: 2px;
-  /* table_body.border.bottom.width */
-  border-bottom-color: #A8A8A8;
-  /* table_body.border.bottom.color */
-}
-
-#jqbtdtocre .gt_footnote {
-  font-size: 90%;
-  /* footnote.font.size */
-  padding: 4px;
-  /* footnote.padding */
-}
-
-#jqbtdtocre .gt_sourcenote {
-  font-size: 90%;
-  /* sourcenote.font.size */
-  padding: 4px;
-  /* sourcenote.padding */
-}
-
-#jqbtdtocre .gt_center {
-  text-align: center;
-}
-
-#jqbtdtocre .gt_left {
-  text-align: left;
-}
-
-#jqbtdtocre .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#jqbtdtocre .gt_font_normal {
-  font-weight: normal;
-}
-
-#jqbtdtocre .gt_font_bold {
-  font-weight: bold;
-}
-
-#jqbtdtocre .gt_font_italic {
-  font-style: italic;
-}
-
-#jqbtdtocre .gt_super {
-  font-size: 65%;
-}
-
-#jqbtdtocre .gt_footnote_glyph {
-  font-style: italic;
-  font-size: 65%;
-}
-</style>
-<div id="jqbtdtocre" style="overflow-x:auto;">
-<!--gt table start-->
-<table class="table table gt_table">
-<thead>
-<tr>
-<th colspan="3" class="gt_heading gt_title gt_font_normal gt_center">DIAMONDS</th>
-</tr>
-<tr>
-<th colspan="3" class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border">Prices of 50,000 round cut diamonds</th>
-</tr>
-</thead>
-<tr>
-<th class="gt_col_heading gt_left" rowspan="1" colspan="1">Name</th>
-<th class="gt_col_heading gt_left" rowspan="1" colspan="1">Type</th>
-<th class="gt_col_heading gt_left" rowspan="1" colspan="1">Description</th>
-</tr>
-<tbody class="gt_table_body">
-<tr>
-<td class="gt_row gt_left" style="font-style:italic;">price</td>
-<td class="gt_row gt_left">double</td>
-<td class="gt_row gt_left">price in US dollars ($326--$18,823)</td>
-</tr>
-<tr>
-<td class="gt_row gt_left gt_striped" style="font-style:italic;">carat</td>
-<td class="gt_row gt_left gt_striped">double</td>
-<td class="gt_row gt_left gt_striped">weight of diamond (0.2--5.01)</td>
-</tr>
-<tr>
-<td class="gt_row gt_left" style="font-style:italic;">cut</td>
-<td class="gt_row gt_left">character</td>
-<td class="gt_row gt_left">quality of the cut (Fair, Good, Very Good, Premium, Ideal)</td>
-</tr>
-<tr>
-<td class="gt_row gt_left gt_striped" style="font-style:italic;">color</td>
-<td class="gt_row gt_left gt_striped">character</td>
-<td class="gt_row gt_left gt_striped">diamond color, from D (best) to J (worst)</td>
-</tr>
-<tr>
-<td class="gt_row gt_left" style="font-style:italic;">clarity</td>
-<td class="gt_row gt_left">character</td>
-<td class="gt_row gt_left">a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))</td>
-</tr>
-<tr>
-<td class="gt_row gt_left gt_striped" style="font-style:italic;">x</td>
-<td class="gt_row gt_left gt_striped">double</td>
-<td class="gt_row gt_left gt_striped">length in mm (0--10.74)</td>
-</tr>
-<tr>
-<td class="gt_row gt_left" style="font-style:italic;">y</td>
-<td class="gt_row gt_left">double</td>
-<td class="gt_row gt_left">width in mm (0--58.9)</td>
-</tr>
-<tr>
-<td class="gt_row gt_left gt_striped" style="font-style:italic;">z</td>
-<td class="gt_row gt_left gt_striped">double</td>
-<td class="gt_row gt_left gt_striped">depth in mm (0--31.8)</td>
-</tr>
-<tr>
-<td class="gt_row gt_left" style="font-style:italic;">depth</td>
-<td class="gt_row gt_left">double</td>
-<td class="gt_row gt_left">total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)</td>
-</tr>
-<tr>
-<td class="gt_row gt_left gt_striped" style="font-style:italic;">table</td>
-<td class="gt_row gt_left gt_striped">double</td>
-<td class="gt_row gt_left gt_striped">width of top of diamond relative to widest point (43--95)</td>
-</tr>
-</tbody>
-<tfoot><tr>
-<td colspan="4" class="gt_sourcenote">http://www.diamondse.info/</td>
-</tr></tfoot>
-</table>
-<!--gt table end-->
-</div>
-</div>
+</li>
+<li>take into account <a href="https://github.com/uncoast-unconf/steward/issues/39">timezone as column metadata</a>
+</li>
+<li>
+<a href="https://github.com/uncoast-unconf/steward/issues/43">build metadata from package-documentation</a> (<code>.Rd</code> file)</li>
+</ul>
 </div>
 </div>
 <div id="related-work" class="section level2">

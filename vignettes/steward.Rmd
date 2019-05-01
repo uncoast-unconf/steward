@@ -9,12 +9,104 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+  collapse = FALSE,
+  comment = ""
+)
+
+# https://community.rstudio.com/t/showing-only-the-first-few-lines-of-the-results-of-a-code-chunk/6963/2
+#
+hook_output <- knitr::knit_hooks$get("output")
+knitr::knit_hooks$set(
+  output = function(x, options) {
+    lines <- options$output.lines
+    if (is.null(lines)) {
+      return(hook_output(x, options))  # pass to default hook
+    }
+    x <- unlist(strsplit(x, "\n"))
+    more <- "..."
+    if (length(lines)==1) {        # first n lines
+      if (length(x) > lines) {
+        # truncate the output, but add ....
+        x <- c(head(x, lines), more)
+      }
+    } else {
+      x <- c(more, x[lines], more)
+    }
+    # paste these lines together
+    x <- paste(c(x, ""), collapse = "\n")
+    hook_output(x, options)
+  }
 )
 ```
 
 ```{r setup}
 library("steward")
+```
+
+The current capabilities all deal with metadata:
+
+- [read from YAML](#read-yaml) 
+- [read from CSV](#read-csv) 
+- [write to YAML](#write-yaml)
+- [write to roxygen](#write-roxygen) 
+- [write to gt table](#write-gt-table) 
+
+#### Read YAML
+
+Here are the first lines of a YAML file containing metadata from [ggplot2](http://ggplot2.tidyverse.org)'s `diamonds` dataset, which is available as:
+
+```r
+system.file("metadata/diamonds.yml", package = "steward")
+```
+
+```{r yaml, echo = FALSE, comment = "", output.lines = 11}
+system.file("metadata/diamonds.yml", package = "steward") %>%
+  readr::read_lines() %>%
+  glue::glue_collapse(sep = "\n")
+```
+
+We can read a YAML file using `stw_read_yaml()`:
+
+```{r example_read_yaml}
+stw_read_yaml(system.file("metadata/diamonds.yml", package = "steward"))
+```
+
+#### Read CSV
+
+This is an emerging capability that we need to document.
+
+#### Write YAML
+
+To get a YAML string from metadata, you can use the `stw_to_yaml()` function. Here are the first few lines:
+
+```{r stw_to_yaml, output, output.lines = 11}
+cat(stw_to_yaml(diamonds_meta))
+```
+
+Other functions in this family:
+
+- `stw_use_yaml()` copies the YAML string to the clipboard.
+- `stw_write_yaml()` writes the YAML string to a file.
+
+#### Write roxygen
+
+To get a roxygen string from metadata, you can use the `stw_to_roxygen()` function:
+
+
+```{r example_roxygen}
+cat(stw_to_roxygen(diamonds_meta))
+```
+
+Other functions in this family:
+
+- `stw_use_roxygen()` copies the roxygen string to the clipboard.
+- `stw_write_roxygen()` writes the roxygen string to a file.
+
+#### Write gt Table
+
+If you are creating an R Markdown document, you can use the `stw_to_table()` function to create a [gt table](https://gt.rstudio.com):
+
+```{r}
+stw_to_table(diamonds_meta)
 ```
 

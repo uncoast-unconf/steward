@@ -58,7 +58,6 @@ stw_mutate_dict.stw_meta <- function(meta, ...) {
   meta
 }
 
-
 #' Set the description for a given name
 #'
 #' Internal function.

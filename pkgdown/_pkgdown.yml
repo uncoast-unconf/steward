@@ -1,0 +1,23 @@
+destination: docs
+
+reference:
+  - title: "Package data"
+    contents:
+      - diamonds_meta
+  - title: "Object constructors"
+    contents:
+      - stw_dict
+      - stw_meta
+  - title: "Input functions"
+    contents:
+      - stw_read_yaml
+      - stw_read_csv
+  - title: "Mutation functions"
+    contents:
+      - stw_mutate_dict
+  - title: "Output functions"
+    contents:
+      - stw_to_yaml
+      - stw_to_roxygen
+      - stw_to_table
+

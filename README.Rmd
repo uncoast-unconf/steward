@@ -68,25 +68,15 @@ devtools::install_github("uncoast-unconf/steward")
 library("steward")
 ```
 
-The current capabilities all deal with metadata:
+### Current capabilities
 
-- [read from YAML](#read-yaml) 
-- [read from CSV](#read-csv) 
-- [write to YAML](#write-yaml)
-- [write to roxygen](#write-roxygen) 
-- [write to gt table](#write-gt-table) 
+You can read about these capabilities in the [getting started article](https://uncoast-unconf.github.io/steward/articles/steward.html):
 
-### Future capabilities
-
-Soon, we hope to add additional capabilities:
-
-- [write metadata to YAML](https://github.com/uncoast-unconf/steward/issues/42)
-- [combine metadata with dataset](https://github.com/uncoast-unconf/steward/issues/36)
-  - [read and write combined dataset](https://github.com/uncoast-unconf/steward/issues/41) from/to flat files
-- take into account [timezone as column metadata](https://github.com/uncoast-unconf/steward/issues/39)
-- [build metadata from package-documentation](https://github.com/uncoast-unconf/steward/issues/43) (`.Rd` file)
-
-#### Read YAML
+- read from YAML
+- read from CSV
+- write to YAML
+- write to roxygen
+- write to [gt table](https://gt.rstudio.com)
 
 Here are the first lines of a YAML file containing metadata from [ggplot2](http://ggplot2.tidyverse.org)'s `diamonds` dataset, which is available as:
 
@@ -100,50 +90,31 @@ system.file("metadata/diamonds.yml", package = "steward") %>%
   glue::glue_collapse(sep = "\n")
 ```
 
-We can read a YAML file using `stw_read_yaml()`:
+You can read this YAML file using `stw_read_yaml()`:
 
-```{r example_read_yaml}
-stw_read_yaml(system.file("metadata/diamonds.yml", package = "steward"))
+```{r read_yaml}
+diamonds_meta <-
+  stw_read_yaml(system.file("metadata/diamonds.yml", package = "steward"))
+
+print(diamonds_meta)
 ```
-
-#### Read CSV
-
-This is an emerging capability that we need to document.
-
-#### Write YAML
-
-To get a YAML string from metadata, you can use the `stw_to_yaml()` function. Here are the first few lines:
-
-```{r stw_to_yaml, output, output.lines = 11}
-cat(stw_to_yaml(diamonds_meta))
-```
-
-Other functions in this family:
-
-- `stw_use_yaml()` copies the YAML string to the clipboard.
-- `stw_write_yaml()` writes the YAML string to a file.
-
-#### Write roxygen
 
 To get a roxygen string from metadata, you can use the `stw_to_roxygen()` function:
 
-
-```{r example_roxygen}
+```{r to_roxygen}
 cat(stw_to_roxygen(diamonds_meta))
 ```
 
-Other functions in this family:
+You may also be interested in the related functions: `stw_use_roxygen()` and `stw_write_roxygen()`.
 
-- `stw_use_roxygen()` copies the roxygen string to the clipboard.
-- `stw_write_roxygen()` writes the roxygen string to a file.
+### Future capabilities
 
-#### Write gt Table
+Soon, we hope to add additional capabilities:
 
-If you are creating an R Markdown document, you can use the `stw_to_table()` function to create a [gt table](https://gt.rstudio.com):
-
-```{r}
-stw_to_table(diamonds_meta)
-```
+- [combine metadata with dataset](https://github.com/uncoast-unconf/steward/issues/36)
+  - [read and write combined dataset](https://github.com/uncoast-unconf/steward/issues/41) from/to flat files
+- take into account [timezone as column metadata](https://github.com/uncoast-unconf/steward/issues/39)
+- [build metadata from package-documentation](https://github.com/uncoast-unconf/steward/issues/43) (`.Rd` file)
 
 ## Related work
 
