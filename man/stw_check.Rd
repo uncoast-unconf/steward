@@ -12,8 +12,8 @@ stw_check(...)
 
 \method{stw_check}{default}(...)
 
-\method{stw_check}{stw_dict}(dict, verbosity = c("verbose", "alert",
-  "silent"), ...)
+\method{stw_check}{stw_dict}(dict, verbosity = c("none", "error", "info",
+  "all"), ...)
 
 stw_validate(...)
 
@@ -37,20 +37,22 @@ Use this function to determine the validity of a \code{stw_dict} or \code{stw_me
 You can specify the `verbosity`` of the check:
 
 \describe{
-\item{\code{"verbose"}}{reports results of all checks}
-\item{\code{"alert"}}{reports results of all checks that failed}
-\item{\code{"silent"}}{reports no results}
+\item{\code{"all"}}{reports results of all checks}
+\item{\code{"info"}}{reports results of all checks that failed,
+and that have missing optional information}
+\item{\code{"error"}}{reports results of all checks that failed}
+\item{\code{"none"}}{reports no results}
 }
 
-The \code{"silent"} option may not seem intuitive, it is for internal use.
+The \code{"none"} option may not seem intuitive, it is for internal use.
 These functions set an internal attribute of the object to inicate its
 validity.
 
-A \code{stw_dict} object must have a non-trivial \code{name}, \code{type}, and \code{description}
-for every observation; all values of \code{name} must be unique.
+For a \code{stw_dict} object each \code{name} nust be unique and non-trivial,
+each \code{description} must be non-trivial, \code{type} is optional.
 
 A \code{stw_meta} object must have a non-trivial \code{name}, and \code{dict}.
-It may have a \code{description}, \code{source}, \code{n_row}, and \code{n_col}.
+It may have a \code{title}, \code{description}, \code{source}, \code{n_row}, and \code{n_col}.
 }
 \examples{
 stw_check(diamonds_meta$dict)

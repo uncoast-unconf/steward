@@ -5,20 +5,22 @@
 #' You can specify the `verbosity`` of the check:
 #'
 #' \describe{
-#'   \item{`"verbose"`}{reports results of all checks}
-#'   \item{`"alert"`}{reports results of all checks that failed}
-#'   \item{`"silent"`}{reports no results}
+#'   \item{`"all"`}{reports results of all checks}
+#'   \item{`"info"`}{reports results of all checks that failed,
+#'     and that have missing optional information}
+#'   \item{`"error"`}{reports results of all checks that failed}
+#'   \item{`"none"`}{reports no results}
 #' }
 #'
-#' The `"silent"` option may not seem intuitive, it is for internal use.
+#' The `"none"` option may not seem intuitive, it is for internal use.
 #' These functions set an internal attribute of the object to inicate its
 #' validity.
 #'
-#' A `stw_dict` object must have a non-trivial `name`, `type`, and `description`
-#' for every observation; all values of `name` must be unique.
+#' For a `stw_dict` object each `name` nust be unique and non-trivial,
+#' each `description` must be non-trivial, `type` is optional.
 #'
 #' A `stw_meta` object must have a non-trivial `name`, and `dict`.
-#' It may have a `description`, `source`, `n_row`, and `n_col`.
+#' It may have a `title`, `description`, `source`, `n_row`, and `n_col`.
 #'
 #' @param ... other arguments (not used)
 # @param meta object with S3 class `stw_meta`,
@@ -49,9 +51,38 @@ stw_check.default <- function(...) {
 #' @export
 #'
 stw_check.stw_dict <- function(dict,
-                               verbosity = c("verbose", "alert", "silent"),
+                               verbosity = c("none", "error", "info", "all"),
                                ...) {
+  valid <- TRUE
+  ui_fn <- get_ui_functions(verbosity)
 
+  # names are non-trivial
+  names_trivial <- dict[["name"]][stringr::str_detect(dict[["name"]], "^\\s*$")]
+  if (length(names_trivial) > 0) {
+    valid <- FALSE
+    ui_fn$ui_oops(
+      "Dictionary names are trivial: {usethis::ui_value(names_trivial).}"
+    )
+  } else {
+    ui_fn$ui_done("Dictionary names are non-trivial.")
+  }
+
+  # names are unique
+  names_repeated <- dict[["name"]][duplicated(dict[["name"]])]
+  if (length(names_repeated) > 0) {
+    valid <- FALSE
+    ui_fn$ui_oops(
+      "Dictionary names are repeated: {usethis::ui_value(names_repeated)}."
+    )
+  } else {
+    ui_fn$ui_done("Dictionary names are unique.")
+  }
+
+
+  # set the validity of the dict
+  dict <- set_valid(dict, valid)
+
+  invisible(dict)
 }
 
 #' @rdname stw_check
@@ -69,7 +100,43 @@ stw_validate.default <- function(...) {
   stop(error_message_method("stw_validate()", class(dots[[1]])))
 }
 
-
-is_valid <- function(x) {
+get_valid <- function(x) {
   identical(attr(x, "is_valid"), TRUE)
+}
+
+set_valid <- function(x, valid) {
+  attr(x, "is_valid") <- identical(valid, TRUE)
+  x
+}
+
+get_ui_functions <- function(verbosity = c("none", "error", "info", "all")) {
+
+  verbosity <- match.arg(verbosity)
+
+  write_null <- function(x, ...) {
+    NULL
+  }
+
+  set <- list(
+    ui_oops = usethis::ui_oops,
+    ui_info = usethis::ui_info,
+    ui_done = usethis::ui_done
+  )
+
+  if (identical(verbosity, "info")) {
+    set[["ui_done"]] <- write_null
+  }
+
+  if (identical(verbosity, "error")) {
+    set[["ui_done"]] <- write_null
+    set[["ui_info"]] <- write_null
+  }
+
+  if (identical(verbosity, "none")) {
+    set[["ui_done"]] <- write_null
+    set[["ui_info"]] <- write_null
+    set[["ui_oops"]] <- write_null
+  }
+
+  set
 }
