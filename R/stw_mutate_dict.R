@@ -1,4 +1,4 @@
-#' Modify descriptions in a data-dictionary
+#' Modify descriptions in data-dictionary
 #'
 #' Use this function to modify the descriptions in a data-dictionary,
 #' using syntax along the same lines as [dplyr::mutate()].

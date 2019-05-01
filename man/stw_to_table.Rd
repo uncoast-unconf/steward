@@ -4,7 +4,7 @@
 \alias{stw_to_table}
 \alias{stw_to_table.default}
 \alias{stw_to_table.stw_meta}
-\title{Create gt table}
+\title{Output to gt (table) format}
 \usage{
 stw_to_table(meta, ...)
 
@@ -21,7 +21,7 @@ stw_to_table(meta, ...)
 A gt table
 }
 \description{
-Create gt table
+Output to gt (table) format
 }
 \examples{
 stw_to_table(diamonds_meta)

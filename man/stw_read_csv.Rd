@@ -2,7 +2,7 @@
 % Please edit documentation in R/stw_read_csv.R
 \name{stw_read_csv}
 \alias{stw_read_csv}
-\title{Create metadata object from CSV}
+\title{Create metadata-object from CSV}
 \usage{
 stw_read_csv(file)
 }
@@ -13,7 +13,7 @@ stw_read_csv(file)
 object with S3 class \code{stw_meta}
 }
 \description{
-Create metadata object from CSV
+Create metadata-object from CSV
 }
 \examples{
 stw_read_csv(system.file("metadata/diamonds.csv", package = "steward"))

@@ -5,7 +5,7 @@
 \alias{stw_meta.default}
 \alias{stw_meta.character}
 \alias{stw_meta.list}
-\title{Create a new meta-data object}
+\title{Create new metadata object}
 \usage{
 stw_meta(...)
 
@@ -39,5 +39,5 @@ stw_meta(...)
 object with S3 class \code{stw_meta}
 }
 \description{
-Create a new meta-data object
+Create new metadata object
 }

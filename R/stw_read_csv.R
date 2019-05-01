@@ -1,4 +1,4 @@
-#' Create metadata object from CSV
+#' Create metadata-object from CSV
 #'
 #' @param file location of csv file
 #'

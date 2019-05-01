@@ -5,7 +5,7 @@
 \alias{stw_mutate_dict.default}
 \alias{stw_mutate_dict.stw_dict}
 \alias{stw_mutate_dict.stw_meta}
-\title{Modify descriptions in a data-dictionary}
+\title{Modify descriptions in data-dictionary}
 \usage{
 stw_mutate_dict(...)
 

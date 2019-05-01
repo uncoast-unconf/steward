@@ -1,13 +1,6 @@
 destination: docs
 
 reference:
-  - title: "Package data"
-    contents:
-      - diamonds_meta
-  - title: "Object constructors"
-    contents:
-      - stw_dict
-      - stw_meta
   - title: "Input functions"
     contents:
       - stw_read_yaml
@@ -20,4 +13,11 @@ reference:
       - stw_to_yaml
       - stw_to_roxygen
       - stw_to_table
+  - title: "Object constructors"
+    contents:
+      - stw_dict
+      - stw_meta
+  - title: "Package data"
+    contents:
+      - diamonds_meta
 

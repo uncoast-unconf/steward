@@ -5,7 +5,7 @@ new_stw_dict <- function(dictionary) {
   )
 }
 
-#' Create a new data-dictionary object
+#' Create new data-dictionary object
 #'
 #' @param dictionary `data.frame` that has columns `name`, `type`, `description`
 #'
