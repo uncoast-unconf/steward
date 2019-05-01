@@ -76,6 +76,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/steward.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
@@ -110,12 +113,25 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>stw_meta</span>(<span class='no'>name</span>, <span class='no'>title</span>, <span class='no'>description</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n_row</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>n_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dictionary</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>stw_meta</span>(<span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>stw_meta</span>(<span class='no'>...</span>)
+
+<span class='co'># S3 method for character</span>
+<span class='fu'>stw_meta</span>(<span class='no'>name</span>, <span class='no'>title</span>, <span class='no'>description</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>n_row</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dictionary</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for list</span>
+<span class='fu'>stw_meta</span>(<span class='no'>env</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>...</th>
+      <td><p>additional args (not used)</p></td>
+    </tr>
     <tr>
       <th>name</th>
       <td><p><code>character</code> name of the dataset</p></td>
@@ -143,6 +159,10 @@
     <tr>
       <th>dictionary</th>
       <td><p><code>stw_dict</code> object, dictionary of variables in the dataset</p></td>
+    </tr>
+    <tr>
+      <th>env</th>
+      <td><p><code>list</code> with elements <code>name</code>, <code>title</code>, etc.</p></td>
     </tr>
     </table>
     
