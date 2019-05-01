@@ -6,18 +6,18 @@
 #' You can send a dictionary (`stw_dict` object) or a metadata (`stw_meta`)
 #' object, and get back an object of the same class. In other words, if
 #' you call this function using a `stw_meta` object, it will modify the
-#' `dictionary` within the object, then return a modified copy of the
+#' `dict` within the object, then return a modified copy of the
 #' `stw_meta` object.
 #'
-#' @param dictionary Object with S3 class `stw_dict`
+#' @param dict Object with S3 class `stw_dict`
 #' @inheritParams stw_to_roxygen
 #' @param ... Name-value pairs of expressions
 #'
-#' @return modified copy of `dictionary` or `meta`
+#' @return modified copy of `dict` or `meta`
 #' @export
 #'
 #' @examples
-#' stw_mutate_dict(diamonds_meta$dictionary, color = "foo")
+#' stw_mutate_dict(diamonds_meta$dict, color = "foo")
 #' stw_mutate_dict(diamonds_meta, color = "foo")
 #'
 stw_mutate_dict <- function(...) {
@@ -35,17 +35,17 @@ stw_mutate_dict.default <- function(...) {
 #' @rdname stw_mutate_dict
 #' @export
 #'
-stw_mutate_dict.stw_dict <- function(dictionary, ...) {
+stw_mutate_dict.stw_dict <- function(dict, ...) {
 
   list_mutate <- rlang::list2(...)
   names <- names(list_mutate)
   values <- unname(unlist(list_mutate))
 
   for (i in seq_along(names)) {
-    dictionary <- dict_describe(dictionary, names[i], values[i])
+    dict <- dict_describe(dict, names[i], values[i])
   }
 
-  dictionary
+  dict
 }
 
 #' @rdname stw_mutate_dict
@@ -53,7 +53,7 @@ stw_mutate_dict.stw_dict <- function(dictionary, ...) {
 #'
 stw_mutate_dict.stw_meta <- function(meta, ...) {
 
-  meta[["dictionary"]] <- stw_mutate_dict(meta[["dictionary"]], ...)
+  meta[["dict"]] <- stw_mutate_dict(meta[["dict"]], ...)
 
   meta
 }
@@ -62,33 +62,33 @@ stw_mutate_dict.stw_meta <- function(meta, ...) {
 #'
 #' Internal function.
 #'
-#' If the value of `name` exists in `dictionary[[name]]`, then the
+#' If the value of `name` exists in `dict[[name]]`, then the
 #' value of `description` is set for that observation. If the
 #' value of `name` does not exist, then a new observation is added.
 #'
-#' @param dictionary `data.frame` with columns `name`, `description`
+#' @param dict `data.frame` with columns `name`, `description`
 #' @param name `character` value of `name` for which the value of
 #'   `description` will be set
 #' @param description value to which to set `description`
 #'
-#' @return `tbl_df`, modified copy of `dictionary`
+#' @return `tbl_df`, modified copy of `dict`
 #' @noRd
 #'
-dict_describe <- function(dictionary, name, description) {
+dict_describe <- function(dict, name, description) {
 
-  index <- name == dictionary[["name"]]
+  index <- name == dict[["name"]]
 
   if (any(index)) {
     # modify description for that observation
-    dictionary[["description"]][index] <- description
+    dict[["description"]][index] <- description
   } else {
     # add new observation
-    dictionary <- tibble::add_row(
-      dictionary,
+    dict <- tibble::add_row(
+      dict,
       name = name,
       description = description
     )
   }
 
-  dictionary
+  dict
 }

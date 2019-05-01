@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create new metadata object — stw_meta • steward</title>
+<title>Create metadata-object from CSV — stw_read_meta_csv • steward</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Create new metadata object — stw_meta" />
+<meta property="og:title" content="Create metadata-object from CSV — stw_read_meta_csv" />
 
-<meta property="og:description" content="Create new metadata object" />
+<meta property="og:description" content="Create metadata-object from CSV" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -102,67 +102,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create new metadata object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/uncoast-unconf/steward/blob/master/R/stw_meta.R'><code>R/stw_meta.R</code></a></small>
-    <div class="hidden name"><code>stw_meta.Rd</code></div>
+    <h1>Create metadata-object from CSV</h1>
+    <small class="dont-index">Source: <a href='https://github.com/uncoast-unconf/steward/blob/master/R/stw_read_meta_csv.R'><code>R/stw_read_meta_csv.R</code></a></small>
+    <div class="hidden name"><code>stw_read_meta_csv.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create new metadata object</p>
+    <p>Create metadata-object from CSV</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>stw_meta</span>(<span class='no'>...</span>)
-
-<span class='co'># S3 method for default</span>
-<span class='fu'>stw_meta</span>(<span class='no'>...</span>)
-
-<span class='co'># S3 method for character</span>
-<span class='fu'>stw_meta</span>(<span class='no'>name</span>, <span class='no'>title</span>, <span class='no'>description</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>n_row</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dict</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for list</span>
-<span class='fu'>stw_meta</span>(<span class='no'>env</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>stw_read_meta_csv</span>(<span class='no'>file</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>additional args (not used)</p></td>
-    </tr>
-    <tr>
-      <th>name</th>
-      <td><p><code>character</code> name of the dataset</p></td>
-    </tr>
-    <tr>
-      <th>title</th>
-      <td><p><code>character</code> title of the dataset</p></td>
-    </tr>
-    <tr>
-      <th>description</th>
-      <td><p><code>character</code> description of the dataset</p></td>
-    </tr>
-    <tr>
-      <th>source</th>
-      <td><p><code>character</code> source of the dataset</p></td>
-    </tr>
-    <tr>
-      <th>n_row</th>
-      <td><p><code>integer</code> number of rows in the dataset</p></td>
-    </tr>
-    <tr>
-      <th>n_col</th>
-      <td><p><code>integer</code> number of columns in the dataset</p></td>
-    </tr>
-    <tr>
-      <th>dict</th>
-      <td><p><code>stw_dict</code> object, dictionary of variables in the dataset</p></td>
-    </tr>
-    <tr>
-      <th>env</th>
-      <td><p><code>list</code> with elements <code>name</code>, <code>title</code>, etc.</p></td>
+      <th>file</th>
+      <td><p>location of csv file</p></td>
     </tr>
     </table>
     
@@ -171,6 +129,20 @@
     <p>object with S3 class <code>stw_meta</code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>stw_read_meta_csv</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"metadata/diamonds.csv"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"steward"</span>))</div><div class='output co'>#&gt; List of 7
+#&gt;  $ name       : chr "diamonds"
+#&gt;  $ title      : chr "\"Prices of 50,000 round cut diamonds\""
+#&gt;  $ description: chr "\"A dataset containing the prices and other attributes of almost 54,000 diamonds\""
+#&gt;  $ source     : chr "www.google.com"
+#&gt;  $ n_row      : NULL
+#&gt;  $ n_col      : NULL
+#&gt;  $ dict       :Classes ‘stw_dict’ and 'data.frame':	10 obs. of  3 variables:
+#&gt;   ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...
+#&gt;   ..$ type       : chr [1:10] "double" "double" "character" "character" ...
+#&gt;   ..$ description: chr [1:10] "price in US dollars ($326 - $18,823)" "weight of diamond (0.2 - 5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "diamond color, from D (best) to J (worst)" ...
+#&gt;  - attr(*, "class")= chr "stw_meta"</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -178,7 +150,9 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

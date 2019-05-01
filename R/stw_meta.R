@@ -2,7 +2,7 @@
 #
 new_stw_meta <- function(name, title, description, source = NULL,
                          n_row = NULL, n_col = NULL,
-                         dictionary = NULL) {
+                         dict = NULL) {
 
   structure(
     list(
@@ -12,7 +12,7 @@ new_stw_meta <- function(name, title, description, source = NULL,
       source = source,
       n_row = n_row,
       n_col = n_col,
-      dictionary = dictionary
+      dict = dict
     ),
     class = "stw_meta"
   )
@@ -26,7 +26,7 @@ new_stw_meta <- function(name, title, description, source = NULL,
 #' @param source `character` source of the dataset
 #' @param n_row `integer` number of rows in the dataset
 #' @param n_col `integer` number of columns in the dataset
-#' @param dictionary `stw_dict` object, dictionary of variables in the dataset
+#' @param dict `stw_dict` object, dictionary of variables in the dataset
 #' @param env `list` with elements `name`, `title`, etc.
 #' @param ... additional args (not used)
 #'
@@ -50,11 +50,11 @@ stw_meta.default <- function(...) {
 #'
 stw_meta.character <- function(name, title, description, source = NULL,
                                n_row = NULL, n_col = NULL,
-                               dictionary = NULL, ...) {
+                               dict = NULL, ...) {
 
   assert_name <- function(field) {
     assertthat::assert_that(
-      rlang::has_name(dictionary, field),
+      rlang::has_name(dict, field),
       msg = glue::glue("metadata: does not have a `{field}` field")
     )
   }
@@ -69,7 +69,7 @@ stw_meta.character <- function(name, title, description, source = NULL,
     source = trimws(source),
     n_row = n_row,
     n_col = n_col,
-    dictionary = dictionary
+    dict = dict
   )
 }
 
@@ -87,7 +87,7 @@ stw_meta.list <- function(env, ...) {
     n_col = env[["n_col"]],
     description = env[["description"]],
     source = env[["source"]],
-    dictionary = env[["dictionary"]]
+    dict = env[["dict"]]
   )
 }
 

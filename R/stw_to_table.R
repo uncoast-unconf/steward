@@ -28,14 +28,14 @@ stw_to_table.stw_meta <- function(meta, ...) {
   meta[["name"]] <- toupper(meta[["name"]])
 
   # capitalize the variable-names in the dictionary, e.g. "name", "type", ...
-  names(meta[["dictionary"]]) <-
-    stringr::str_to_title(names(meta[["dictionary"]]))
+  names(meta[["dict"]]) <-
+    stringr::str_to_title(names(meta[["dict"]]))
 
   # remove angle-brackets in source (denotes URL)
   meta[["source"]] <-
     stringr::str_replace_all(meta[["source"]], "<([^<>\\s]*)>", "\\1")
 
-  meta[["dictionary"]] %>%
+  meta[["dict"]] %>%
     gt::gt() %>%
     gt::tab_header(
       title = meta[["name"]],

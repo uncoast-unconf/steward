@@ -12,7 +12,7 @@ stw_meta(...)
 \method{stw_meta}{default}(...)
 
 \method{stw_meta}{character}(name, title, description, source = NULL,
-  n_row = NULL, n_col = NULL, dictionary = NULL, ...)
+  n_row = NULL, n_col = NULL, dict = NULL, ...)
 
 \method{stw_meta}{list}(env, ...)
 }
@@ -31,7 +31,7 @@ stw_meta(...)
 
 \item{n_col}{\code{integer} number of columns in the dataset}
 
-\item{dictionary}{\code{stw_dict} object, dictionary of variables in the dataset}
+\item{dict}{\code{stw_dict} object, dictionary of variables in the dataset}
 
 \item{env}{\code{list} with elements \code{name}, \code{title}, etc.}
 }

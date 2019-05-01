@@ -104,8 +104,8 @@ dictionary:
       type: double
       description: price in US dollars ($326--$18,823)
 ...</code></pre>
-<p>We can read a YAML file using <code><a href="../reference/stw_read_yaml.html">stw_read_yaml()</a></code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/stw_read_yaml.html">stw_read_yaml</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"metadata/diamonds.yml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>))</a></code></pre></div>
+<p>We can read a YAML file using <code><a href="../reference/stw_read_meta_yaml.html">stw_read_meta_yaml()</a></code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/stw_read_meta_yaml.html">stw_read_meta_yaml</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"metadata/diamonds.yml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>))</a></code></pre></div>
 <pre><code>List of 7
  $ name       : chr "diamonds"
  $ title      : chr "Prices of 50,000 round cut diamonds"
@@ -113,7 +113,7 @@ dictionary:
  $ source     : chr "&lt;http://www.diamondse.info/&gt;"
  $ n_row      : int 53940
  $ n_col      : int 10
- $ dictionary :Classes 'stw_dict' and 'data.frame': 10 obs. of  3 variables:
+ $ dict       :Classes 'stw_dict' and 'data.frame': 10 obs. of  3 variables:
   ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...
   ..$ type       : chr [1:10] "double" "double" "character" "character" ...
   ..$ description: chr [1:10] "price in US dollars ($326--$18,823)" "weight of diamond (0.2--5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "diamond color, from D (best) to J (worst)" ...
@@ -136,7 +136,7 @@ description: A dataset containing the prices and other attributes of almost 54,0
 source: &lt;http://www.diamondse.info/&gt;
 n_row: 53940
 n_col: 10
-dictionary:
+dict:
 - name: price
   type: double
   description: price in US dollars ($326--$18,823)
@@ -191,7 +191,7 @@ dictionary:
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ueyzxjowdx .gt_table {
+#iynsyhpprc .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -210,13 +210,13 @@ dictionary:
   /* table.border.top.color */
 }
 
-#ueyzxjowdx .gt_heading {
+#iynsyhpprc .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#ueyzxjowdx .gt_title {
+#iynsyhpprc .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -227,7 +227,7 @@ dictionary:
   border-bottom-width: 0;
 }
 
-#ueyzxjowdx .gt_subtitle {
+#iynsyhpprc .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -238,7 +238,7 @@ dictionary:
   border-top-width: 0;
 }
 
-#ueyzxjowdx .gt_bottom_border {
+#iynsyhpprc .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -247,7 +247,7 @@ dictionary:
   /* heading.border.bottom.color */
 }
 
-#ueyzxjowdx .gt_column_spanner {
+#iynsyhpprc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -255,7 +255,7 @@ dictionary:
   padding-bottom: 4px;
 }
 
-#ueyzxjowdx .gt_col_heading {
+#iynsyhpprc .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -268,11 +268,11 @@ dictionary:
   margin: 10px;
 }
 
-#ueyzxjowdx .gt_sep_right {
+#iynsyhpprc .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#ueyzxjowdx .gt_group_heading {
+#iynsyhpprc .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -296,7 +296,7 @@ dictionary:
   vertical-align: middle;
 }
 
-#ueyzxjowdx .gt_empty_group_heading {
+#iynsyhpprc .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -320,37 +320,37 @@ dictionary:
   vertical-align: middle;
 }
 
-#ueyzxjowdx .gt_striped {
+#iynsyhpprc .gt_striped {
   background-color: #f2f2f2;
 }
 
-#ueyzxjowdx .gt_from_md > :first-child {
+#iynsyhpprc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ueyzxjowdx .gt_from_md > :last-child {
+#iynsyhpprc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ueyzxjowdx .gt_row {
+#iynsyhpprc .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#ueyzxjowdx .gt_stub {
+#iynsyhpprc .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#ueyzxjowdx .gt_stub.gt_row {
+#iynsyhpprc .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#ueyzxjowdx .gt_summary_row {
+#iynsyhpprc .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -359,13 +359,13 @@ dictionary:
   /* summary_row.text_transform */
 }
 
-#ueyzxjowdx .gt_first_summary_row {
+#iynsyhpprc .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#ueyzxjowdx .gt_table_body {
+#iynsyhpprc .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -380,55 +380,55 @@ dictionary:
   /* table_body.border.bottom.color */
 }
 
-#ueyzxjowdx .gt_footnote {
+#iynsyhpprc .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#ueyzxjowdx .gt_sourcenote {
+#iynsyhpprc .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#ueyzxjowdx .gt_center {
+#iynsyhpprc .gt_center {
   text-align: center;
 }
 
-#ueyzxjowdx .gt_left {
+#iynsyhpprc .gt_left {
   text-align: left;
 }
 
-#ueyzxjowdx .gt_right {
+#iynsyhpprc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ueyzxjowdx .gt_font_normal {
+#iynsyhpprc .gt_font_normal {
   font-weight: normal;
 }
 
-#ueyzxjowdx .gt_font_bold {
+#iynsyhpprc .gt_font_bold {
   font-weight: bold;
 }
 
-#ueyzxjowdx .gt_font_italic {
+#iynsyhpprc .gt_font_italic {
   font-style: italic;
 }
 
-#ueyzxjowdx .gt_super {
+#iynsyhpprc .gt_super {
   font-size: 65%;
 }
 
-#ueyzxjowdx .gt_footnote_glyph {
+#iynsyhpprc .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ueyzxjowdx" style="overflow-x:auto;">
+<div id="iynsyhpprc" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <thead>

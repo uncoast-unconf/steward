@@ -94,7 +94,7 @@ You can read this YAML file using `stw_read_yaml()`:
 
 ```{r read_yaml}
 diamonds_meta <-
-  stw_read_yaml(system.file("metadata/diamonds.yml", package = "steward"))
+  stw_read_meta_yaml(system.file("metadata/diamonds.yml", package = "steward"))
 
 print(diamonds_meta)
 ```

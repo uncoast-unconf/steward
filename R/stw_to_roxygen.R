@@ -53,7 +53,7 @@ stw_to_roxygen.stw_meta <- function(meta, ...) {
         .sep = "\n"
     )
 
-  fillings <- dict_to_roxygen(meta$dictionary)
+  fillings <- dict_to_roxygen(meta$dict)
 
   bottom_bread <-
     glue::glue(

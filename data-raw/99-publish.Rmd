@@ -8,7 +8,7 @@ library("here")
 ```
 
 ```{r}
-diamonds_meta <- stw_read_yaml(here("inst", "metadata", "diamonds.yml"))
+diamonds_meta <- stw_read_meta_yaml(here("inst", "metadata", "diamonds.yml"))
 
 diamonds_meta
 ```

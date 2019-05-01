@@ -1,6 +1,6 @@
 library("tibble")
 
-dict_test <- diamonds_meta$dictionary
+dict_test <- diamonds_meta$dict
 
 dict_combined <- add_row(dict_test, name = "foo", description = "bar")
 
@@ -59,10 +59,10 @@ test_that("stw_dict method works", {
 test_that("stw_meta method works", {
 
   diamonds_meta_combined <- diamonds_meta
-  diamonds_meta_combined$dictionary <- dict_combined
+  diamonds_meta_combined$dict <- dict_combined
 
   diamonds_meta_changed <- diamonds_meta
-  diamonds_meta_changed$dictionary <- dict_changed
+  diamonds_meta_changed$dict <- dict_changed
 
   expect_identical(
     stw_mutate_dict(diamonds_meta, foo = "bar"),
