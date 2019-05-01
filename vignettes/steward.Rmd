@@ -2,7 +2,7 @@
 title: "stweard"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{stweard}
+  %\VignetteIndexEntry{steward}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
