@@ -11,19 +11,19 @@ stw_mutate_dict(...)
 
 \method{stw_mutate_dict}{default}(...)
 
-\method{stw_mutate_dict}{stw_dict}(dictionary, ...)
+\method{stw_mutate_dict}{stw_dict}(dict, ...)
 
 \method{stw_mutate_dict}{stw_meta}(meta, ...)
 }
 \arguments{
 \item{...}{Name-value pairs of expressions}
 
-\item{dictionary}{Object with S3 class \code{stw_dict}}
+\item{dict}{Object with S3 class \code{stw_dict}}
 
 \item{meta}{object with S3 class \code{stw_meta}}
 }
 \value{
-modified copy of \code{dictionary} or \code{meta}
+modified copy of \code{dict} or \code{meta}
 }
 \description{
 Use this function to modify the descriptions in a data-dictionary,
@@ -33,11 +33,11 @@ using syntax along the same lines as \code{\link[dplyr:mutate]{dplyr::mutate()}}
 You can send a dictionary (\code{stw_dict} object) or a metadata (\code{stw_meta})
 object, and get back an object of the same class. In other words, if
 you call this function using a \code{stw_meta} object, it will modify the
-\code{dictionary} within the object, then return a modified copy of the
+\code{dict} within the object, then return a modified copy of the
 \code{stw_meta} object.
 }
 \examples{
-stw_mutate_dict(diamonds_meta$dictionary, color = "foo")
+stw_mutate_dict(diamonds_meta$dict, color = "foo")
 stw_mutate_dict(diamonds_meta, color = "foo")
 
 }

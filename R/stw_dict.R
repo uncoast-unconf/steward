@@ -1,23 +1,23 @@
-new_stw_dict <- function(dictionary) {
+new_stw_dict <- function(dict) {
   structure(
-    dictionary,
-    class = unique(c("stw_dict", class(dictionary)))
+    dict,
+    class = unique(c("stw_dict", class(dict)))
   )
 }
 
 #' Create new data-dictionary object
 #'
-#' @param dictionary `data.frame` that has columns `name`, `type`, `description`
+#' @param dict `data.frame` that has columns `name`, `type`, `description`
 #'
 #' @return object with S3 class `stw_meta`
 #' @export
 #'
-stw_dict <- function(dictionary) {
+stw_dict <- function(dict) {
 
   assert_name <- function(var) {
     assertthat::assert_that(
-      rlang::has_name(dictionary, var),
-      msg = glue::glue("dictionary: does not have a `{var}` variable")
+      rlang::has_name(dict, var),
+      msg = glue::glue("dict: does not have a `{var}` variable")
     )
   }
 
@@ -27,8 +27,8 @@ stw_dict <- function(dictionary) {
   assert_name("description")
 
   # coerce to character
-  d <- lapply(dictionary, as.character)
-  d <- lapply(dictionary, trimws)
+  d <- lapply(dict, as.character)
+  d <- lapply(dict, trimws)
   d <- as.data.frame(d, stringsAsFactors = FALSE)
 
   new_stw_dict(d)

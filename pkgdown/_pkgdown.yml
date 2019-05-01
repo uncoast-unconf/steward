@@ -3,8 +3,8 @@ destination: docs
 reference:
   - title: "Input functions"
     contents:
-      - stw_read_yaml
-      - stw_read_csv
+      - stw_read_meta_yaml
+      - stw_read_meta_csv
   - title: "Mutation functions"
     contents:
       - stw_mutate_dict

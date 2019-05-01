@@ -6,8 +6,9 @@
 #' @export
 #'
 #' @examples
-#' stw_read_csv(system.file("metadata/diamonds.csv", package = "steward"))
-stw_read_csv <- function(file) {
+#' stw_read_meta_csv(system.file("metadata/diamonds.csv", package = "steward"))
+#'
+stw_read_meta_csv <- function(file) {
 
   # read in the file
   df <- readr::read_lines(file = file)
@@ -84,7 +85,7 @@ stw_read_csv <- function(file) {
       title = title,
       description = description,
       source = source,
-      dictionary = dict
+      dict = dict
     )
 
   # return

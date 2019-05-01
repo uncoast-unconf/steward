@@ -121,7 +121,7 @@ using syntax along the same lines as <code><a href='https://dplyr.tidyverse.org/
 <span class='fu'>stw_mutate_dict</span>(<span class='no'>...</span>)
 
 <span class='co'># S3 method for stw_dict</span>
-<span class='fu'>stw_mutate_dict</span>(<span class='no'>dictionary</span>, <span class='no'>...</span>)
+<span class='fu'>stw_mutate_dict</span>(<span class='no'>dict</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stw_meta</span>
 <span class='fu'>stw_mutate_dict</span>(<span class='no'>meta</span>, <span class='no'>...</span>)</pre>
@@ -134,7 +134,7 @@ using syntax along the same lines as <code><a href='https://dplyr.tidyverse.org/
       <td><p>Name-value pairs of expressions</p></td>
     </tr>
     <tr>
-      <th>dictionary</th>
+      <th>dict</th>
       <td><p>Object with S3 class <code>stw_dict</code></p></td>
     </tr>
     <tr>
@@ -145,19 +145,19 @@ using syntax along the same lines as <code><a href='https://dplyr.tidyverse.org/
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>modified copy of <code>dictionary</code> or <code>meta</code></p>
+    <p>modified copy of <code>dict</code> or <code>meta</code></p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>You can send a dictionary (<code>stw_dict</code> object) or a metadata (<code>stw_meta</code>)
 object, and get back an object of the same class. In other words, if
 you call this function using a <code>stw_meta</code> object, it will modify the
-<code>dictionary</code> within the object, then return a modified copy of the
+<code>dict</code> within the object, then return a modified copy of the
 <code>stw_meta</code> object.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>stw_mutate_dict</span>(<span class='no'>diamonds_meta</span>$<span class='no'>dictionary</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"foo"</span>)</div><div class='output co'>#&gt; Classes ‘stw_dict’ and 'data.frame':	10 obs. of  3 variables:
+    <pre class="examples"><div class='input'><span class='fu'>stw_mutate_dict</span>(<span class='no'>diamonds_meta</span>$<span class='no'>dict</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"foo"</span>)</div><div class='output co'>#&gt; Classes ‘stw_dict’ and 'data.frame':	10 obs. of  3 variables:
 #&gt;  $ name       : chr  "price" "carat" "cut" "color" ...
 #&gt;  $ type       : chr  "double" "double" "character" "character" ...
 #&gt;  $ description: chr  "price in US dollars ($326--$18,823)" "weight of diamond (0.2--5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "foo" ...</div><div class='input'><span class='fu'>stw_mutate_dict</span>(<span class='no'>diamonds_meta</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"foo"</span>)</div><div class='output co'>#&gt; List of 7
@@ -167,7 +167,7 @@ you call this function using a <code>stw_meta</code> object, it will modify the
 #&gt;  $ source     : chr "&lt;http://www.diamondse.info/&gt;"
 #&gt;  $ n_row      : int 53940
 #&gt;  $ n_col      : int 10
-#&gt;  $ dictionary :Classes ‘stw_dict’ and 'data.frame':	10 obs. of  3 variables:
+#&gt;  $ dict       :Classes ‘stw_dict’ and 'data.frame':	10 obs. of  3 variables:
 #&gt;   ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...
 #&gt;   ..$ type       : chr [1:10] "double" "double" "character" "character" ...
 #&gt;   ..$ description: chr [1:10] "price in US dollars ($326--$18,823)" "weight of diamond (0.2--5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "foo" ...

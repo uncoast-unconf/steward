@@ -65,10 +65,10 @@ system.file("metadata/diamonds.yml", package = "steward") %>%
   glue::glue_collapse(sep = "\n")
 ```
 
-We can read a YAML file using `stw_read_yaml()`:
+We can read a YAML file using `stw_read_meta_yaml()`:
 
 ```{r example_read_yaml}
-stw_read_yaml(system.file("metadata/diamonds.yml", package = "steward"))
+stw_read_meta_yaml(system.file("metadata/diamonds.yml", package = "steward"))
 ```
 
 #### Read CSV
