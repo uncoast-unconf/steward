@@ -1,4 +1,4 @@
-#' Create gt table
+#' Output to gt (table) format
 #'
 #' @inheritParams stw_to_roxygen
 #'

@@ -1,4 +1,4 @@
-#' Create metadata object from YAML
+#' Create metadata-object from YAML
 #'
 #' @param file location of yaml file
 #'

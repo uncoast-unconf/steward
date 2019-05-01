@@ -1,4 +1,4 @@
-# intrnal constructor
+# internal constructor
 #
 new_stw_meta <- function(name, title, description, source = NULL,
                          n_row = NULL, n_col = NULL,
@@ -18,7 +18,7 @@ new_stw_meta <- function(name, title, description, source = NULL,
   )
 }
 
-#' Create a new meta-data object
+#' Create new metadata object
 #'
 #' @param name `character` name of the dataset
 #' @param title `character` title of the dataset

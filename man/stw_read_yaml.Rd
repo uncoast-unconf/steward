@@ -2,7 +2,7 @@
 % Please edit documentation in R/stw_read_yaml.R
 \name{stw_read_yaml}
 \alias{stw_read_yaml}
-\title{Create metadata object from YAML}
+\title{Create metadata-object from YAML}
 \usage{
 stw_read_yaml(file)
 }
@@ -13,7 +13,7 @@ stw_read_yaml(file)
 object with S3 class \code{stw_meta}
 }
 \description{
-Create metadata object from YAML
+Create metadata-object from YAML
 }
 \examples{
 stw_read_yaml(system.file("metadata/diamonds.yml", package = "steward"))
