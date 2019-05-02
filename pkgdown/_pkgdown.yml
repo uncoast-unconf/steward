@@ -5,10 +5,10 @@ reference:
     contents:
       - stw_read_meta_yaml
       - stw_read_meta_csv
-  - title: "Validation functions"
+  - title: "Mutation functions"
     contents:
       - stw_mutate_dict
-  - title: "Mutation functions"
+  - title: "Validation functions"
     contents:
       - stw_check
   - title: "Output functions"

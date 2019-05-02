@@ -1,4 +1,4 @@
-#' Check a steward object
+#' Check steward object
 #'
 #' Use these function to determine the validity of a `stw_dict` or `stw_meta` object;
 #' `stw_check()` tells you about the object, `stw_validate()` additionally throws

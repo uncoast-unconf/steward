@@ -9,7 +9,7 @@
 \alias{stw_validate.default}
 \alias{stw_validate.stw_dict}
 \alias{stw_validate.stw_meta}
-\title{Check a steward object}
+\title{Check steward object}
 \usage{
 stw_check(...)
 
