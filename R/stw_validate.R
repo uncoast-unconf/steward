@@ -56,17 +56,6 @@ stw_check.stw_dict <- function(dict,
   valid <- TRUE
   ui_fn <- get_ui_functions(verbosity)
 
-  # names are non-trivial
-  names_trivial <- dict[["name"]][stringr::str_detect(dict[["name"]], "^\\s*$")]
-  if (length(names_trivial) > 0) {
-    valid <- FALSE
-    ui_fn$ui_oops(
-      "Dictionary names are trivial: {usethis::ui_value(names_trivial).}"
-    )
-  } else {
-    ui_fn$ui_done("Dictionary names are non-trivial.")
-  }
-
   # names are unique
   names_repeated <- dict[["name"]][duplicated(dict[["name"]])]
   if (length(names_repeated) > 0) {
@@ -78,6 +67,39 @@ stw_check.stw_dict <- function(dict,
     ui_fn$ui_done("Dictionary names are unique.")
   }
 
+  # names are non-trivial
+  names_trivial <- dict[["name"]][stringr::str_detect(dict[["name"]], "^\\s*$")]
+  if (length(names_trivial) > 0) {
+    valid <- FALSE
+    ui_fn$ui_oops(
+      "Dictionary names are missing."
+    )
+  } else {
+    ui_fn$ui_done("Dictionary names are all non-trivial.")
+  }
+
+  # descriptions are non-trivial
+  desc_trivial <-
+    dict[["name"]][stringr::str_detect(dict[["description"]], "^\\s*$")]
+  if (length(desc_trivial) > 0) {
+    valid <- FALSE
+    ui_fn$ui_oops(
+      "Dictionary descriprions are missing for names: {usethis::ui_value(desc_trivial)}."
+    )
+  } else {
+    ui_fn$ui_done("Dictionary descriptions are all non-trivial.")
+  }
+
+  # types are non-trivial
+  type_trivial <-
+    dict[["name"]][stringr::str_detect(dict[["type"]], "^\\s*$")]
+  if (length(type_trivial) > 0) {
+    ui_fn$ui_info(
+      "Dictionary types are trivial for names: {usethis::ui_value(type_trivial)}."
+    )
+  } else {
+    ui_fn$ui_done("Dictionary types are all non-trivial.")
+  }
 
   # set the validity of the dict
   dict <- set_valid(dict, valid)
