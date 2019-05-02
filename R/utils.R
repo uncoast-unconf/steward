@@ -16,3 +16,5 @@ error_message_method <- function(name_fn, name_class) {
     "for objects of class {usethis::ui_code(name_class)}"
   )
 }
+
+`%||%` <- rlang::`%||%`

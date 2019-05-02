@@ -30,11 +30,11 @@ Use this function to modify the descriptions in a data-dictionary,
 using syntax along the same lines as \code{\link[dplyr:mutate]{dplyr::mutate()}}.
 }
 \details{
-You can send a dictionary (\code{stw_dict} object) or a metadata (\code{stw_meta})
-object, and get back an object of the same class. In other words, if
-you call this function using a \code{stw_meta} object, it will modify the
-\code{dict} within the object, then return a modified copy of the
-\code{stw_meta} object.
+You can send a dictionary (\code{stw_dict}) object, a metadata (\code{stw_meta})
+object, or dataset object (\code{stw_dataset}) and get back an object of
+the same class. In other words, if you call this function using a
+\code{stw_meta} object, it will modify the \code{dict} within the object,
+then return a modified copy of the\code{stw_meta} object.
 }
 \examples{
 stw_mutate_dict(diamonds_meta$dict, color = "foo")

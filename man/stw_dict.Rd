@@ -4,10 +4,10 @@
 \alias{stw_dict}
 \title{Create new data-dictionary object}
 \usage{
-stw_dict(dict)
+stw_dict(data_dict)
 }
 \arguments{
-\item{dict}{\code{data.frame} that has columns \code{name}, \code{type}, \code{description}}
+\item{data_dict}{\code{data.frame} that has columns \code{name}, \code{type}, \code{description}}
 }
 \value{
 object with S3 class \code{stw_meta}

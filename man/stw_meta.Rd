@@ -5,6 +5,7 @@
 \alias{stw_meta.default}
 \alias{stw_meta.character}
 \alias{stw_meta.list}
+\alias{stw_meta.stw_meta}
 \title{Create new metadata object}
 \usage{
 stw_meta(...)
@@ -15,6 +16,8 @@ stw_meta(...)
   n_row = NULL, n_col = NULL, dict = NULL, ...)
 
 \method{stw_meta}{list}(env, ...)
+
+\method{stw_meta}{stw_meta}(meta, ...)
 }
 \arguments{
 \item{...}{additional args (not used)}
@@ -34,9 +37,11 @@ stw_meta(...)
 \item{dict}{\code{stw_dict} object, dictionary of variables in the dataset}
 
 \item{env}{\code{list} with elements \code{name}, \code{title}, etc.}
+
+\item{meta}{Object with S3 class \code{stw_meta}}
 }
 \value{
-object with S3 class \code{stw_meta}
+Object with S3 class \code{stw_meta}
 }
 \description{
 Create new metadata object

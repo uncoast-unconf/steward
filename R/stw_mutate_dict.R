@@ -3,11 +3,11 @@
 #' Use this function to modify the descriptions in a data-dictionary,
 #' using syntax along the same lines as [dplyr::mutate()].
 #'
-#' You can send a dictionary (`stw_dict` object) or a metadata (`stw_meta`)
-#' object, and get back an object of the same class. In other words, if
-#' you call this function using a `stw_meta` object, it will modify the
-#' `dict` within the object, then return a modified copy of the
-#' `stw_meta` object.
+#' You can send a dictionary (`stw_dict`) object, a metadata (`stw_meta`)
+#' object, or dataset object (`stw_dataset`) and get back an object of
+#' the same class. In other words, if you call this function using a
+#' `stw_meta` object, it will modify the `dict` within the object,
+#' then return a modified copy of the`stw_meta` object.
 #'
 #' @param dict Object with S3 class `stw_dict`
 #' @inheritParams stw_to_roxygen
