@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Output to YAML format — stw_to_yaml • steward</title>
+<title>Check steward object — stw_check • steward</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,11 +30,12 @@
 
 
 
-<meta property="og:title" content="Output to YAML format — stw_to_yaml" />
+<meta property="og:title" content="Check steward object — stw_check" />
 
-<meta property="og:description" content="Use these functions to convert your metadata to YAML format. The function
-stw_to_yaml() returns a YAML string, stw_use_yaml() copies a YAML string
-to your clipboard, and str_write_yaml() writes a YAML string to a file." />
+<meta property="og:description" content="Use these function to determine the validity of a stw_dict or stw_meta object;
+stw_check() tells you about the object, stw_validate() additionally throws
+an error if warranted. To support piping, these functions return their first
+argument invisibly." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -104,103 +105,94 @@ to your clipboard, and str_write_yaml() writes a YAML string to a file." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Output to YAML format</h1>
-    <small class="dont-index">Source: <a href='https://github.com/uncoast-unconf/steward/blob/master/R/stw_to_yaml.R'><code>R/stw_to_yaml.R</code></a></small>
-    <div class="hidden name"><code>stw_to_yaml.Rd</code></div>
+    <h1>Check steward object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/uncoast-unconf/steward/blob/master/R/stw_validate.R'><code>R/stw_validate.R</code></a></small>
+    <div class="hidden name"><code>stw_check.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Use these functions to convert your metadata to YAML format. The function
-<code>stw_to_yaml()</code> returns a YAML string, <code>stw_use_yaml()</code> copies a YAML string
-to your clipboard, and <code>str_write_yaml()</code> writes a YAML string to a file.</p>
+    <p>Use these function to determine the validity of a <code>stw_dict</code> or <code>stw_meta</code> object;
+<code>stw_check()</code> tells you about the object, <code>stw_validate()</code> additionally throws
+an error if warranted. To support piping, these functions return their first
+argument invisibly.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>stw_to_yaml</span>(<span class='no'>meta</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>stw_check</span>(<span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>stw_to_yaml</span>(<span class='no'>meta</span>, <span class='no'>...</span>)
+<span class='fu'>stw_check</span>(<span class='no'>...</span>)
+
+<span class='co'># S3 method for stw_dict</span>
+<span class='fu'>stw_check</span>(<span class='no'>dict</span>, <span class='kw'>verbosity</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"error"</span>, <span class='st'>"info"</span>, <span class='st'>"all"</span>,
+  <span class='st'>"none"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for stw_meta</span>
-<span class='fu'>stw_to_yaml</span>(<span class='no'>meta</span>, <span class='no'>...</span>)
+<span class='fu'>stw_check</span>(<span class='no'>meta</span>, <span class='kw'>verbosity</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"error"</span>, <span class='st'>"info"</span>, <span class='st'>"all"</span>,
+  <span class='st'>"none"</span>), <span class='no'>...</span>)
 
-<span class='fu'>stw_use_yaml</span>(<span class='no'>meta</span>)
+<span class='fu'>stw_validate</span>(<span class='no'>...</span>)
 
-<span class='fu'>stw_write_yaml</span>(<span class='no'>meta</span>, <span class='no'>file</span>)</pre>
+<span class='co'># S3 method for default</span>
+<span class='fu'>stw_validate</span>(<span class='no'>...</span>)
+
+<span class='co'># S3 method for stw_dict</span>
+<span class='fu'>stw_validate</span>(<span class='no'>dict</span>, <span class='kw'>verbosity</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"error"</span>, <span class='st'>"info"</span>,
+  <span class='st'>"all"</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for stw_meta</span>
+<span class='fu'>stw_validate</span>(<span class='no'>meta</span>, <span class='kw'>verbosity</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"error"</span>, <span class='st'>"info"</span>,
+  <span class='st'>"all"</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>meta</th>
-      <td><p>object with S3 class <code>stw_meta</code></p></td>
-    </tr>
-    <tr>
       <th>...</th>
-      <td><p>additional arguments (not used)</p></td>
+      <td><p>other arguments (not used)</p></td>
     </tr>
     <tr>
-      <th>file</th>
-      <td><p><code>character</code> path of file to write</p></td>
+      <th>dict</th>
+      <td><p>object with S3 class <code>stw_dict</code>,
+contains dataset data-dictionary; see <code><a href='stw_dict.html'>stw_dict()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>verbosity</th>
+      <td><p><code>character</code>, determines the amount of feedback, see Details.</p></td>
+    </tr>
+    <tr>
+      <th>meta</th>
+      <td><p>object with S3 class <code>stw_meta</code>,
+contains dataset metadata; see <code><a href='stw_meta.html'>stw_meta()</a></code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>modified copy of <code>dict</code> or <code>meta</code></p>
     
-<dl class='dl-horizontal'>
-<dt><code>stw_to_yaml()</code></dt><dd><p><code>character</code>, YAML string</p></dd>
-<dt><code>stw_use_yaml()</code></dt><dd><p><code><a href='https://www.rdocumentation.org/packages/base/topics/invisible'>invisible(meta)</a></code>, called for side-effects</p></dd>
-<dt><code>stw_write_yaml()</code></dt><dd><p><code><a href='https://www.rdocumentation.org/packages/base/topics/invisible'>invisible(meta)</a></code>, called for side-effects</p></dd>
-</dl>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>You can specify the <code>verbosity</code>:</p>
+<dl class='dl-horizontal'>
+<dt><code>"error"</code></dt><dd><p>reports results of all checks that failed</p></dd>
+<dt><code>"info"</code></dt><dd><p>reports results of all checks that failed,
+and that find missing optional information</p></dd>
+<dt><code>"all"</code></dt><dd><p>reports results of all checks</p></dd>
+<dt><code>"none"</code></dt><dd><p>reports no results</p></dd>
+</dl>
+    <p>The <code>"none"</code> option may not seem intuitive, it is for internal use.
+These functions set an internal attribute of the object to inicate its
+validity.</p>
+<p>For a <code>stw_dict</code> object, each <code>name</code> nust be unique and non-trivial,
+each <code>description</code> must be non-trivial, <code>type</code> is optional.</p>
+<p>For a <code>stw_meta</code> object, it must have a non-trivial <code>name</code>, and <code>dict</code>.
+It may have a <code>title</code>, <code>description</code>, <code>source</code>, <code>n_row</code>, and <code>n_col</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cat'>cat</a></span>(<span class='fu'>stw_to_yaml</span>(<span class='no'>diamonds_meta</span>))</div><div class='output co'>#&gt; name: diamonds
-#&gt; title: Prices of 50,000 round cut diamonds
-#&gt; description: A dataset containing the prices and other attributes of almost 54,000
-#&gt;   diamonds.
-#&gt; source: &lt;http://www.diamondse.info/&gt;
-#&gt; n_row: 53940
-#&gt; n_col: 10
-#&gt; dict:
-#&gt; - name: price
-#&gt;   type: double
-#&gt;   description: price in US dollars ($326--$18,823)
-#&gt; - name: carat
-#&gt;   type: double
-#&gt;   description: weight of diamond (0.2--5.01)
-#&gt; - name: cut
-#&gt;   type: character
-#&gt;   description: quality of the cut (Fair, Good, Very Good, Premium, Ideal)
-#&gt; - name: color
-#&gt;   type: character
-#&gt;   description: diamond color, from D (best) to J (worst)
-#&gt; - name: clarity
-#&gt;   type: character
-#&gt;   description: a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2,
-#&gt;     VS1, VVS2, VVS1, IF (best))
-#&gt; - name: x
-#&gt;   type: double
-#&gt;   description: length in mm (0--10.74)
-#&gt; - name: 'y'
-#&gt;   type: double
-#&gt;   description: width in mm (0--58.9)
-#&gt; - name: z
-#&gt;   type: double
-#&gt;   description: depth in mm (0--31.8)
-#&gt; - name: depth
-#&gt;   type: double
-#&gt;   description: total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)
-#&gt; - name: table
-#&gt;   type: double
-#&gt;   description: width of top of diamond relative to widest point (43--95)</div><div class='input'><span class='fu'>stw_write_yaml</span>(<span class='no'>diamonds_meta</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".yml"</span>))</div><div class='output co'>#&gt; ✔ YAML metadata written to '/var/folders/bw/6jvpjvd14x1534dc6zgtj3vnght7ft/T//Rtmplb75Jb/filea9c2455fe71.yml'.</div><span class='co'># NOT RUN {</span>
-<span class='co'># not run because it copies text to the clipboard</span>
-<span class='fu'>stw_use_yaml</span>(<span class='no'>diamonds_meta</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>stw_check</span>(<span class='no'>diamonds_meta</span>$<span class='no'>dict</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -208,6 +200,8 @@ to your clipboard, and <code>str_write_yaml()</code> writes a YAML string to a f
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
