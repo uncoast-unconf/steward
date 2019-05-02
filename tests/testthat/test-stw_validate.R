@@ -20,8 +20,6 @@ dict_type_trivial <-
 dict_desc_trivial <-
   add_row(dict_good, name = "z", type = "integer", description = "")
 
-
-
 test_that("validity-check works ", {
 
   get_valid <- function(x) {
@@ -36,5 +34,21 @@ test_that("validity-check works ", {
 })
 
 test_that("validity-check side-effects are correct", {
+  # everything OK
+  expect_output(stw_check(dict_good, verbosity = "all"))
+  expect_silent(stw_check(dict_good, verbosity = "info"))
+  expect_silent(stw_check(dict_good, verbosity = "error"))
+  expect_silent(stw_check(dict_good, verbosity = "none"))
 
+  # missing type
+  expect_output(stw_check(dict_type_trivial, verbosity = "all"))
+  expect_output(stw_check(dict_type_trivial, verbosity = "info"))
+  expect_silent(stw_check(dict_type_trivial, verbosity = "error"))
+  expect_silent(stw_check(dict_type_trivial, verbosity = "none"))
+
+  # repeated name
+  expect_output(stw_check(dict_names_repeated, verbosity = "all"))
+  expect_output(stw_check(dict_names_repeated, verbosity = "info"))
+  expect_output(stw_check(dict_names_repeated, verbosity = "error"))
+  expect_silent(stw_check(dict_names_repeated, verbosity = "none"))
 })
