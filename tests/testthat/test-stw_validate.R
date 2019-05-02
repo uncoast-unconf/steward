@@ -28,7 +28,7 @@ meta_missing_name$name <- NULL
 meta_missing_source <- meta_good
 meta_missing_source$source <- " "
 
-test_that("validity-check works for dictionary", {
+test_that("check works for dictionary", {
 
   get_valid <- function(x) {
     identical(attr(x, "is_valid"), TRUE)
@@ -45,7 +45,7 @@ test_that("validity-check works for dictionary", {
   expect_equivalent(stw_check(dict_good), dict_good)
 })
 
-test_that("validity-check works for dictionary", {
+test_that("check works for dictionary", {
 
   get_valid <- function(x) {
     identical(attr(x, "is_valid"), TRUE)
@@ -60,7 +60,7 @@ test_that("validity-check works for dictionary", {
   expect_equivalent(stw_check(meta_good), meta_good)
 })
 
-test_that("validity-check side-effects are correct for dictionary", {
+test_that("check side-effects are correct for dictionary", {
   # everything OK
   expect_output(stw_check(meta_good, verbosity = "all"))
   expect_silent(stw_check(meta_good, verbosity = "info"))
@@ -80,7 +80,7 @@ test_that("validity-check side-effects are correct for dictionary", {
   expect_silent(stw_check(meta_missing_name, verbosity = "none"))
 })
 
-test_that("validity-check side-effects are correct for meta", {
+test_that("check side-effects are correct for meta", {
   # everything OK
   expect_output(stw_check(dict_good, verbosity = "all"))
   expect_silent(stw_check(dict_good, verbosity = "info"))
@@ -98,4 +98,19 @@ test_that("validity-check side-effects are correct for meta", {
   expect_output(stw_check(dict_names_repeated, verbosity = "info"))
   expect_output(stw_check(dict_names_repeated, verbosity = "error"))
   expect_silent(stw_check(dict_names_repeated, verbosity = "none"))
+})
+
+test_that("validate works", {
+
+  # silent
+  expect_silent(stw_validate(dict_good))
+  expect_silent(stw_validate(meta_good))
+
+  # returns argument
+  expect_equivalent(stw_validate(dict_good), dict_good)
+  expect_equivalent(stw_validate(meta_good), meta_good)
+
+  # throws error
+  expect_error(stw_validate(dict_names_repeated))
+  expect_error(stw_validate(meta_missing_name))
 })

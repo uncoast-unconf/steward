@@ -1,8 +1,11 @@
 #' Check a steward object
 #'
-#' Use this function to determine the validity of a `stw_dict` or `stw_meta` object.
+#' Use these function to determine the validity of a `stw_dict` or `stw_meta` object;
+#' `stw_check()` tells you about the object, `stw_validate()` additionally throws
+#' an error if warranted. To support piping, these functions return their first
+#' argument invisibly.
 #'
-#' You can specify the `verbosity`` of the check:
+#' You can specify the `verbosity`:
 #'
 #' \describe{
 #'   \item{`"error"`}{reports results of all checks that failed}
@@ -16,15 +19,15 @@
 #' These functions set an internal attribute of the object to inicate its
 #' validity.
 #'
-#' For a `stw_dict` object each `name` nust be unique and non-trivial,
+#' For a `stw_dict` object, each `name` nust be unique and non-trivial,
 #' each `description` must be non-trivial, `type` is optional.
 #'
-#' A `stw_meta` object must have a non-trivial `name`, and `dict`.
+#' For a `stw_meta` object, it must have a non-trivial `name`, and `dict`.
 #' It may have a `title`, `description`, `source`, `n_row`, and `n_col`.
 #'
 #' @param ... other arguments (not used)
 #' @param meta object with S3 class `stw_meta`,
-#   contains dataset metadata; see [stw_meta()].
+#'   contains dataset metadata; see [stw_meta()].
 #' @param dict object with S3 class `stw_dict`,
 #'   contains dataset data-dictionary; see [stw_dict()].
 #' @param verbosity `character`, determines the amount of feedback, see Details.
@@ -167,6 +170,42 @@ stw_validate <- function(...) {
 stw_validate.default <- function(...) {
   dots <- rlang::list2(...)
   stop(error_message_method("stw_validate()", class(dots[[1]])))
+}
+
+#' @rdname stw_check
+#' @export
+#'
+stw_validate.stw_dict <- function(dict,
+                                  verbosity = c("error", "info", "all"),
+                                  ...) {
+
+  verbosity <- match.arg(verbosity)
+
+  dict <- stw_check(dict, verbosity = verbosity)
+
+  if (!get_valid(dict)) {
+    stop("Dictionary not valid.")
+  }
+
+  invisible(dict)
+}
+
+#' @rdname stw_check
+#' @export
+#'
+stw_validate.stw_meta <- function(meta,
+                                  verbosity = c("error", "info", "all"),
+                                  ...) {
+
+  verbosity <- match.arg(verbosity)
+
+  meta <- stw_check(meta, verbosity = verbosity)
+
+  if (!get_valid(meta)) {
+    stop("Metadata not valid.")
+  }
+
+  invisible(meta)
 }
 
 get_valid <- function(x) {

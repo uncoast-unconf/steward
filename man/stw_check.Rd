@@ -7,6 +7,8 @@
 \alias{stw_check.stw_meta}
 \alias{stw_validate}
 \alias{stw_validate.default}
+\alias{stw_validate.stw_dict}
+\alias{stw_validate.stw_meta}
 \title{Check a steward object}
 \usage{
 stw_check(...)
@@ -22,6 +24,12 @@ stw_check(...)
 stw_validate(...)
 
 \method{stw_validate}{default}(...)
+
+\method{stw_validate}{stw_dict}(dict, verbosity = c("error", "info",
+  "all"), ...)
+
+\method{stw_validate}{stw_meta}(meta, verbosity = c("error", "info",
+  "all"), ...)
 }
 \arguments{
 \item{...}{other arguments (not used)}
@@ -31,16 +39,20 @@ contains dataset data-dictionary; see \code{\link[=stw_dict]{stw_dict()}}.}
 
 \item{verbosity}{\code{character}, determines the amount of feedback, see Details.}
 
-\item{meta}{object with S3 class \code{stw_meta},}
+\item{meta}{object with S3 class \code{stw_meta},
+contains dataset metadata; see \code{\link[=stw_meta]{stw_meta()}}.}
 }
 \value{
 modified copy of \code{dict} or \code{meta}
 }
 \description{
-Use this function to determine the validity of a \code{stw_dict} or \code{stw_meta} object.
+Use these function to determine the validity of a \code{stw_dict} or \code{stw_meta} object;
+\code{stw_check()} tells you about the object, \code{stw_validate()} additionally throws
+an error if warranted. To support piping, these functions return their first
+argument invisibly.
 }
 \details{
-You can specify the `verbosity`` of the check:
+You can specify the \code{verbosity}:
 
 \describe{
 \item{\code{"error"}}{reports results of all checks that failed}
@@ -54,10 +66,10 @@ The \code{"none"} option may not seem intuitive, it is for internal use.
 These functions set an internal attribute of the object to inicate its
 validity.
 
-For a \code{stw_dict} object each \code{name} nust be unique and non-trivial,
+For a \code{stw_dict} object, each \code{name} nust be unique and non-trivial,
 each \code{description} must be non-trivial, \code{type} is optional.
 
-A \code{stw_meta} object must have a non-trivial \code{name}, and \code{dict}.
+For a \code{stw_meta} object, it must have a non-trivial \code{name}, and \code{dict}.
 It may have a \code{title}, \code{description}, \code{source}, \code{n_row}, and \code{n_col}.
 }
 \examples{
