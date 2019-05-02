@@ -4,6 +4,7 @@
 \alias{stw_check}
 \alias{stw_check.default}
 \alias{stw_check.stw_dict}
+\alias{stw_check.stw_meta}
 \alias{stw_validate}
 \alias{stw_validate.default}
 \title{Check a steward object}
@@ -12,8 +13,11 @@ stw_check(...)
 
 \method{stw_check}{default}(...)
 
-\method{stw_check}{stw_dict}(dict, verbosity = c("none", "error", "info",
-  "all"), ...)
+\method{stw_check}{stw_dict}(dict, verbosity = c("error", "info", "all",
+  "none"), ...)
+
+\method{stw_check}{stw_meta}(meta, verbosity = c("error", "info", "all",
+  "none"), ...)
 
 stw_validate(...)
 
@@ -26,6 +30,8 @@ stw_validate(...)
 contains dataset data-dictionary; see \code{\link[=stw_dict]{stw_dict()}}.}
 
 \item{verbosity}{\code{character}, determines the amount of feedback, see Details.}
+
+\item{meta}{object with S3 class \code{stw_meta},}
 }
 \value{
 modified copy of \code{dict} or \code{meta}
@@ -37,10 +43,10 @@ Use this function to determine the validity of a \code{stw_dict} or \code{stw_me
 You can specify the `verbosity`` of the check:
 
 \describe{
-\item{\code{"all"}}{reports results of all checks}
-\item{\code{"info"}}{reports results of all checks that failed,
-and that have missing optional information}
 \item{\code{"error"}}{reports results of all checks that failed}
+\item{\code{"info"}}{reports results of all checks that failed,
+and that find missing optional information}
+\item{\code{"all"}}{reports results of all checks}
 \item{\code{"none"}}{reports no results}
 }
 

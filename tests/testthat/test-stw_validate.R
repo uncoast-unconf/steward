@@ -20,20 +20,67 @@ dict_type_trivial <-
 dict_desc_trivial <-
   add_row(dict_good, name = "z", type = "integer", description = "")
 
-test_that("validity-check works ", {
+meta_good <- diamonds_meta
+
+meta_missing_name <- meta_good
+meta_missing_name$name <- NULL
+
+meta_missing_source <- meta_good
+meta_missing_source$source <- " "
+
+test_that("validity-check works for dictionary", {
 
   get_valid <- function(x) {
     identical(attr(x, "is_valid"), TRUE)
   }
 
+  # check we get the right result
   expect_true(get_valid(stw_check(dict_good)))
   expect_true(get_valid(stw_check(dict_type_trivial)))
   expect_false(get_valid(stw_check(dict_names_repeated)))
   expect_false(get_valid(stw_check(dict_names_trivial)))
   expect_false(get_valid(stw_check(dict_desc_trivial)))
+
+  # check we reutrn the item
+  expect_equivalent(stw_check(dict_good), dict_good)
 })
 
-test_that("validity-check side-effects are correct", {
+test_that("validity-check works for dictionary", {
+
+  get_valid <- function(x) {
+    identical(attr(x, "is_valid"), TRUE)
+  }
+
+  # check we get the right result
+  expect_true(get_valid(stw_check(meta_good)))
+  expect_true(get_valid(stw_check(meta_missing_source)))
+  expect_false(get_valid(stw_check(meta_missing_name)))
+
+  # check we reutrn the item
+  expect_equivalent(stw_check(meta_good), meta_good)
+})
+
+test_that("validity-check side-effects are correct for dictionary", {
+  # everything OK
+  expect_output(stw_check(meta_good, verbosity = "all"))
+  expect_silent(stw_check(meta_good, verbosity = "info"))
+  expect_silent(stw_check(meta_good, verbosity = "error"))
+  expect_silent(stw_check(meta_good, verbosity = "none"))
+
+  # missing type
+  expect_output(stw_check(meta_missing_source, verbosity = "all"))
+  expect_output(stw_check(meta_missing_source, verbosity = "info"))
+  expect_silent(stw_check(meta_missing_source, verbosity = "error"))
+  expect_silent(stw_check(meta_missing_source, verbosity = "none"))
+
+  # repeated name
+  expect_output(stw_check(meta_missing_name, verbosity = "all"))
+  expect_output(stw_check(meta_missing_name, verbosity = "info"))
+  expect_output(stw_check(meta_missing_name, verbosity = "error"))
+  expect_silent(stw_check(meta_missing_name, verbosity = "none"))
+})
+
+test_that("validity-check side-effects are correct for meta", {
   # everything OK
   expect_output(stw_check(dict_good, verbosity = "all"))
   expect_silent(stw_check(dict_good, verbosity = "info"))

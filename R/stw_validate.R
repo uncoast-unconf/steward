@@ -5,10 +5,10 @@
 #' You can specify the `verbosity`` of the check:
 #'
 #' \describe{
-#'   \item{`"all"`}{reports results of all checks}
-#'   \item{`"info"`}{reports results of all checks that failed,
-#'     and that have missing optional information}
 #'   \item{`"error"`}{reports results of all checks that failed}
+#'   \item{`"info"`}{reports results of all checks that failed,
+#'     and that find missing optional information}
+#'   \item{`"all"`}{reports results of all checks}
 #'   \item{`"none"`}{reports no results}
 #' }
 #'
@@ -23,7 +23,7 @@
 #' It may have a `title`, `description`, `source`, `n_row`, and `n_col`.
 #'
 #' @param ... other arguments (not used)
-# @param meta object with S3 class `stw_meta`,
+#' @param meta object with S3 class `stw_meta`,
 #   contains dataset metadata; see [stw_meta()].
 #' @param dict object with S3 class `stw_dict`,
 #'   contains dataset data-dictionary; see [stw_dict()].
@@ -51,10 +51,12 @@ stw_check.default <- function(...) {
 #' @export
 #'
 stw_check.stw_dict <- function(dict,
-                               verbosity = c("none", "error", "info", "all"),
+                               verbosity = c("error", "info", "all", "none"),
                                ...) {
-  valid <- TRUE
+  verbosity <- match.arg(verbosity)
   ui_fn <- get_ui_functions(verbosity)
+
+  valid <- TRUE
 
   # names are unique
   names_repeated <- dict[["name"]][duplicated(dict[["name"]])]
@@ -101,10 +103,55 @@ stw_check.stw_dict <- function(dict,
     ui_fn$ui_done("Dictionary types are all non-trivial.")
   }
 
-  # set the validity of the dict
+  # set the validity
   dict <- set_valid(dict, valid)
 
   invisible(dict)
+}
+
+
+#' @rdname stw_check
+#' @export
+#'
+stw_check.stw_meta <- function(meta,
+                               verbosity = c("error", "info", "all", "none"),
+                               ...) {
+
+  verbosity <- match.arg(verbosity)
+  ui_fn <- get_ui_functions(verbosity)
+
+  # check the dictionary
+  meta[["dict"]] <- stw_check(meta[["dict"]], verbosity = verbosity)
+  valid <- get_valid(meta[["dict"]])
+
+  # check the fields
+  fields <- names(meta)
+
+  # check the mandatory fields
+  mandatory <- c("name", "dict")
+  missing_mandatory <- mandatory[!check_elements(mandatory, meta)]
+
+  if (length(missing_mandatory) > 0) {
+    valid <- FALSE
+    ui_fn$ui_oops("Metadata missing required fields: {usethis::ui_value(missing_mandatory)}.")
+  } else {
+    ui_fn$ui_done("Metadata has all required fields.")
+  }
+
+  # check the optional fields
+  optional <- c("title", "description", "source", "n_row", "n_col")
+  missing_optional <- optional[!check_elements(optional, meta)]
+
+  if (length(missing_optional) > 0) {
+    ui_fn$ui_info("Metadata missing optional fields: {usethis::ui_value(missing_optional)}.")
+  } else {
+    ui_fn$ui_done("Metadata has all optional fields.")
+  }
+
+  # set the validity
+  meta <- set_valid(meta, valid)
+
+  invisible(meta)
 }
 
 #' @rdname stw_check
@@ -161,4 +208,28 @@ get_ui_functions <- function(verbosity = c("none", "error", "info", "all")) {
   }
 
   set
+}
+
+# return a named vector indicating validity
+check_elements <- function(names, item) {
+
+  is_valid <- function(name, item) {
+
+    elem <- item[[name]]
+
+    if (is.data.frame(elem)) {
+      return(TRUE)
+    }
+
+    valid <-
+      !is.null(elem) &&
+      !is.na(elem) &&
+      length(elem) > 0 &&
+      !stringr::str_detect(elem, "^\\s*$") &&
+      TRUE
+
+    valid
+  }
+
+  vapply(names, is_valid, FUN.VALUE = logical(1), item)
 }
