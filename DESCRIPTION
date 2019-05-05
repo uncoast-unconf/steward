@@ -53,7 +53,8 @@ Imports:
     stringr,
     gt,
     utils,
-    usethis
+    usethis,
+    withr
 Remotes: rstudio/gt
 Suggests: 
     testthat (>= 2.1.0),

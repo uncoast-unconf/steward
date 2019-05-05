@@ -20,6 +20,13 @@ new_stw_meta <- function(name = NULL, title = NULL, description = NULL,
 
 #' Create new metadata object
 #'
+#' You can create a new metadata by specifying each of the elements,
+#' by specifying a list, or by providing a dataset which includes metadata.
+#'
+#' When you create a metadata object, it is checked for required and optional
+#' elements. Each metadaset is required to have a `name` and `dict` object. A
+#' `title`, `description`, `source`, `n_row`, `n_col` are optional.
+#'
 #' @param name `character` name of the dataset
 #' @param title `character` title of the dataset
 #' @param description `character` description of the dataset
@@ -49,9 +56,20 @@ stw_meta.default <- function(...) {
 #' @rdname stw_meta
 #' @export
 #'
-stw_meta.character <- function(name, title, description, source = NULL,
-                               n_row = NULL, n_col = NULL,
+stw_meta.character <- function(name, title = NULL, description = NULL,
+                               source = NULL, n_row = NULL, n_col = NULL,
                                dict = NULL, ...) {
+
+  # warn on extra arguments
+  extra_args <- names(rlang::list2(...))
+
+  if (length(extra_args) > 0) {
+    warning(
+      "Metadata extra arguments are ignored: ",
+      usethis::ui_value(extra_args),
+      call. = FALSE
+    )
+  }
 
   # construct
   meta <- new_stw_meta(
@@ -65,7 +83,9 @@ stw_meta.character <- function(name, title, description, source = NULL,
   )
 
   # check
-  meta <- stw_check(meta, verbosity = "info")
+  verbosity <- getOption("steward.verbosity") %||% "info"
+
+  meta <- stw_check(meta, verbosity = verbosity)
 
   meta
 }

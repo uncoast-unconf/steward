@@ -12,8 +12,8 @@ stw_meta(...)
 
 \method{stw_meta}{default}(...)
 
-\method{stw_meta}{character}(name, title, description, source = NULL,
-  n_row = NULL, n_col = NULL, dict = NULL, ...)
+\method{stw_meta}{character}(name, title = NULL, description = NULL,
+  source = NULL, n_row = NULL, n_col = NULL, dict = NULL, ...)
 
 \method{stw_meta}{list}(env, ...)
 
@@ -44,5 +44,11 @@ stw_meta(...)
 Object with S3 class \code{stw_meta}
 }
 \description{
-Create new metadata object
+You can create a new metadata by specifying each of the elements,
+by specifying a list, or by providing a dataset which includes metadata.
+}
+\details{
+When you create a metadata object, it is checked for required and optional
+elements. Each metadaset is required to have a \code{name} and \code{dict} object. A
+\code{title}, \code{description}, \code{source}, \code{n_row}, \code{n_col} are optional.
 }
