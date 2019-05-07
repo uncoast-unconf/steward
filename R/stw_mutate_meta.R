@@ -54,3 +54,25 @@ stw_mutate_meta.stw_meta <- function(meta, ...) {
 
   meta
 }
+
+#' @rdname stw_mutate_meta
+#' @export
+#'
+stw_mutate_meta.stw_dataset <- function(dataset, ...) {
+  meta <- stw_meta(dataset)
+  meta <- stw_mutate_meta(meta, ...)
+
+  # we ignore the dictionary
+  meta$dict <- NULL
+
+  # set n_row
+  meta$n_row <- nrow(dataset)
+
+  # incorporate meta as attributes
+  for (i in seq_along(meta)) {
+    attr(dataset, names(meta)[i]) <- meta[[i]]
+  }
+
+  dataset
+}
+

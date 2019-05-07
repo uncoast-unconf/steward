@@ -50,7 +50,7 @@ stw_meta <- function(...) {
 #'
 stw_meta.default <- function(...) {
   dots <- rlang::list2(...)
-  stop(error_message_method("stw_to_meta()", class(dots[[1]])))
+  stop(error_message_method("stw_meta()", class(dots[[1]])))
 }
 
 #' @rdname stw_meta
@@ -116,6 +116,13 @@ stw_meta.list <- function(env, ...) {
 stw_meta.stw_meta <- function(meta, ...) {
   meta <- stw_meta(unclass(meta))
   meta
+}
+
+#' @rdname stw_meta
+#' @export
+#'
+stw_meta.stw_dataset <- function(dataset, ...) {
+
 }
 
 #' @export
