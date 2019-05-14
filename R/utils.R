@@ -18,3 +18,31 @@ error_message_method <- function(name_fn, name_class) {
 }
 
 `%||%` <- rlang::`%||%`
+
+type <- function(x) {
+
+  # recognized types:
+  # - logical
+  # - integer
+  # - double
+  # - date
+  # - datetime
+  # - character
+
+  class_x <- class(x)[[1]]
+
+  key_value <- c(
+    logical = "logical",
+    integer = "integer",
+    numeric = "double",
+    Date = "date",
+    POSIXct = "datetime",
+    character = "character"
+  )
+
+  if (!(class_x %in% names(key_value))) {
+    return("unrecognized")
+  }
+
+  key_value[[class_x]]
+}
