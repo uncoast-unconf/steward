@@ -86,12 +86,18 @@ stw_dataset.stw_dataset <- function(dataset, meta = NULL, ...) {
   invisible(dataset)
 }
 
+#' @export
+#'
 format.stw_dataset <- function(x, ...) {
-  tibble::glimpse(x)
+  x_df <- x
+  class(x_df) <- class(x)[-1]
+  print(x_df)
   cat("Metadata:\n")
-  format(stw_meta(x))
+  print(stw_meta(x))
 }
 
+#' @export
+#'
 print.stw_dataset <- function(x, ...) {
   format(x, ...)
 }

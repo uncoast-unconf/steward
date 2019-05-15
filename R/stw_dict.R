@@ -77,21 +77,17 @@ stw_dict.stw_dataset <- function(dataset, ...) {
 
   names_dataset <- names(dataset)
 
-  d <- stw_dict(NULL)
-
-  for (i in seq_along(names_dataset)) {
-
-    name <- names_dataset[i]
-
-    d <- tibble::add_row(
-      d,
-      name = name,
-      type = type(dataset[[name]]),
-      description = attr(dataset[[name]], "steward_description")
-    )
+  get_desc <- function(x) {
+    attr(x, "steward_description") %||% NA_character_
   }
 
-  new_stw_dict(d)
+  df <- tibble::tibble(
+    name = names(dataset),
+    type = vapply(dataset, type, character(1)),
+    description = vapply(dataset, get_desc, character(1))
+  )
+
+  stw_dict(df)
 }
 
 #' @export

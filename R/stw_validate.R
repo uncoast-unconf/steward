@@ -25,11 +25,8 @@
 #' For a `stw_meta` object, it must have a non-trivial `name`, and `dict`.
 #' It may have a `title`, `description`, `source`, `n_row`, and `n_col`.
 #'
+#' @inheritParams stw_meta
 #' @param ... other arguments (not used)
-#' @param meta object with S3 class `stw_meta`,
-#'   contains dataset metadata; see [stw_meta()].
-#' @param dict object with S3 class `stw_dict`,
-#'   contains dataset data-dictionary; see [stw_dict()].
 #' @param verbosity `character`, determines the amount of feedback, see Details.
 #'
 #' @return modified copy of `dict` or `meta`
@@ -89,7 +86,7 @@ stw_check.stw_dict <- function(dict,
   if (length(desc_trivial) > 0) {
     valid <- FALSE
     ui_fn$ui_oops(
-      "Dictionary descriprions are missing for names: {usethis::ui_value(desc_trivial)}."
+      "Dictionary descriptions are missing for names: {usethis::ui_value(desc_trivial)}."
     )
   } else {
     ui_fn$ui_done("Dictionary descriptions are all non-trivial.")
@@ -157,6 +154,23 @@ stw_check.stw_meta <- function(meta,
   invisible(meta)
 }
 
+stw_check.stw_dataset <- function(dataset,
+                                  verbosity = c("error", "info", "all"),
+                                  ...) {
+
+  verbosity <- match.arg(verbosity)
+  ui_fn <- get_ui_functions(verbosity)
+
+  # check the meta
+  meta <- stw_check(stw_meta(dataset), verbosity = verbosity)
+
+  # reincorporate into dataset
+  dataset <- stw_dataset(dataset, meta)
+
+  invisible(dataset)
+}
+
+
 #' @rdname stw_check
 #' @export
 #'
@@ -206,6 +220,26 @@ stw_validate.stw_meta <- function(meta,
   }
 
   invisible(meta)
+}
+
+
+#' @rdname stw_check
+#' @export
+#'
+stw_validate.stw_dataset <- function(dataset,
+                                     verbosity = c("error", "info", "all"),
+                                     ...) {
+
+  verbosity <- match.arg(verbosity)
+
+  # validate the meta
+  meta <- stw_meta(dataset)
+  meta <- stw_validate(meta)
+
+  # reincorporate
+  dataset <- stw_dataset(dataset, meta)
+
+  invisible(dataset)
 }
 
 get_valid <- function(x) {
