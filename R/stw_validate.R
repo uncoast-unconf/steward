@@ -139,14 +139,27 @@ stw_check.stw_meta <- function(meta,
   }
 
   # check the optional fields
-  optional <- c("title", "description", "source", "n_row", "n_col")
+  optional <- c("title", "description", "n_row", "n_col")
   missing_optional <- optional[!check_elements(optional, meta)]
+
+  # check the sources
+  if (is.null(meta[["sources"]])) {
+    missing_optional <- c(missing_optional, "sources")
+  } else {
+    if (!check_sources(meta[["sources"]], ui_fn)) {
+      ui_fn$ui_oops("Metadata sources not valid.")
+    } else {
+      ui_fn$ui_done("Metadata sources valid.")
+    }
+  }
 
   if (length(missing_optional) > 0) {
     ui_fn$ui_info("Metadata missing optional fields: {usethis::ui_value(missing_optional)}.")
   } else {
     ui_fn$ui_done("Metadata has all optional fields.")
   }
+
+
 
   # set the validity
   meta <- set_valid(meta, valid)
@@ -305,4 +318,33 @@ check_elements <- function(names, item) {
   }
 
   vapply(names, is_valid, FUN.VALUE = logical(1), item)
+}
+
+check_sources <- function(x, ui_fn) {
+
+  if (!is.list(x)) {
+    ui_fn$ui_oops("Metadata sources not a list.")
+    return(FALSE)
+  }
+
+  check_source <- function(x) {
+    if (!is.list(x)) {
+      ui_fn$ui_oops("Metadata sources-element not a list.")
+      return(FALSE)
+    }
+
+    if (!all(names(x) %in% c("title", "path", "email"))) {
+      ui_fn$ui_oops("Metadata sources-element has extra names.")
+      return(FALSE)
+    }
+
+    if (!("title" %in% names(x))) {
+      ui_fn$ui_oops("Metadata sources-element no {usethis::ui_value('title')}.")
+      return(FALSE)
+    }
+
+    TRUE
+  }
+
+  all(vapply(x, check_source, logical(1)))
 }

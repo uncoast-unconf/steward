@@ -1,7 +1,7 @@
 # internal constructor
 #
 new_stw_meta <- function(name = NULL, title = NULL, description = NULL,
-                         source = NULL, n_row = NULL, n_col = NULL,
+                         sources = NULL, n_row = NULL, n_col = NULL,
                          dict = NULL) {
 
   structure(
@@ -9,7 +9,7 @@ new_stw_meta <- function(name = NULL, title = NULL, description = NULL,
       name = trimws(name),
       title = trimws(title),
       description = trimws(description),
-      source = trimws(source),
+      sources = sources,
       n_row = as.integer(n_row),
       n_col = as.integer(n_col),
       dict = stw_dict(dict)
@@ -30,7 +30,8 @@ new_stw_meta <- function(name = NULL, title = NULL, description = NULL,
 #' @param name `character` name of the dataset
 #' @param title `character` title of the dataset
 #' @param description `character` description of the dataset
-#' @param source `character` source of the dataset
+#' @param sources `list` source of the dataset; has elements `title`, and optionally
+#'   `path` and `email`
 #' @param n_row `integer` number of rows in the dataset
 #' @param n_col `integer` number of columns in the dataset
 #' @param dict Object with S3 class `stw_dict`, contains data-dictionary
@@ -57,7 +58,7 @@ stw_meta.default <- function(...) {
 #' @export
 #'
 stw_meta.character <- function(name, title = NULL, description = NULL,
-                               source = NULL, n_row = NULL, n_col = NULL,
+                               sources = NULL, n_row = NULL, n_col = NULL,
                                dict = NULL, ...) {
 
   # warn on extra arguments
@@ -76,7 +77,7 @@ stw_meta.character <- function(name, title = NULL, description = NULL,
     name = name,
     title = title,
     description = description,
-    source = source,
+    sources = sources,
     n_row = n_row,
     n_col = n_col,
     dict = dict
@@ -100,7 +101,7 @@ stw_meta.list <- function(env, ...) {
     n_row = env[["n_row"]],
     n_col = env[["n_col"]],
     description = env[["description"]],
-    source = env[["source"]],
+    sources = env[["sources"]],
     dict = env[["dict"]]
   )
 }

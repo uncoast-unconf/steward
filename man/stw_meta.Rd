@@ -14,7 +14,7 @@ stw_meta(...)
 \method{stw_meta}{default}(...)
 
 \method{stw_meta}{character}(name, title = NULL, description = NULL,
-  source = NULL, n_row = NULL, n_col = NULL, dict = NULL, ...)
+  sources = NULL, n_row = NULL, n_col = NULL, dict = NULL, ...)
 
 \method{stw_meta}{list}(env, ...)
 
@@ -31,7 +31,8 @@ stw_meta(...)
 
 \item{description}{\code{character} description of the dataset}
 
-\item{source}{\code{character} source of the dataset}
+\item{sources}{\code{list} source of the dataset; has elements \code{title}, and optionally
+\code{path} and \code{email}}
 
 \item{n_row}{\code{integer} number of rows in the dataset}
 

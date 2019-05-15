@@ -26,7 +26,7 @@ meta_missing_name <- meta_good
 meta_missing_name$name <- NULL
 
 meta_missing_source <- meta_good
-meta_missing_source$source <- " "
+meta_missing_source$sources <- NULL
 
 test_that("check works for dictionary", {
 

@@ -21,6 +21,7 @@ diamonds_meta <-
     ## ✔ Dictionary descriptions are all non-trivial.
     ## ✔ Dictionary types are all recognized.
     ## ✔ Metadata has all required fields.
+    ## ✔ Metadata sources valid.
     ## ✔ Metadata has all optional fields.
 
 ``` r
