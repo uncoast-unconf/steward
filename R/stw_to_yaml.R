@@ -39,7 +39,28 @@ stw_to_yaml.default <- function(meta, ...) {
 #'
 stw_to_yaml.stw_meta <- function(meta, ...) {
 
-  meta$dict <- transpose(meta$dict)
+  # supress n_row, n_col: not part of table-schema
+  meta[["n_row"]] <- NULL
+  meta[["n_col"]] <- NULL
+
+  # dict -> schema$fields
+  dict <- transpose(meta[["dict"]])
+
+  # levels -> constraints$enum
+  to_enum <- function(x) {
+    levels <- x[["levels"]]
+    x[["levels"]] <- NULL
+
+    if (!is.null(levels)) {
+      x[["constraints"]] <- list(enum = levels)
+    }
+
+    x
+  }
+  dict <- lapply(dict, to_enum)
+
+  meta[["dict"]] <- NULL
+  meta[["schema"]] <- list(fields = dict)
 
   yaml <- yaml::as.yaml(meta)
 

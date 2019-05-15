@@ -9,6 +9,10 @@ library("here")
 ``` r
 diamonds_meta <- 
   stw_read_meta_yaml(here("inst", "metadata", "diamonds.yml")) %>%
+  stw_mutate_meta(
+    n_row = 53940L,
+    n_col = 10L    
+  ) %>%
   stw_check("all")
 ```
 
