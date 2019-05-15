@@ -14,10 +14,11 @@ stw_read_meta_yaml <- function(file) {
   # read in the yaml file
   infile <- yaml::read_yaml(file)
 
-  # process the dictionary
-  grande <- lapply(infile$dict, tibble::as_tibble)
-  df <- do.call(rbind, grande) # this combines all the different values into 1 tibble
-  infile$dict <- stw_dict(df)
+  dict <- lapply(infile$dict, function(x) {do.call(stw_dict, x)})
+
+  dict <- do.call(rbind, dict) # this combines all the different values into 1 tibble
+
+  infile$dict <- stw_dict(dict)
 
   # create using the `infile` envronment
   meta <- stw_meta(infile)

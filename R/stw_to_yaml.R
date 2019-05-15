@@ -38,7 +38,10 @@ stw_to_yaml.default <- function(meta, ...) {
 #' @export
 #'
 stw_to_yaml.stw_meta <- function(meta, ...) {
-  yaml <- yaml::as.yaml(meta, column.major = FALSE)
+
+  meta$dict <- transpose(meta$dict)
+
+  yaml <- yaml::as.yaml(meta)
 
   yaml
 }

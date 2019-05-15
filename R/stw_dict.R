@@ -8,8 +8,10 @@ new_stw_dict <- function(dict) {
 #' Create new data-dictionary object
 #'
 #' @param data_dict `data.frame` that has columns `name`, `type`, `description`
+#' @param description `character`, description of the varaible
+#' @param type `character`, type of the variable, see Details
+#' @param levels `character`, if `type` is `"factor"`, the levels of the factor
 #' @inheritParams stw_meta
-#' @inheritParams stw_dataset
 #'
 #' @return object with S3 class `stw_dict`
 #' @export
@@ -33,8 +35,24 @@ stw_dict.NULL <- function(data_dict, ...) {
   tibble::tibble(
     name = character(),
     type = character(),
-    description = character()
+    description = character(),
+    levels = list()
   )
+}
+
+#' @rdname stw_dict
+#' @export
+#'
+stw_dict.character <- function(name, type, description, levels = NULL, ...) {
+
+  dict <- tibble::tibble(
+    name = name,
+    type = type,
+    description = description,
+    levels = list(levels)
+  )
+
+  stw_dict(dict)
 }
 
 #' @rdname stw_dict
@@ -53,13 +71,13 @@ stw_dict.data.frame <- function(data_dict, ...) {
   assert_name("name")
   assert_name("type")
   assert_name("description")
+  assert_name("levels")
 
-  # coerce to character
-  d <- lapply(data_dict, as.character)
-  d <- lapply(d, trimws)
-  d <- as.data.frame(d, stringsAsFactors = FALSE)
+  data_dict[["name"]] <- trimws(data_dict[["name"]])
+  data_dict[["type"]] <- trimws(data_dict[["type"]])
+  data_dict[["description"]] <- trimws(data_dict[["description"]])
 
-  new_stw_dict(d)
+  new_stw_dict(data_dict)
 }
 
 #' @rdname stw_dict
@@ -84,7 +102,8 @@ stw_dict.stw_dataset <- function(dataset, ...) {
   df <- tibble::tibble(
     name = names(dataset),
     type = vapply(dataset, type, character(1)),
-    description = vapply(dataset, get_desc, character(1))
+    description = vapply(dataset, get_desc, character(1)),
+    levels = lapply(dataset, levels)
   )
 
   stw_dict(df)

@@ -16,6 +16,6 @@ Object with S3 class \code{stw_meta}
 Create metadata-object from CSV
 }
 \examples{
-stw_read_meta_csv(system.file("metadata/diamonds.csv", package = "steward"))
+# stw_read_meta_csv(system.file("metadata/diamonds.csv", package = "steward"))
 
 }

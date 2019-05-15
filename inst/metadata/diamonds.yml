@@ -7,32 +7,55 @@ n_col: 10
 source: <http://www.diamondse.info/>
 dict:
     - name: price
-      type: double
+      type: number
       description: price in US dollars ($326--$18,823)
     - name: carat
-      type: double
+      type: number
       description: weight of diamond (0.2--5.01)
     - name: cut
-      type: factor
+      type: string
       description: quality of the cut (Fair, Good, Very Good, Premium, Ideal)
+      levels:
+        - Fair
+        - Good
+        - Very Good
+        - Premium
+        - Ideal
     - name: color
-      type: factor
+      type: string
       description: diamond color, from D (best) to J (worst)
+      levels:
+        - D
+        - E
+        - F
+        - G
+        - H
+        - I
+        - J
     - name: clarity
-      type: factor
+      type: string
       description: a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))
+      levels:
+        - I1
+        - SI2
+        - SI1
+        - VS2
+        - VS1
+        - VVS2
+        - VVS1
+        - IF
     - name: x
-      type: double
+      type: number
       description: length in mm (0--10.74)
     - name: "y"
-      type: double
+      type: number
       description: width in mm (0--58.9)
     - name: z
-      type: double
+      type: number
       description: depth in mm (0--31.8)
     - name: depth
-      type: double
+      type: number
       description: total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)
     - name: table
-      type: double
+      type: number
       description: width of top of diamond relative to widest point (43--95)

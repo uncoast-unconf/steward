@@ -92,15 +92,15 @@ stw_check.stw_dict <- function(dict,
     ui_fn$ui_done("Dictionary descriptions are all non-trivial.")
   }
 
-  # types are non-trivial
-  type_trivial <-
-    dict[["name"]][stringr::str_detect(dict[["type"]], "^\\s*$")]
-  if (length(type_trivial) > 0) {
+  # types are recognized
+  type_not_recognized <- !(dict[["type"]] %in% type_recognized())
+  name_not_recognized <- dict[["name"]][type_not_recognized]
+  if (length(name_not_recognized) > 0) {
     ui_fn$ui_info(
-      "Dictionary types are trivial for names: {usethis::ui_value(type_trivial)}."
+      "Dictionary types not recognized for names: {usethis::ui_value(name_not_recognized)}."
     )
   } else {
-    ui_fn$ui_done("Dictionary types are all non-trivial.")
+    ui_fn$ui_done("Dictionary types are all recognized.")
   }
 
   # set the validity

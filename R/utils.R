@@ -23,20 +23,24 @@ type <- function(x) {
 
   class_x <- class(x)[[1]]
 
-  key_value <- c(
-    logical = "logical",
-    integer = "integer",
-    numeric = "double",
-    Date = "date",
-    POSIXct = "datetime",
-    character = "character",
-    factor = "factor",
-    ordered = "ordered"
-  )
+  key_value <- type_recognized()
 
   if (!(class_x %in% names(key_value))) {
     return("unrecognized")
   }
 
   key_value[[class_x]]
+}
+
+type_recognized <- function() {
+  c(
+    logical = "boolean",
+    integer = "integer",
+    numeric = "number",
+    Date = "date",
+    POSIXct = "datetime",
+    character = "string",
+    factor = "string",
+    ordered = "string"
+  )
 }
