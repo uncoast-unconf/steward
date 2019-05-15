@@ -21,14 +21,6 @@ error_message_method <- function(name_fn, name_class) {
 
 type <- function(x) {
 
-  # recognized types:
-  # - logical
-  # - integer
-  # - double
-  # - date
-  # - datetime
-  # - character
-
   class_x <- class(x)[[1]]
 
   key_value <- c(
@@ -37,7 +29,9 @@ type <- function(x) {
     numeric = "double",
     Date = "date",
     POSIXct = "datetime",
-    character = "character"
+    character = "character",
+    factor = "factor",
+    ordered = "ordered"
   )
 
   if (!(class_x %in% names(key_value))) {

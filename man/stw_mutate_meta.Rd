@@ -4,6 +4,7 @@
 \alias{stw_mutate_meta}
 \alias{stw_mutate_meta.default}
 \alias{stw_mutate_meta.stw_meta}
+\alias{stw_mutate_meta.stw_dataset}
 \title{Modify metadata-object}
 \usage{
 stw_mutate_meta(...)
@@ -11,11 +12,15 @@ stw_mutate_meta(...)
 \method{stw_mutate_meta}{default}(...)
 
 \method{stw_mutate_meta}{stw_meta}(meta, ...)
+
+\method{stw_mutate_meta}{stw_dataset}(dataset, ...)
 }
 \arguments{
 \item{...}{Name-value pairs, passed on to \code{\link[=stw_mutate_meta]{stw_mutate_meta()}}}
 
-\item{meta}{object with S3 class \code{stw_meta}}
+\item{meta}{Object with S3 class \code{stw_meta}, contains meta-data}
+
+\item{dataset}{Object with S3 class \code{stw_dataset}, a data frame with attached meta-data}
 }
 \value{
 modified copy of \code{meta} or \code{dataset}

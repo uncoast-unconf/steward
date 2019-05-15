@@ -8,20 +8,39 @@ new_stw_dict <- function(dict) {
 #' Create new data-dictionary object
 #'
 #' @param data_dict `data.frame` that has columns `name`, `type`, `description`
+#' @inheritParams stw_meta
+#' @inheritParams stw_dataset
 #'
-#' @return object with S3 class `stw_meta`
+#' @return object with S3 class `stw_dict`
 #' @export
 #'
-stw_dict <- function(data_dict) {
+stw_dict <- function(...) {
+  UseMethod("stw_dict")
+}
 
-  # permit NULL so that we can get names of meta elements
-  data_dict <-
-    data_dict %||%
-    tibble::tibble(
-      name = character(),
-      type = character(),
-      description = character()
-    )
+#' @rdname stw_dict
+#' @export
+#'
+stw_dict.default <- function(...) {
+  dots <- rlang::list2(...)
+  stop(error_message_method("stw_dict()", class(dots[[1]])))
+}
+
+#' @rdname stw_dict
+#' @export
+#'
+stw_dict.NULL <- function(data_dict, ...) {
+  tibble::tibble(
+    name = character(),
+    type = character(),
+    description = character()
+  )
+}
+
+#' @rdname stw_dict
+#' @export
+#'
+stw_dict.data.frame <- function(data_dict, ...) {
 
   assert_name <- function(var) {
     assertthat::assert_that(
@@ -43,6 +62,37 @@ stw_dict <- function(data_dict) {
   new_stw_dict(d)
 }
 
+#' @rdname stw_dict
+#' @export
+#'
+stw_dict.stw_meta <- function(meta, ...) {
+  d <- meta[["dict"]]
+  new_stw_dict(d)
+}
+
+#' @rdname stw_dict
+#' @export
+#'
+stw_dict.stw_dataset <- function(dataset, ...) {
+
+  names_dataset <- names(dataset)
+
+  d <- stw_dict(NULL)
+
+  for (i in seq_along(names_dataset)) {
+
+    name <- names_dataset[i]
+
+    d <- tibble::add_row(
+      d,
+      name = name,
+      type = type(dataset[[name]]),
+      description = attr(dataset[[name]], "steward_description")
+    )
+  }
+
+  new_stw_dict(d)
+}
 
 #' @export
 #'

@@ -9,8 +9,7 @@
 #' `stw_meta` object, it will modify the `dict` within the object,
 #' then return a modified copy of the`stw_meta` object.
 #'
-#' @param dict Object with S3 class `stw_dict`
-#' @inheritParams stw_to_roxygen
+#' @inheritParams stw_meta
 #' @param ... Name-value pairs of expressions
 #'
 #' @return modified copy of `dict` or `meta`
@@ -53,10 +52,25 @@ stw_mutate_dict.stw_dict <- function(dict, ...) {
 #'
 stw_mutate_dict.stw_meta <- function(meta, ...) {
 
-  meta[["dict"]] <- stw_mutate_dict(meta[["dict"]], ...)
+  dict <- stw_dict(meta)
+  meta[["dict"]] <- stw_mutate_dict(dict, ...)
 
   meta
 }
+
+#' @rdname stw_mutate_dict
+#' @export
+#'
+stw_mutate_dict.stw_dataset <- function(dataset, ...) {
+
+  meta <- stw_meta(dataset)
+  meta <- stw_mutate_dict(meta, ...)
+
+  dataset <- stw_dataset(dataset, meta)
+
+  invisible(dataset)
+}
+
 
 #' Set the description for a given name
 #'

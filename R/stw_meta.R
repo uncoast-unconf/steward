@@ -33,10 +33,10 @@ new_stw_meta <- function(name = NULL, title = NULL, description = NULL,
 #' @param source `character` source of the dataset
 #' @param n_row `integer` number of rows in the dataset
 #' @param n_col `integer` number of columns in the dataset
-#' @param dict `stw_dict` object, dictionary of variables in the dataset
+#' @param dict Object with S3 class `stw_dict`, contains data-dictionary
 #' @param env `list` with elements `name`, `title`, etc.
-#' @param meta Object with S3 class `stw_meta`
 #' @param ... additional args (not used)
+#' @inheritParams stw_dataset
 #'
 #' @return Object with S3 class `stw_meta`
 #' @export
@@ -82,11 +82,6 @@ stw_meta.character <- function(name, title = NULL, description = NULL,
     dict = dict
   )
 
-  # check
-  verbosity <- getOption("steward.verbosity") %||% "info"
-
-  meta <- stw_check(meta, verbosity = verbosity)
-
   meta
 }
 
@@ -123,6 +118,17 @@ stw_meta.stw_meta <- function(meta, ...) {
 #'
 stw_meta.stw_dataset <- function(dataset, ...) {
 
+  # get everything but the dictionary
+  meta <- attr(dataset, "steward_meta")
+
+  # get the dictionary
+  meta[["dict"]] <- stw_dict(dataset)
+
+  # update n_row, n_col
+  meta[["n_row"]] <- nrow(dataset)
+  meta[["n_col"]] <- ncol(dataset)
+
+  meta
 }
 
 #' @export

@@ -35,11 +35,13 @@ test_that("check works for dictionary", {
   }
 
   # check we get the right result
-  expect_true(get_valid(stw_check(dict_good)))
-  expect_true(get_valid(stw_check(dict_type_trivial)))
-  expect_false(get_valid(stw_check(dict_names_repeated)))
-  expect_false(get_valid(stw_check(dict_names_trivial)))
-  expect_false(get_valid(stw_check(dict_desc_trivial)))
+  expect_output({
+    expect_true(get_valid(stw_check(dict_good)))
+    expect_true(get_valid(stw_check(dict_type_trivial)))
+    expect_false(get_valid(stw_check(dict_names_repeated)))
+    expect_false(get_valid(stw_check(dict_names_trivial)))
+    expect_false(get_valid(stw_check(dict_desc_trivial)))
+  })
 
   # check we reutrn the item
   expect_equivalent(stw_check(dict_good), dict_good)
@@ -52,9 +54,11 @@ test_that("check works for dictionary", {
   }
 
   # check we get the right result
-  expect_true(get_valid(stw_check(meta_good)))
-  expect_true(get_valid(stw_check(meta_missing_source)))
-  expect_false(get_valid(stw_check(meta_missing_name)))
+  expect_output({
+    expect_true(get_valid(stw_check(meta_good)))
+    expect_true(get_valid(stw_check(meta_missing_source)))
+    expect_false(get_valid(stw_check(meta_missing_name)))
+  })
 
   # check we reutrn the item
   expect_equivalent(stw_check(meta_good), meta_good)
@@ -62,7 +66,7 @@ test_that("check works for dictionary", {
 
 test_that("check side-effects are correct for dictionary", {
   # everything OK
-  expect_output(stw_check(meta_good, verbosity = "all"))
+  expect_output(stw_check(meta_good, verbosity = "all"), )
   expect_silent(stw_check(meta_good, verbosity = "info"))
   expect_silent(stw_check(meta_good, verbosity = "error"))
   expect_silent(stw_check(meta_good, verbosity = "none"))
@@ -111,6 +115,9 @@ test_that("validate works", {
   expect_equivalent(stw_validate(meta_good), meta_good)
 
   # throws error
-  expect_error(stw_validate(dict_names_repeated))
-  expect_error(stw_validate(meta_missing_name))
+  expect_output({
+    expect_error(stw_validate(dict_names_repeated))
+    expect_error(stw_validate(meta_missing_name))
+  })
+
 })

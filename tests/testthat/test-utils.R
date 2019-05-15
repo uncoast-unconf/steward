@@ -11,5 +11,7 @@ test_that("type (internal function) works", {
   ex_id("1", "character")
   ex_id(Sys.time(), "datetime")
   ex_id(Sys.Date(), "date")
+  ex_id(factor(1), "factor")
+  ex_id(ordered(1), "ordered")
 
 })

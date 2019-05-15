@@ -5,6 +5,7 @@
 \alias{stw_mutate_dict.default}
 \alias{stw_mutate_dict.stw_dict}
 \alias{stw_mutate_dict.stw_meta}
+\alias{stw_mutate_dict.stw_dataset}
 \title{Modify descriptions in data-dictionary}
 \usage{
 stw_mutate_dict(...)
@@ -14,13 +15,17 @@ stw_mutate_dict(...)
 \method{stw_mutate_dict}{stw_dict}(dict, ...)
 
 \method{stw_mutate_dict}{stw_meta}(meta, ...)
+
+\method{stw_mutate_dict}{stw_dataset}(dataset, ...)
 }
 \arguments{
 \item{...}{Name-value pairs of expressions}
 
-\item{dict}{Object with S3 class \code{stw_dict}}
+\item{dict}{Object with S3 class \code{stw_dict}, contains data-dictionary}
 
-\item{meta}{object with S3 class \code{stw_meta}}
+\item{meta}{Object with S3 class \code{stw_meta}, contains meta-data}
+
+\item{dataset}{Object with S3 class \code{stw_dataset}, a data frame with attached meta-data}
 }
 \value{
 modified copy of \code{dict} or \code{meta}

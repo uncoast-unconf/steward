@@ -8,8 +8,7 @@
 #' you call this function using a `stw_dataset` object, it will modify the
 #' metadata, then return a modified copy of the `stw_dataset` object.
 #'
-#' @inheritParams stw_to_roxygen
-#' @param ... Name-value pairs, passed on to [stw_mutate_meta()]
+#' @inheritParams stw_dataset
 #'
 #' @return modified copy of `meta` or `dataset`
 #' @export
@@ -59,19 +58,11 @@ stw_mutate_meta.stw_meta <- function(meta, ...) {
 #' @export
 #'
 stw_mutate_meta.stw_dataset <- function(dataset, ...) {
+
   meta <- stw_meta(dataset)
   meta <- stw_mutate_meta(meta, ...)
 
-  # we ignore the dictionary
-  meta$dict <- NULL
-
-  # set n_row
-  meta$n_row <- nrow(dataset)
-
-  # incorporate meta as attributes
-  for (i in seq_along(meta)) {
-    attr(dataset, names(meta)[i]) <- meta[[i]]
-  }
+  dataset <- stw_dataset(dataset, meta)
 
   dataset
 }
