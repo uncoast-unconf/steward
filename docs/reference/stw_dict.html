@@ -113,20 +113,66 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>stw_dict</span>(<span class='no'>dict</span>)</pre>
+    <pre class="usage"><span class='fu'>stw_dict</span>(<span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>stw_dict</span>(<span class='no'>...</span>)
+
+<span class='co'># S3 method for NULL</span>
+<span class='fu'>stw_dict</span>(<span class='no'>data_dict</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for character</span>
+<span class='fu'>stw_dict</span>(<span class='no'>name</span>, <span class='no'>type</span>, <span class='no'>description</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>stw_dict</span>(<span class='no'>data_dict</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for stw_meta</span>
+<span class='fu'>stw_dict</span>(<span class='no'>meta</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for stw_dataset</span>
+<span class='fu'>stw_dict</span>(<span class='no'>dataset</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>dict</th>
+      <th>...</th>
+      <td><p>additional args (not used)</p></td>
+    </tr>
+    <tr>
+      <th>data_dict</th>
       <td><p><code>data.frame</code> that has columns <code>name</code>, <code>type</code>, <code>description</code></p></td>
+    </tr>
+    <tr>
+      <th>name</th>
+      <td><p><code>character</code> name of the dataset</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p><code>character</code>, type of the variable, see Details</p></td>
+    </tr>
+    <tr>
+      <th>description</th>
+      <td><p><code>character</code>, description of the varaible</p></td>
+    </tr>
+    <tr>
+      <th>levels</th>
+      <td><p><code>character</code>, if <code>type</code> is <code>"factor"</code>, the levels of the factor</p></td>
+    </tr>
+    <tr>
+      <th>meta</th>
+      <td><p>Object with S3 class <code>stw_meta</code>, contains meta-data</p></td>
+    </tr>
+    <tr>
+      <th>dataset</th>
+      <td><p>Object with S3 class <code>stw_dataset</code>, a data frame with attached meta-data</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>object with S3 class <code>stw_meta</code></p>
+    <p>object with S3 class <code>stw_dict</code></p>
     
 
   </div>

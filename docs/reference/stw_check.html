@@ -143,7 +143,11 @@ argument invisibly.</p>
 
 <span class='co'># S3 method for stw_meta</span>
 <span class='fu'>stw_validate</span>(<span class='no'>meta</span>, <span class='kw'>verbosity</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"error"</span>, <span class='st'>"info"</span>,
-  <span class='st'>"all"</span>), <span class='no'>...</span>)</pre>
+  <span class='st'>"all"</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for stw_dataset</span>
+<span class='fu'>stw_validate</span>(<span class='no'>dataset</span>, <span class='kw'>verbosity</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"error"</span>,
+  <span class='st'>"info"</span>, <span class='st'>"all"</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,8 +158,7 @@ argument invisibly.</p>
     </tr>
     <tr>
       <th>dict</th>
-      <td><p>object with S3 class <code>stw_dict</code>,
-contains dataset data-dictionary; see <code><a href='stw_dict.html'>stw_dict()</a></code>.</p></td>
+      <td><p>Object with S3 class <code>stw_dict</code>, contains data-dictionary</p></td>
     </tr>
     <tr>
       <th>verbosity</th>
@@ -163,8 +166,11 @@ contains dataset data-dictionary; see <code><a href='stw_dict.html'>stw_dict()</
     </tr>
     <tr>
       <th>meta</th>
-      <td><p>object with S3 class <code>stw_meta</code>,
-contains dataset metadata; see <code><a href='stw_meta.html'>stw_meta()</a></code>.</p></td>
+      <td><p>Object with S3 class <code>stw_meta</code>, contains meta-data</p></td>
+    </tr>
+    <tr>
+      <th>dataset</th>
+      <td><p>Object with S3 class <code>stw_dataset</code>, a data frame with attached meta-data</p></td>
     </tr>
     </table>
     

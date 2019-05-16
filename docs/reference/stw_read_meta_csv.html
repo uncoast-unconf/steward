@@ -126,22 +126,12 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>object with S3 class <code>stw_meta</code></p>
+    <p>Object with S3 class <code>stw_meta</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>stw_read_meta_csv</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"metadata/diamonds.csv"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"steward"</span>))</div><div class='output co'>#&gt; List of 7
-#&gt;  $ name       : chr "diamonds"
-#&gt;  $ title      : chr "\"Prices of 50,000 round cut diamonds\""
-#&gt;  $ description: chr "\"A dataset containing the prices and other attributes of almost 54,000 diamonds\""
-#&gt;  $ source     : chr "www.google.com"
-#&gt;  $ n_row      : NULL
-#&gt;  $ n_col      : NULL
-#&gt;  $ dict       :Classes ‘stw_dict’ and 'data.frame':	10 obs. of  3 variables:
-#&gt;   ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...
-#&gt;   ..$ type       : chr [1:10] "double" "double" "character" "character" ...
-#&gt;   ..$ description: chr [1:10] "price in US dollars ($326 - $18,823)" "weight of diamond (0.2 - 5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "diamond color, from D (best) to J (worst)" ...
-#&gt;  - attr(*, "class")= chr "stw_meta"</div><div class='input'>
+    <pre class="examples"><div class='input'># stw_read_meta_csv(system.file("metadata/diamonds.csv", package = "steward"))
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

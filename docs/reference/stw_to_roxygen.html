@@ -119,13 +119,16 @@ string to a file.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>stw_to_roxygen</span>(<span class='no'>meta</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>stw_to_roxygen</span>(<span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>stw_to_roxygen</span>(<span class='no'>meta</span>, <span class='no'>...</span>)
+<span class='fu'>stw_to_roxygen</span>(<span class='no'>...</span>)
 
 <span class='co'># S3 method for stw_meta</span>
 <span class='fu'>stw_to_roxygen</span>(<span class='no'>meta</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for stw_data</span>
+<span class='fu'>stw_to_roxygen</span>(<span class='no'>dataset</span>, <span class='no'>...</span>)
 
 <span class='fu'>stw_use_roxygen</span>(<span class='no'>meta</span>)
 
@@ -135,12 +138,16 @@ string to a file.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>meta</th>
-      <td><p>object with S3 class <code>stw_meta</code></p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>additional arguments (not used)</p></td>
+    </tr>
+    <tr>
+      <th>meta</th>
+      <td><p>Object with S3 class <code>stw_meta</code>, contains meta-data</p></td>
+    </tr>
+    <tr>
+      <th>dataset</th>
+      <td><p>Object with S3 class <code>stw_dataset</code>, a data frame with attached meta-data</p></td>
     </tr>
     <tr>
       <th>file</th>
@@ -178,8 +185,10 @@ string to a file.</p>
 #&gt; #'   \item{depth}{total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)}
 #&gt; #'   \item{table}{width of top of diamond relative to widest point (43--95)}
 #&gt; #' }
-#&gt; #' @source &lt;http://www.diamondse.info/&gt;
-#&gt; "diamonds"</div><div class='input'><span class='fu'>stw_write_roxygen</span>(<span class='no'>diamonds_meta</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".yml"</span>))</div><div class='output co'>#&gt; ✔ Roxygen metadata written to '/var/folders/bw/6jvpjvd14x1534dc6zgtj3vnght7ft/T//Rtmplb75Jb/filea9c60b1ee1a.yml'.</div><span class='co'># NOT RUN {</span>
+#&gt; #' 
+#&gt; #' @source [DiamondSearchEngine](http://www.diamondse.info/), [ggplot2 package](https://ggplot2.tidyverse.org/)
+#&gt; #' 
+#&gt; "diamonds"</div><div class='input'><span class='fu'>stw_write_roxygen</span>(<span class='no'>diamonds_meta</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".yml"</span>))</div><div class='output co'>#&gt; ✔ Roxygen metadata written to '/var/folders/bw/6jvpjvd14x1534dc6zgtj3vnght7ft/T//RtmpdwNBiG/file8862428cbd6d.yml'.</div><span class='co'># NOT RUN {</span>
 <span class='co'># not run because it copies text to the clipboard</span>
 <span class='fu'>stw_use_roxygen</span>(<span class='no'>diamonds_meta</span>)
 <span class='co'># }</span><div class='input'>
