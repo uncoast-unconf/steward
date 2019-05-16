@@ -13,7 +13,7 @@ stw_to_table(meta, ...)
 \method{stw_to_table}{stw_meta}(meta, ...)
 }
 \arguments{
-\item{meta}{object with S3 class \code{stw_meta}}
+\item{meta}{Object with S3 class \code{stw_meta}, contains meta-data}
 
 \item{...}{additional arguments (not used)}
 }

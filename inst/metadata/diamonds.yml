@@ -6,6 +6,9 @@ sources:
   - title: DiamondSearchEngine
     path: http://www.diamondse.info/
     email: ""
+  - title: ggplot2 package
+    path: https://ggplot2.tidyverse.org/
+    email: ""
 schema:
   fields:
   - name: price

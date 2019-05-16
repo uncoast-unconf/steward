@@ -19,6 +19,14 @@ error_message_method <- function(name_fn, name_class) {
 
 `%||%` <- rlang::`%||%`
 
+`%|0|%` <- function(x, y) {
+  if (rlang::is_empty(x)) {
+    y
+  } else {
+    x
+  }
+}
+
 type <- function(x) {
 
   class_x <- class(x)[[1]]
