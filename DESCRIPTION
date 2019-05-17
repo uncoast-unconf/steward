@@ -54,11 +54,13 @@ Imports:
     gt,
     utils,
     usethis,
-    withr
+    withr,
+    tools
 Remotes: rstudio/gt
 Suggests: 
     testthat (>= 2.1.0),
     roxygen2,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ggplot2
 VignetteBuilder: knitr
