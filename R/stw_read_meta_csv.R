@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples
-#' stw_read_meta_csv(system.file("metadata/diamonds.csv", package = "steward"))
+#' # stw_read_meta_csv(system.file("metadata/diamonds.csv", package = "steward"))
 #'
 stw_read_meta_csv <- function(file) {
 

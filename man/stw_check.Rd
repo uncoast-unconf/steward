@@ -9,6 +9,7 @@
 \alias{stw_validate.default}
 \alias{stw_validate.stw_dict}
 \alias{stw_validate.stw_meta}
+\alias{stw_validate.stw_dataset}
 \title{Check steward object}
 \usage{
 stw_check(...)
@@ -30,17 +31,20 @@ stw_validate(...)
 
 \method{stw_validate}{stw_meta}(meta, verbosity = c("error", "info",
   "all"), ...)
+
+\method{stw_validate}{stw_dataset}(dataset, verbosity = c("error",
+  "info", "all"), ...)
 }
 \arguments{
 \item{...}{other arguments (not used)}
 
-\item{dict}{object with S3 class \code{stw_dict},
-contains dataset data-dictionary; see \code{\link[=stw_dict]{stw_dict()}}.}
+\item{dict}{Object with S3 class \code{stw_dict}, contains data-dictionary}
 
 \item{verbosity}{\code{character}, determines the amount of feedback, see Details.}
 
-\item{meta}{object with S3 class \code{stw_meta},
-contains dataset metadata; see \code{\link[=stw_meta]{stw_meta()}}.}
+\item{meta}{Object with S3 class \code{stw_meta}, contains meta-data}
+
+\item{dataset}{Object with S3 class \code{stw_dataset}, a data frame with attached meta-data}
 }
 \value{
 modified copy of \code{dict} or \code{meta}

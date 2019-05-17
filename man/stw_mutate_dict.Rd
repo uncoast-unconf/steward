@@ -5,6 +5,7 @@
 \alias{stw_mutate_dict.default}
 \alias{stw_mutate_dict.stw_dict}
 \alias{stw_mutate_dict.stw_meta}
+\alias{stw_mutate_dict.stw_dataset}
 \title{Modify descriptions in data-dictionary}
 \usage{
 stw_mutate_dict(...)
@@ -14,13 +15,17 @@ stw_mutate_dict(...)
 \method{stw_mutate_dict}{stw_dict}(dict, ...)
 
 \method{stw_mutate_dict}{stw_meta}(meta, ...)
+
+\method{stw_mutate_dict}{stw_dataset}(dataset, ...)
 }
 \arguments{
 \item{...}{Name-value pairs of expressions}
 
-\item{dict}{Object with S3 class \code{stw_dict}}
+\item{dict}{Object with S3 class \code{stw_dict}, contains data-dictionary}
 
-\item{meta}{object with S3 class \code{stw_meta}}
+\item{meta}{Object with S3 class \code{stw_meta}, contains meta-data}
+
+\item{dataset}{Object with S3 class \code{stw_dataset}, a data frame with attached meta-data}
 }
 \value{
 modified copy of \code{dict} or \code{meta}
@@ -30,11 +35,11 @@ Use this function to modify the descriptions in a data-dictionary,
 using syntax along the same lines as \code{\link[dplyr:mutate]{dplyr::mutate()}}.
 }
 \details{
-You can send a dictionary (\code{stw_dict} object) or a metadata (\code{stw_meta})
-object, and get back an object of the same class. In other words, if
-you call this function using a \code{stw_meta} object, it will modify the
-\code{dict} within the object, then return a modified copy of the
-\code{stw_meta} object.
+You can send a dictionary (\code{stw_dict}) object, a metadata (\code{stw_meta})
+object, or dataset object (\code{stw_dataset}) and get back an object of
+the same class. In other words, if you call this function using a
+\code{stw_meta} object, it will modify the \code{dict} within the object,
+then return a modified copy of the\code{stw_meta} object.
 }
 \examples{
 stw_mutate_dict(diamonds_meta$dict, color = "foo")

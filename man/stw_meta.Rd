@@ -5,16 +5,22 @@
 \alias{stw_meta.default}
 \alias{stw_meta.character}
 \alias{stw_meta.list}
+\alias{stw_meta.stw_meta}
+\alias{stw_meta.stw_dataset}
 \title{Create new metadata object}
 \usage{
 stw_meta(...)
 
 \method{stw_meta}{default}(...)
 
-\method{stw_meta}{character}(name, title, description, source = NULL,
-  n_row = NULL, n_col = NULL, dict = NULL, ...)
+\method{stw_meta}{character}(name, title = NULL, description = NULL,
+  sources = NULL, n_row = NULL, n_col = NULL, dict = NULL, ...)
 
 \method{stw_meta}{list}(env, ...)
+
+\method{stw_meta}{stw_meta}(meta, ...)
+
+\method{stw_meta}{stw_dataset}(dataset, ...)
 }
 \arguments{
 \item{...}{additional args (not used)}
@@ -25,19 +31,30 @@ stw_meta(...)
 
 \item{description}{\code{character} description of the dataset}
 
-\item{source}{\code{character} source of the dataset}
+\item{sources}{\code{list} source of the dataset; has elements \code{title}, and optionally
+\code{path} and \code{email}}
 
 \item{n_row}{\code{integer} number of rows in the dataset}
 
 \item{n_col}{\code{integer} number of columns in the dataset}
 
-\item{dict}{\code{stw_dict} object, dictionary of variables in the dataset}
+\item{dict}{Object with S3 class \code{stw_dict}, contains data-dictionary}
 
 \item{env}{\code{list} with elements \code{name}, \code{title}, etc.}
+
+\item{meta}{Object with S3 class \code{stw_meta}, contains meta-data}
+
+\item{dataset}{Object with S3 class \code{stw_dataset}, a data frame with attached meta-data}
 }
 \value{
-object with S3 class \code{stw_meta}
+Object with S3 class \code{stw_meta}
 }
 \description{
-Create new metadata object
+You can create a new metadata by specifying each of the elements,
+by specifying a list, or by providing a dataset which includes metadata.
+}
+\details{
+When you create a metadata object, it is checked for required and optional
+elements. Each metadaset is required to have a \code{name} and \code{dict} object. A
+\code{title}, \code{description}, \code{source}, \code{n_row}, \code{n_col} are optional.
 }

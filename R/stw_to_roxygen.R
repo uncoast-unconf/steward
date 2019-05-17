@@ -5,9 +5,9 @@
 #' roxygen string to your clipboard, and `str_write_roxygen()` writes a roxygen
 #' string to a file.
 #'
-#' @param meta object with S3 class `stw_meta`
 #' @param file `character` path of file to write
 #' @param ... additional arguments (not used)
+#' @inheritParams stw_meta
 #'
 #' @return
 #' \describe{
@@ -25,15 +25,16 @@
 #' stw_use_roxygen(diamonds_meta)
 #' }
 #'
-stw_to_roxygen <- function(meta, ...) {
+stw_to_roxygen <- function(...) {
   UseMethod("stw_to_roxygen")
 }
 
 #' @rdname stw_to_roxygen
 #' @export
 #'
-stw_to_roxygen.default <- function(meta, ...) {
-  stop(error_message_method("stw_to_roxygen()", class(meta)))
+stw_to_roxygen.default <- function(...) {
+  dots <- rlang::list2(...)
+  stop(error_message_method("stw_to_roxygen()", class(dots[[1]])))
 }
 
 #' @rdname stw_to_roxygen
@@ -41,16 +42,47 @@ stw_to_roxygen.default <- function(meta, ...) {
 #'
 stw_to_roxygen.stw_meta <- function(meta, ...) {
 
+  # note that that the infix function `%|0|%` works just like
+  # `%||%`, execept it tests using `rlang::is_empty()`, which is more
+  # permissive than `rlang::is_null()`.
+
+  # title
+  title <- meta[["title"]] %|0|% glue::glue("Dataset: {meta[['name']]}")
+
+  # description
+  description <- meta[["description"]] %|0|% ""
+
+  # format
+  fmt_str <-
+    "A data frame with {meta[['n_row']]} rows and {meta[['n_col']]} variables:"
+  fmt <- glue::glue(fmt_str) %|0|% ""
+
+  # if sources is empty, we want to return ""
+  # if sources is not empty, we want to return a comma-delimited set of strings,
+  # each describing a source
+
+  # TODO: make this more amenable to emails
+  sources <- meta[["sources"]]
+  if (rlang::is_empty(sources)) {
+    str_source <- ""
+  } else {
+    str_sources <- lapply(sources, function(x) do.call(source_to_markdown, x))
+    str_sources <- glue::glue_collapse(str_sources, sep = ", ")
+    str_source <- glue::glue("@source {str_sources}")
+  }
+
+  # function, given title, path, email, returns a markdown source-string
+
   top_bread <-
     glue::glue(
-        "#' {meta$title}",
-        "#' ",
-        "#' {meta$description}",
-        "#' ",
-        "#' @format A data frame with {meta$n_row} rows and {meta$n_col} variables:",
-        "#' ",
-        "#' \\describe{{ ",
-        .sep = "\n"
+      "#' {title}",
+      "#' ",
+      "#' {description}",
+      "#' ",
+      "#' @format {fmt}",
+      "#' ",
+      "#' \\describe{{ ",
+      .sep = "\n"
     )
 
   fillings <- dict_to_roxygen(meta$dict)
@@ -58,8 +90,10 @@ stw_to_roxygen.stw_meta <- function(meta, ...) {
   bottom_bread <-
     glue::glue(
       "#' }}",
-      "#' @source {meta$source}",
-      "\"{meta$name}\"",
+      "#' ",
+      "#' {str_source}",
+      "#' ",
+      "\"{meta[['name']]}\"",
       .sep = "\n"
     )
 
@@ -73,6 +107,14 @@ stw_to_roxygen.stw_meta <- function(meta, ...) {
   sandwich <- roxygen_substitute(sandwich)
 
   as.character(sandwich)
+}
+
+#' @rdname stw_to_roxygen
+#' @export
+#'
+stw_to_roxygen.stw_data <- function(dataset, ...) {
+  meta <- stw_meta(dataset)
+  stw_to_roxygen(meta)
 }
 
 #' @rdname stw_to_roxygen
@@ -136,6 +178,20 @@ roxygen_substitute <- function(x) {
   x <- stringr::str_replace_all(x, "(?<!\\\\)%", "\\\\%")
 
   x
+}
+
+source_to_markdown <- function(title, path = NULL, email = NULL) {
+
+  # at this point, let's ignore the email
+  if (rlang::is_empty(path)) {
+    # bare title
+    str <- "{title}"
+  } else {
+    # hyperlink to path
+    str <- "[{title}]({path})"
+  }
+
+  glue::glue(str)
 }
 
 

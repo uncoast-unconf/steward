@@ -19,7 +19,7 @@ stw_use_yaml(meta)
 stw_write_yaml(meta, file)
 }
 \arguments{
-\item{meta}{object with S3 class \code{stw_meta}}
+\item{meta}{Object with S3 class \code{stw_meta}, contains meta-data}
 
 \item{...}{additional arguments (not used)}
 

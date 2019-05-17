@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create metadata-object from YAML — stw_read_meta_yaml • steward</title>
+<title>Create new dataset object — stw_dataset • steward</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Create metadata-object from YAML — stw_read_meta_yaml" />
+<meta property="og:title" content="Create new dataset object — stw_dataset" />
 
-<meta property="og:description" content="Create metadata-object from YAML" />
+<meta property="og:description" content="Create new dataset object" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -102,67 +102,54 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create metadata-object from YAML</h1>
-    <small class="dont-index">Source: <a href='https://github.com/uncoast-unconf/steward/blob/master/R/stw_read_meta_yaml.R'><code>R/stw_read_meta_yaml.R</code></a></small>
-    <div class="hidden name"><code>stw_read_meta_yaml.Rd</code></div>
+    <h1>Create new dataset object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/uncoast-unconf/steward/blob/master/R/stw_dataset.R'><code>R/stw_dataset.R</code></a></small>
+    <div class="hidden name"><code>stw_dataset.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create metadata-object from YAML</p>
+    <p>Create new dataset object</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>stw_read_meta_yaml</span>(<span class='no'>file</span>)</pre>
+    <pre class="usage"><span class='fu'>stw_dataset</span>(<span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>stw_dataset</span>(<span class='no'>...</span>)
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>stw_dataset</span>(<span class='no'>data</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for stw_dataset</span>
+<span class='fu'>stw_dataset</span>(<span class='no'>dataset</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>location of yaml file</p></td>
+      <th>...</th>
+      <td><p>Name-value pairs, passed on to <code><a href='stw_mutate_meta.html'>stw_mutate_meta()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p><code>data.frame</code> to be documented</p></td>
+    </tr>
+    <tr>
+      <th>meta</th>
+      <td><p>Object with S3 class <code>stw_meta</code>, contains meta-data</p></td>
+    </tr>
+    <tr>
+      <th>dataset</th>
+      <td><p>Object with S3 class <code>stw_dataset</code>, a data frame with attached meta-data</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Object with S3 class <code>stw_meta</code></p>
+    <p>object with S3 class <code>stw_dataset</code></p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>stw_read_meta_yaml</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"metadata/diamonds.yml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"steward"</span>))</div><div class='output co'>#&gt; List of 7
-#&gt;  $ name       : chr "diamonds"
-#&gt;  $ title      : chr "Prices of 50,000 round cut diamonds"
-#&gt;  $ description: chr "A dataset containing the prices and other attributes of almost 54,000 diamonds."
-#&gt;  $ sources    :List of 2
-#&gt;   ..$ :List of 3
-#&gt;   .. ..$ title: chr "DiamondSearchEngine"
-#&gt;   .. ..$ path : chr "http://www.diamondse.info/"
-#&gt;   .. ..$ email: chr ""
-#&gt;   ..$ :List of 3
-#&gt;   .. ..$ title: chr "ggplot2 package"
-#&gt;   .. ..$ path : chr "https://ggplot2.tidyverse.org/"
-#&gt;   .. ..$ email: chr ""
-#&gt;  $ n_row      : int(0) 
-#&gt;  $ n_col      : int(0) 
-#&gt;  $ dict       :Classes ‘stw_dict’, ‘tbl_df’, ‘tbl’ and 'data.frame':	10 obs. of  4 variables:
-#&gt;   ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...
-#&gt;   ..$ type       : chr [1:10] "number" "number" "string" "string" ...
-#&gt;   ..$ description: chr [1:10] "price in US dollars ($326--$18,823)" "weight of diamond (0.2--5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "diamond color, from D (best) to J (worst)" ...
-#&gt;   ..$ levels     :List of 10
-#&gt;   .. ..$ : NULL
-#&gt;   .. ..$ : NULL
-#&gt;   .. ..$ : chr [1:5] "Fair" "Good" "Very Good" "Premium" ...
-#&gt;   .. ..$ : chr [1:7] "D" "E" "F" "G" ...
-#&gt;   .. ..$ : chr [1:8] "I1" "SI2" "SI1" "VS2" ...
-#&gt;   .. ..$ : NULL
-#&gt;   .. ..$ : NULL
-#&gt;   .. ..$ : NULL
-#&gt;   .. ..$ : NULL
-#&gt;   .. ..$ : NULL
-#&gt;  - attr(*, "class")= chr "stw_meta"</div><div class='input'>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -170,9 +157,7 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

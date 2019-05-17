@@ -10,7 +10,7 @@ stw_read_meta_yaml(file)
 \item{file}{location of yaml file}
 }
 \value{
-object with S3 class \code{stw_meta}
+Object with S3 class \code{stw_meta}
 }
 \description{
 Create metadata-object from YAML

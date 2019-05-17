@@ -134,7 +134,7 @@ to your clipboard, and <code>str_write_yaml()</code> writes a YAML string to a f
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>meta</th>
-      <td><p>object with S3 class <code>stw_meta</code></p></td>
+      <td><p>Object with S3 class <code>stw_meta</code>, contains meta-data</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -162,41 +162,72 @@ to your clipboard, and <code>str_write_yaml()</code> writes a YAML string to a f
 #&gt; title: Prices of 50,000 round cut diamonds
 #&gt; description: A dataset containing the prices and other attributes of almost 54,000
 #&gt;   diamonds.
-#&gt; source: &lt;http://www.diamondse.info/&gt;
-#&gt; n_row: 53940
-#&gt; n_col: 10
-#&gt; dict:
-#&gt; - name: price
-#&gt;   type: double
-#&gt;   description: price in US dollars ($326--$18,823)
-#&gt; - name: carat
-#&gt;   type: double
-#&gt;   description: weight of diamond (0.2--5.01)
-#&gt; - name: cut
-#&gt;   type: character
-#&gt;   description: quality of the cut (Fair, Good, Very Good, Premium, Ideal)
-#&gt; - name: color
-#&gt;   type: character
-#&gt;   description: diamond color, from D (best) to J (worst)
-#&gt; - name: clarity
-#&gt;   type: character
-#&gt;   description: a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2,
-#&gt;     VS1, VVS2, VVS1, IF (best))
-#&gt; - name: x
-#&gt;   type: double
-#&gt;   description: length in mm (0--10.74)
-#&gt; - name: 'y'
-#&gt;   type: double
-#&gt;   description: width in mm (0--58.9)
-#&gt; - name: z
-#&gt;   type: double
-#&gt;   description: depth in mm (0--31.8)
-#&gt; - name: depth
-#&gt;   type: double
-#&gt;   description: total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)
-#&gt; - name: table
-#&gt;   type: double
-#&gt;   description: width of top of diamond relative to widest point (43--95)</div><div class='input'><span class='fu'>stw_write_yaml</span>(<span class='no'>diamonds_meta</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".yml"</span>))</div><div class='output co'>#&gt; ✔ YAML metadata written to '/var/folders/bw/6jvpjvd14x1534dc6zgtj3vnght7ft/T//Rtmplb75Jb/filea9c2455fe71.yml'.</div><span class='co'># NOT RUN {</span>
+#&gt; sources:
+#&gt; - title: DiamondSearchEngine
+#&gt;   path: http://www.diamondse.info/
+#&gt;   email: ''
+#&gt; - title: ggplot2 package
+#&gt;   path: https://ggplot2.tidyverse.org/
+#&gt;   email: ''
+#&gt; schema:
+#&gt;   fields:
+#&gt;   - name: price
+#&gt;     type: number
+#&gt;     description: price in US dollars ($326--$18,823)
+#&gt;   - name: carat
+#&gt;     type: number
+#&gt;     description: weight of diamond (0.2--5.01)
+#&gt;   - name: cut
+#&gt;     type: string
+#&gt;     description: quality of the cut (Fair, Good, Very Good, Premium, Ideal)
+#&gt;     constraints:
+#&gt;       enum:
+#&gt;       - Fair
+#&gt;       - Good
+#&gt;       - Very Good
+#&gt;       - Premium
+#&gt;       - Ideal
+#&gt;   - name: color
+#&gt;     type: string
+#&gt;     description: diamond color, from D (best) to J (worst)
+#&gt;     constraints:
+#&gt;       enum:
+#&gt;       - D
+#&gt;       - E
+#&gt;       - F
+#&gt;       - G
+#&gt;       - H
+#&gt;       - I
+#&gt;       - J
+#&gt;   - name: clarity
+#&gt;     type: string
+#&gt;     description: a measurement of how clear the diamond is (I1 (worst), SI2, SI1,
+#&gt;       VS2, VS1, VVS2, VVS1, IF (best))
+#&gt;     constraints:
+#&gt;       enum:
+#&gt;       - I1
+#&gt;       - SI2
+#&gt;       - SI1
+#&gt;       - VS2
+#&gt;       - VS1
+#&gt;       - VVS2
+#&gt;       - VVS1
+#&gt;       - IF
+#&gt;   - name: x
+#&gt;     type: number
+#&gt;     description: length in mm (0--10.74)
+#&gt;   - name: 'y'
+#&gt;     type: number
+#&gt;     description: width in mm (0--58.9)
+#&gt;   - name: z
+#&gt;     type: number
+#&gt;     description: depth in mm (0--31.8)
+#&gt;   - name: depth
+#&gt;     type: number
+#&gt;     description: total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)
+#&gt;   - name: table
+#&gt;     type: number
+#&gt;     description: width of top of diamond relative to widest point (43--95)</div><div class='input'><span class='fu'>stw_write_yaml</span>(<span class='no'>diamonds_meta</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".yml"</span>))</div><div class='output co'>#&gt; ✔ YAML metadata written to '/var/folders/bw/6jvpjvd14x1534dc6zgtj3vnght7ft/T//RtmpdwNBiG/file886251ecd0c2.yml'.</div><span class='co'># NOT RUN {</span>
 <span class='co'># not run because it copies text to the clipboard</span>
 <span class='fu'>stw_use_yaml</span>(<span class='no'>diamonds_meta</span>)
 <span class='co'># }</span><div class='input'>

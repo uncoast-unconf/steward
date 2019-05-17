@@ -96,13 +96,13 @@
 title: Prices of 50,000 round cut diamonds
 description: |
  A dataset containing the prices and other attributes of almost 54,000 diamonds.
-n_row: 53940
-n_col: 10
-source: &lt;http://www.diamondse.info/&gt;
-dictionary:
-    - name: price
-      type: double
-      description: price in US dollars ($326--$18,823)
+sources:
+  - title: DiamondSearchEngine
+    path: http://www.diamondse.info/
+    email: ""
+  - title: ggplot2 package
+    path: https://ggplot2.tidyverse.org/
+    email: ""
 ...</code></pre>
 <p>We can read a YAML file using <code><a href="../reference/stw_read_meta_yaml.html">stw_read_meta_yaml()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/stw_read_meta_yaml.html">stw_read_meta_yaml</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"metadata/diamonds.yml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>))</a></code></pre></div>
@@ -110,13 +110,32 @@ dictionary:
  $ name       : chr "diamonds"
  $ title      : chr "Prices of 50,000 round cut diamonds"
  $ description: chr "A dataset containing the prices and other attributes of almost 54,000 diamonds."
- $ source     : chr "&lt;http://www.diamondse.info/&gt;"
- $ n_row      : int 53940
- $ n_col      : int 10
- $ dict       :Classes 'stw_dict' and 'data.frame': 10 obs. of  3 variables:
+ $ sources    :List of 2
+  ..$ :List of 3
+  .. ..$ title: chr "DiamondSearchEngine"
+  .. ..$ path : chr "http://www.diamondse.info/"
+  .. ..$ email: chr ""
+  ..$ :List of 3
+  .. ..$ title: chr "ggplot2 package"
+  .. ..$ path : chr "https://ggplot2.tidyverse.org/"
+  .. ..$ email: chr ""
+ $ n_row      : int(0) 
+ $ n_col      : int(0) 
+ $ dict       :Classes 'stw_dict', 'tbl_df', 'tbl' and 'data.frame':    10 obs. of  4 variables:
   ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...
-  ..$ type       : chr [1:10] "double" "double" "character" "character" ...
+  ..$ type       : chr [1:10] "number" "number" "string" "string" ...
   ..$ description: chr [1:10] "price in US dollars ($326--$18,823)" "weight of diamond (0.2--5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "diamond color, from D (best) to J (worst)" ...
+  ..$ levels     :List of 10
+  .. ..$ : NULL
+  .. ..$ : NULL
+  .. ..$ : chr [1:5] "Fair" "Good" "Very Good" "Premium" ...
+  .. ..$ : chr [1:7] "D" "E" "F" "G" ...
+  .. ..$ : chr [1:8] "I1" "SI2" "SI1" "VS2" ...
+  .. ..$ : NULL
+  .. ..$ : NULL
+  .. ..$ : NULL
+  .. ..$ : NULL
+  .. ..$ : NULL
  - attr(*, "class")= chr "stw_meta"</code></pre>
 </div>
 <div id="read-csv" class="section level4">
@@ -133,13 +152,13 @@ dictionary:
 title: Prices of 50,000 round cut diamonds
 description: A dataset containing the prices and other attributes of almost 54,000
   diamonds.
-source: &lt;http://www.diamondse.info/&gt;
-n_row: 53940
-n_col: 10
-dict:
-- name: price
-  type: double
-  description: price in US dollars ($326--$18,823)
+sources:
+- title: DiamondSearchEngine
+  path: http://www.diamondse.info/
+  email: ''
+- title: ggplot2 package
+  path: https://ggplot2.tidyverse.org/
+  email: ''
 ...</code></pre>
 <p>Other functions in this family:</p>
 <ul>
@@ -172,7 +191,9 @@ dict:
 #'   \item{depth}{total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)}
 #'   \item{table}{width of top of diamond relative to widest point (43--95)}
 #' }
-#' @source &lt;http://www.diamondse.info/&gt;
+#' 
+#' @source [DiamondSearchEngine](http://www.diamondse.info/), [ggplot2 package](https://ggplot2.tidyverse.org/)
+#' 
 "diamonds"</code></pre>
 <p>Other functions in this family:</p>
 <ul>
@@ -191,7 +212,7 @@ dict:
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#puprfnsusu .gt_table {
+#xwdpuvxput .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -210,13 +231,13 @@ dict:
   /* table.border.top.color */
 }
 
-#puprfnsusu .gt_heading {
+#xwdpuvxput .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#puprfnsusu .gt_title {
+#xwdpuvxput .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -227,7 +248,7 @@ dict:
   border-bottom-width: 0;
 }
 
-#puprfnsusu .gt_subtitle {
+#xwdpuvxput .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -238,7 +259,7 @@ dict:
   border-top-width: 0;
 }
 
-#puprfnsusu .gt_bottom_border {
+#xwdpuvxput .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -247,7 +268,7 @@ dict:
   /* heading.border.bottom.color */
 }
 
-#puprfnsusu .gt_column_spanner {
+#xwdpuvxput .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -255,7 +276,7 @@ dict:
   padding-bottom: 4px;
 }
 
-#puprfnsusu .gt_col_heading {
+#xwdpuvxput .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -268,11 +289,11 @@ dict:
   margin: 10px;
 }
 
-#puprfnsusu .gt_sep_right {
+#xwdpuvxput .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#puprfnsusu .gt_group_heading {
+#xwdpuvxput .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -296,7 +317,7 @@ dict:
   vertical-align: middle;
 }
 
-#puprfnsusu .gt_empty_group_heading {
+#xwdpuvxput .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -320,37 +341,37 @@ dict:
   vertical-align: middle;
 }
 
-#puprfnsusu .gt_striped {
+#xwdpuvxput .gt_striped {
   background-color: #f2f2f2;
 }
 
-#puprfnsusu .gt_from_md > :first-child {
+#xwdpuvxput .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#puprfnsusu .gt_from_md > :last-child {
+#xwdpuvxput .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#puprfnsusu .gt_row {
+#xwdpuvxput .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#puprfnsusu .gt_stub {
+#xwdpuvxput .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#puprfnsusu .gt_stub.gt_row {
+#xwdpuvxput .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#puprfnsusu .gt_summary_row {
+#xwdpuvxput .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -359,13 +380,13 @@ dict:
   /* summary_row.text_transform */
 }
 
-#puprfnsusu .gt_first_summary_row {
+#xwdpuvxput .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#puprfnsusu .gt_table_body {
+#xwdpuvxput .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -380,124 +401,136 @@ dict:
   /* table_body.border.bottom.color */
 }
 
-#puprfnsusu .gt_footnote {
+#xwdpuvxput .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#puprfnsusu .gt_sourcenote {
+#xwdpuvxput .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#puprfnsusu .gt_center {
+#xwdpuvxput .gt_center {
   text-align: center;
 }
 
-#puprfnsusu .gt_left {
+#xwdpuvxput .gt_left {
   text-align: left;
 }
 
-#puprfnsusu .gt_right {
+#xwdpuvxput .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#puprfnsusu .gt_font_normal {
+#xwdpuvxput .gt_font_normal {
   font-weight: normal;
 }
 
-#puprfnsusu .gt_font_bold {
+#xwdpuvxput .gt_font_bold {
   font-weight: bold;
 }
 
-#puprfnsusu .gt_font_italic {
+#xwdpuvxput .gt_font_italic {
   font-style: italic;
 }
 
-#puprfnsusu .gt_super {
+#xwdpuvxput .gt_super {
   font-size: 65%;
 }
 
-#puprfnsusu .gt_footnote_glyph {
+#xwdpuvxput .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="puprfnsusu" style="overflow-x:auto;">
+<div id="xwdpuvxput" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <thead>
 <tr>
-<th colspan="3" class="gt_heading gt_title gt_font_normal gt_center">DIAMONDS</th>
+<th colspan="4" class="gt_heading gt_title gt_font_normal gt_center">DIAMONDS</th>
 </tr>
 <tr>
-<th colspan="3" class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border">Prices of 50,000 round cut diamonds</th>
+<th colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border">Prices of 50,000 round cut diamonds</th>
 </tr>
 </thead>
 <tr>
-<th class="gt_col_heading gt_left" rowspan="1" colspan="1">Name</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">Name</th>
 <th class="gt_col_heading gt_left" rowspan="1" colspan="1">Type</th>
 <th class="gt_col_heading gt_left" rowspan="1" colspan="1">Description</th>
+<th class="gt_col_heading gt_left" rowspan="1" colspan="1">Levels</th>
 </tr>
 <tbody class="gt_table_body">
 <tr>
-<td class="gt_row gt_left" style="font-style:italic;">price</td>
-<td class="gt_row gt_left">double</td>
+<td class="gt_row gt_right" style="font-style:italic;">price</td>
+<td class="gt_row gt_left">number</td>
 <td class="gt_row gt_left">price in US dollars ($326--$18,823)</td>
+<td class="gt_row gt_left"></td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_striped" style="font-style:italic;">carat</td>
-<td class="gt_row gt_left gt_striped">double</td>
+<td class="gt_row gt_right gt_striped" style="font-style:italic;">carat</td>
+<td class="gt_row gt_left gt_striped">number</td>
 <td class="gt_row gt_left gt_striped">weight of diamond (0.2--5.01)</td>
+<td class="gt_row gt_left gt_striped"></td>
 </tr>
 <tr>
-<td class="gt_row gt_left" style="font-style:italic;">cut</td>
-<td class="gt_row gt_left">character</td>
+<td class="gt_row gt_right" style="font-style:italic;">cut</td>
+<td class="gt_row gt_left">string</td>
 <td class="gt_row gt_left">quality of the cut (Fair, Good, Very Good, Premium, Ideal)</td>
+<td class="gt_row gt_left">Fair, Good, Very Good, Premium, Ideal</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_striped" style="font-style:italic;">color</td>
-<td class="gt_row gt_left gt_striped">character</td>
+<td class="gt_row gt_right gt_striped" style="font-style:italic;">color</td>
+<td class="gt_row gt_left gt_striped">string</td>
 <td class="gt_row gt_left gt_striped">diamond color, from D (best) to J (worst)</td>
+<td class="gt_row gt_left gt_striped">D, E, F, G, H, I, J</td>
 </tr>
 <tr>
-<td class="gt_row gt_left" style="font-style:italic;">clarity</td>
-<td class="gt_row gt_left">character</td>
+<td class="gt_row gt_right" style="font-style:italic;">clarity</td>
+<td class="gt_row gt_left">string</td>
 <td class="gt_row gt_left">a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))</td>
+<td class="gt_row gt_left">I1, SI2, SI1, VS2, VS1, VVS2, VVS1, IF</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_striped" style="font-style:italic;">x</td>
-<td class="gt_row gt_left gt_striped">double</td>
+<td class="gt_row gt_right gt_striped" style="font-style:italic;">x</td>
+<td class="gt_row gt_left gt_striped">number</td>
 <td class="gt_row gt_left gt_striped">length in mm (0--10.74)</td>
+<td class="gt_row gt_left gt_striped"></td>
 </tr>
 <tr>
-<td class="gt_row gt_left" style="font-style:italic;">y</td>
-<td class="gt_row gt_left">double</td>
+<td class="gt_row gt_right" style="font-style:italic;">y</td>
+<td class="gt_row gt_left">number</td>
 <td class="gt_row gt_left">width in mm (0--58.9)</td>
+<td class="gt_row gt_left"></td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_striped" style="font-style:italic;">z</td>
-<td class="gt_row gt_left gt_striped">double</td>
+<td class="gt_row gt_right gt_striped" style="font-style:italic;">z</td>
+<td class="gt_row gt_left gt_striped">number</td>
 <td class="gt_row gt_left gt_striped">depth in mm (0--31.8)</td>
+<td class="gt_row gt_left gt_striped"></td>
 </tr>
 <tr>
-<td class="gt_row gt_left" style="font-style:italic;">depth</td>
-<td class="gt_row gt_left">double</td>
+<td class="gt_row gt_right" style="font-style:italic;">depth</td>
+<td class="gt_row gt_left">number</td>
 <td class="gt_row gt_left">total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)</td>
+<td class="gt_row gt_left"></td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_striped" style="font-style:italic;">table</td>
-<td class="gt_row gt_left gt_striped">double</td>
+<td class="gt_row gt_right gt_striped" style="font-style:italic;">table</td>
+<td class="gt_row gt_left gt_striped">number</td>
 <td class="gt_row gt_left gt_striped">width of top of diamond relative to widest point (43--95)</td>
+<td class="gt_row gt_left gt_striped"></td>
 </tr>
 </tbody>
 <tfoot><tr>
-<td colspan="4" class="gt_sourcenote">http://www.diamondse.info/</td>
+<td colspan="5" class="gt_sourcenote">Sources: <a href="http://www.diamondse.info/">DiamondSearchEngine</a>, <a href="https://ggplot2.tidyverse.org/">ggplot2 package</a>
+</td>
 </tr></tfoot>
 </table>
 <!--gt table end-->

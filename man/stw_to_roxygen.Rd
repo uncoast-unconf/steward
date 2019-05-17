@@ -4,24 +4,29 @@
 \alias{stw_to_roxygen}
 \alias{stw_to_roxygen.default}
 \alias{stw_to_roxygen.stw_meta}
+\alias{stw_to_roxygen.stw_data}
 \alias{stw_use_roxygen}
 \alias{stw_write_roxygen}
 \title{Output to roxygen format}
 \usage{
-stw_to_roxygen(meta, ...)
+stw_to_roxygen(...)
 
-\method{stw_to_roxygen}{default}(meta, ...)
+\method{stw_to_roxygen}{default}(...)
 
 \method{stw_to_roxygen}{stw_meta}(meta, ...)
+
+\method{stw_to_roxygen}{stw_data}(dataset, ...)
 
 stw_use_roxygen(meta)
 
 stw_write_roxygen(meta, file)
 }
 \arguments{
-\item{meta}{object with S3 class \code{stw_meta}}
-
 \item{...}{additional arguments (not used)}
+
+\item{meta}{Object with S3 class \code{stw_meta}, contains meta-data}
+
+\item{dataset}{Object with S3 class \code{stw_dataset}, a data frame with attached meta-data}
 
 \item{file}{\code{character} path of file to write}
 }

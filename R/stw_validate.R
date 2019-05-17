@@ -25,11 +25,8 @@
 #' For a `stw_meta` object, it must have a non-trivial `name`, and `dict`.
 #' It may have a `title`, `description`, `source`, `n_row`, and `n_col`.
 #'
+#' @inheritParams stw_meta
 #' @param ... other arguments (not used)
-#' @param meta object with S3 class `stw_meta`,
-#'   contains dataset metadata; see [stw_meta()].
-#' @param dict object with S3 class `stw_dict`,
-#'   contains dataset data-dictionary; see [stw_dict()].
 #' @param verbosity `character`, determines the amount of feedback, see Details.
 #'
 #' @return modified copy of `dict` or `meta`
@@ -89,21 +86,21 @@ stw_check.stw_dict <- function(dict,
   if (length(desc_trivial) > 0) {
     valid <- FALSE
     ui_fn$ui_oops(
-      "Dictionary descriprions are missing for names: {usethis::ui_value(desc_trivial)}."
+      "Dictionary descriptions are missing for names: {usethis::ui_value(desc_trivial)}."
     )
   } else {
     ui_fn$ui_done("Dictionary descriptions are all non-trivial.")
   }
 
-  # types are non-trivial
-  type_trivial <-
-    dict[["name"]][stringr::str_detect(dict[["type"]], "^\\s*$")]
-  if (length(type_trivial) > 0) {
+  # types are recognized
+  type_not_recognized <- !(dict[["type"]] %in% type_recognized())
+  name_not_recognized <- dict[["name"]][type_not_recognized]
+  if (length(name_not_recognized) > 0) {
     ui_fn$ui_info(
-      "Dictionary types are trivial for names: {usethis::ui_value(type_trivial)}."
+      "Dictionary types not recognized for names: {usethis::ui_value(name_not_recognized)}."
     )
   } else {
-    ui_fn$ui_done("Dictionary types are all non-trivial.")
+    ui_fn$ui_done("Dictionary types are all recognized.")
   }
 
   # set the validity
@@ -142,8 +139,19 @@ stw_check.stw_meta <- function(meta,
   }
 
   # check the optional fields
-  optional <- c("title", "description", "source", "n_row", "n_col")
+  optional <- c("title", "description", "n_row", "n_col")
   missing_optional <- optional[!check_elements(optional, meta)]
+
+  # check the sources
+  if (is.null(meta[["sources"]])) {
+    missing_optional <- c(missing_optional, "sources")
+  } else {
+    if (!check_sources(meta[["sources"]], ui_fn)) {
+      ui_fn$ui_oops("Metadata sources not valid.")
+    } else {
+      ui_fn$ui_done("Metadata sources valid.")
+    }
+  }
 
   if (length(missing_optional) > 0) {
     ui_fn$ui_info("Metadata missing optional fields: {usethis::ui_value(missing_optional)}.")
@@ -151,11 +159,30 @@ stw_check.stw_meta <- function(meta,
     ui_fn$ui_done("Metadata has all optional fields.")
   }
 
+
+
   # set the validity
   meta <- set_valid(meta, valid)
 
   invisible(meta)
 }
+
+stw_check.stw_dataset <- function(dataset,
+                                  verbosity = c("error", "info", "all"),
+                                  ...) {
+
+  verbosity <- match.arg(verbosity)
+  ui_fn <- get_ui_functions(verbosity)
+
+  # check the meta
+  meta <- stw_check(stw_meta(dataset), verbosity = verbosity)
+
+  # reincorporate into dataset
+  dataset <- stw_dataset(dataset, meta)
+
+  invisible(dataset)
+}
+
 
 #' @rdname stw_check
 #' @export
@@ -206,6 +233,26 @@ stw_validate.stw_meta <- function(meta,
   }
 
   invisible(meta)
+}
+
+
+#' @rdname stw_check
+#' @export
+#'
+stw_validate.stw_dataset <- function(dataset,
+                                     verbosity = c("error", "info", "all"),
+                                     ...) {
+
+  verbosity <- match.arg(verbosity)
+
+  # validate the meta
+  meta <- stw_meta(dataset)
+  meta <- stw_validate(meta)
+
+  # reincorporate
+  dataset <- stw_dataset(dataset, meta)
+
+  invisible(dataset)
 }
 
 get_valid <- function(x) {
@@ -271,4 +318,33 @@ check_elements <- function(names, item) {
   }
 
   vapply(names, is_valid, FUN.VALUE = logical(1), item)
+}
+
+check_sources <- function(x, ui_fn) {
+
+  if (!is.list(x)) {
+    ui_fn$ui_oops("Metadata sources not a list.")
+    return(FALSE)
+  }
+
+  check_source <- function(x) {
+    if (!is.list(x)) {
+      ui_fn$ui_oops("Metadata sources-element not a list.")
+      return(FALSE)
+    }
+
+    if (!all(names(x) %in% c("title", "path", "email"))) {
+      ui_fn$ui_oops("Metadata sources-element has extra names.")
+      return(FALSE)
+    }
+
+    if (!("title" %in% names(x))) {
+      ui_fn$ui_oops("Metadata sources-element no {usethis::ui_value('title')}.")
+      return(FALSE)
+    }
+
+    TRUE
+  }
+
+  all(vapply(x, check_source, logical(1)))
 }

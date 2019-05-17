@@ -32,7 +32,8 @@
 
 <meta property="og:title" content="Create new metadata object — stw_meta" />
 
-<meta property="og:description" content="Create new metadata object" />
+<meta property="og:description" content="You can create a new metadata by specifying each of the elements,
+by specifying a list, or by providing a dataset which includes metadata." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -109,7 +110,8 @@
 
     <div class="ref-description">
     
-    <p>Create new metadata object</p>
+    <p>You can create a new metadata by specifying each of the elements,
+by specifying a list, or by providing a dataset which includes metadata.</p>
     
     </div>
 
@@ -119,11 +121,17 @@
 <span class='fu'>stw_meta</span>(<span class='no'>...</span>)
 
 <span class='co'># S3 method for character</span>
-<span class='fu'>stw_meta</span>(<span class='no'>name</span>, <span class='no'>title</span>, <span class='no'>description</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>n_row</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dict</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>stw_meta</span>(<span class='no'>name</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sources</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n_row</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dict</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for list</span>
-<span class='fu'>stw_meta</span>(<span class='no'>env</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>stw_meta</span>(<span class='no'>env</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for stw_meta</span>
+<span class='fu'>stw_meta</span>(<span class='no'>meta</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for stw_dataset</span>
+<span class='fu'>stw_meta</span>(<span class='no'>dataset</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,8 +153,9 @@
       <td><p><code>character</code> description of the dataset</p></td>
     </tr>
     <tr>
-      <th>source</th>
-      <td><p><code>character</code> source of the dataset</p></td>
+      <th>sources</th>
+      <td><p><code>list</code> source of the dataset; has elements <code>title</code>, and optionally
+<code>path</code> and <code>email</code></p></td>
     </tr>
     <tr>
       <th>n_row</th>
@@ -158,17 +167,31 @@
     </tr>
     <tr>
       <th>dict</th>
-      <td><p><code>stw_dict</code> object, dictionary of variables in the dataset</p></td>
+      <td><p>Object with S3 class <code>stw_dict</code>, contains data-dictionary</p></td>
     </tr>
     <tr>
       <th>env</th>
       <td><p><code>list</code> with elements <code>name</code>, <code>title</code>, etc.</p></td>
     </tr>
+    <tr>
+      <th>meta</th>
+      <td><p>Object with S3 class <code>stw_meta</code>, contains meta-data</p></td>
+    </tr>
+    <tr>
+      <th>dataset</th>
+      <td><p>Object with S3 class <code>stw_dataset</code>, a data frame with attached meta-data</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>object with S3 class <code>stw_meta</code></p>
+    <p>Object with S3 class <code>stw_meta</code></p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>When you create a metadata object, it is checked for required and optional
+elements. Each metadaset is required to have a <code>name</code> and <code>dict</code> object. A
+<code>title</code>, <code>description</code>, <code>source</code>, <code>n_row</code>, <code>n_col</code> are optional.</p>
     
 
   </div>
@@ -178,6 +201,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>

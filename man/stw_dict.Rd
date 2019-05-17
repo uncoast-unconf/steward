@@ -2,15 +2,47 @@
 % Please edit documentation in R/stw_dict.R
 \name{stw_dict}
 \alias{stw_dict}
+\alias{stw_dict.default}
+\alias{stw_dict.NULL}
+\alias{stw_dict.character}
+\alias{stw_dict.data.frame}
+\alias{stw_dict.stw_meta}
+\alias{stw_dict.stw_dataset}
 \title{Create new data-dictionary object}
 \usage{
-stw_dict(dict)
+stw_dict(...)
+
+\method{stw_dict}{default}(...)
+
+\method{stw_dict}{NULL}(data_dict, ...)
+
+\method{stw_dict}{character}(name, type, description, levels = NULL, ...)
+
+\method{stw_dict}{data.frame}(data_dict, ...)
+
+\method{stw_dict}{stw_meta}(meta, ...)
+
+\method{stw_dict}{stw_dataset}(dataset, ...)
 }
 \arguments{
-\item{dict}{\code{data.frame} that has columns \code{name}, \code{type}, \code{description}}
+\item{...}{additional args (not used)}
+
+\item{data_dict}{\code{data.frame} that has columns \code{name}, \code{type}, \code{description}}
+
+\item{name}{\code{character} name of the dataset}
+
+\item{type}{\code{character}, type of the variable, see Details}
+
+\item{description}{\code{character}, description of the varaible}
+
+\item{levels}{\code{character}, if \code{type} is \code{"factor"}, the levels of the factor}
+
+\item{meta}{Object with S3 class \code{stw_meta}, contains meta-data}
+
+\item{dataset}{Object with S3 class \code{stw_dataset}, a data frame with attached meta-data}
 }
 \value{
-object with S3 class \code{stw_meta}
+object with S3 class \code{stw_dict}
 }
 \description{
 Create new data-dictionary object

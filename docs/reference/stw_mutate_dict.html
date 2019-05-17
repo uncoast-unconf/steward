@@ -124,7 +124,10 @@ using syntax along the same lines as <code><a href='https://dplyr.tidyverse.org/
 <span class='fu'>stw_mutate_dict</span>(<span class='no'>dict</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stw_meta</span>
-<span class='fu'>stw_mutate_dict</span>(<span class='no'>meta</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>stw_mutate_dict</span>(<span class='no'>meta</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for stw_dataset</span>
+<span class='fu'>stw_mutate_dict</span>(<span class='no'>dataset</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,11 +138,15 @@ using syntax along the same lines as <code><a href='https://dplyr.tidyverse.org/
     </tr>
     <tr>
       <th>dict</th>
-      <td><p>Object with S3 class <code>stw_dict</code></p></td>
+      <td><p>Object with S3 class <code>stw_dict</code>, contains data-dictionary</p></td>
     </tr>
     <tr>
       <th>meta</th>
-      <td><p>object with S3 class <code>stw_meta</code></p></td>
+      <td><p>Object with S3 class <code>stw_meta</code>, contains meta-data</p></td>
+    </tr>
+    <tr>
+      <th>dataset</th>
+      <td><p>Object with S3 class <code>stw_dataset</code>, a data frame with attached meta-data</p></td>
     </tr>
     </table>
     
@@ -149,29 +156,62 @@ using syntax along the same lines as <code><a href='https://dplyr.tidyverse.org/
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>You can send a dictionary (<code>stw_dict</code> object) or a metadata (<code>stw_meta</code>)
-object, and get back an object of the same class. In other words, if
-you call this function using a <code>stw_meta</code> object, it will modify the
-<code>dict</code> within the object, then return a modified copy of the
-<code>stw_meta</code> object.</p>
+    <p>You can send a dictionary (<code>stw_dict</code>) object, a metadata (<code>stw_meta</code>)
+object, or dataset object (<code>stw_dataset</code>) and get back an object of
+the same class. In other words, if you call this function using a
+<code>stw_meta</code> object, it will modify the <code>dict</code> within the object,
+then return a modified copy of the<code>stw_meta</code> object.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>stw_mutate_dict</span>(<span class='no'>diamonds_meta</span>$<span class='no'>dict</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"foo"</span>)</div><div class='output co'>#&gt; Classes ‘stw_dict’ and 'data.frame':	10 obs. of  3 variables:
+    <pre class="examples"><div class='input'><span class='fu'>stw_mutate_dict</span>(<span class='no'>diamonds_meta</span>$<span class='no'>dict</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"foo"</span>)</div><div class='output co'>#&gt; Classes ‘stw_dict’, ‘tbl_df’, ‘tbl’ and 'data.frame':	10 obs. of  4 variables:
 #&gt;  $ name       : chr  "price" "carat" "cut" "color" ...
-#&gt;  $ type       : chr  "double" "double" "character" "character" ...
-#&gt;  $ description: chr  "price in US dollars ($326--$18,823)" "weight of diamond (0.2--5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "foo" ...</div><div class='input'><span class='fu'>stw_mutate_dict</span>(<span class='no'>diamonds_meta</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"foo"</span>)</div><div class='output co'>#&gt; List of 7
+#&gt;  $ type       : chr  "number" "number" "string" "string" ...
+#&gt;  $ description: chr  "price in US dollars ($326--$18,823)" "weight of diamond (0.2--5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "foo" ...
+#&gt;  $ levels     :List of 10
+#&gt;   ..$ : NULL
+#&gt;   ..$ : NULL
+#&gt;   ..$ : chr  "Fair" "Good" "Very Good" "Premium" ...
+#&gt;   ..$ : chr  "D" "E" "F" "G" ...
+#&gt;   ..$ : chr  "I1" "SI2" "SI1" "VS2" ...
+#&gt;   ..$ : NULL
+#&gt;   ..$ : NULL
+#&gt;   ..$ : NULL
+#&gt;   ..$ : NULL
+#&gt;   ..$ : NULL
+#&gt;  - attr(*, "is_valid")= logi TRUE</div><div class='input'><span class='fu'>stw_mutate_dict</span>(<span class='no'>diamonds_meta</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"foo"</span>)</div><div class='output co'>#&gt; List of 7
 #&gt;  $ name       : chr "diamonds"
 #&gt;  $ title      : chr "Prices of 50,000 round cut diamonds"
 #&gt;  $ description: chr "A dataset containing the prices and other attributes of almost 54,000 diamonds."
-#&gt;  $ source     : chr "&lt;http://www.diamondse.info/&gt;"
+#&gt;  $ sources    :List of 2
+#&gt;   ..$ :List of 3
+#&gt;   .. ..$ title: chr "DiamondSearchEngine"
+#&gt;   .. ..$ path : chr "http://www.diamondse.info/"
+#&gt;   .. ..$ email: chr ""
+#&gt;   ..$ :List of 3
+#&gt;   .. ..$ title: chr "ggplot2 package"
+#&gt;   .. ..$ path : chr "https://ggplot2.tidyverse.org/"
+#&gt;   .. ..$ email: chr ""
 #&gt;  $ n_row      : int 53940
 #&gt;  $ n_col      : int 10
-#&gt;  $ dict       :Classes ‘stw_dict’ and 'data.frame':	10 obs. of  3 variables:
+#&gt;  $ dict       :Classes ‘stw_dict’, ‘tbl_df’, ‘tbl’ and 'data.frame':	10 obs. of  4 variables:
 #&gt;   ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...
-#&gt;   ..$ type       : chr [1:10] "double" "double" "character" "character" ...
+#&gt;   ..$ type       : chr [1:10] "number" "number" "string" "string" ...
 #&gt;   ..$ description: chr [1:10] "price in US dollars ($326--$18,823)" "weight of diamond (0.2--5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "foo" ...
-#&gt;  - attr(*, "class")= chr "stw_meta"</div><div class='input'>
+#&gt;   ..$ levels     :List of 10
+#&gt;   .. ..$ : NULL
+#&gt;   .. ..$ : NULL
+#&gt;   .. ..$ : chr [1:5] "Fair" "Good" "Very Good" "Premium" ...
+#&gt;   .. ..$ : chr [1:7] "D" "E" "F" "G" ...
+#&gt;   .. ..$ : chr [1:8] "I1" "SI2" "SI1" "VS2" ...
+#&gt;   .. ..$ : NULL
+#&gt;   .. ..$ : NULL
+#&gt;   .. ..$ : NULL
+#&gt;   .. ..$ : NULL
+#&gt;   .. ..$ : NULL
+#&gt;   ..- attr(*, "is_valid")= logi TRUE
+#&gt;  - attr(*, "class")= chr "stw_meta"
+#&gt;  - attr(*, "is_valid")= logi TRUE</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
