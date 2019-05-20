@@ -159,8 +159,6 @@ stw_check.stw_meta <- function(meta,
     ui_fn$ui_done("Metadata has all optional fields.")
   }
 
-
-
   # set the validity
   meta <- set_valid(meta, valid)
 

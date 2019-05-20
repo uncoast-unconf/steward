@@ -51,6 +51,7 @@ stw_dataset.stw_dataset <- function(dataset, meta = NULL, ...) {
   meta <- stw_meta(meta)
   meta <- stw_mutate_meta(meta, ...)
   meta <- stw_mutate_meta(meta, n_row = nrow(dataset), n_col = ncol(dataset))
+  meta <- stw_check(meta, verbosity = "none")
 
   # extract dictionary
   dict <- meta[["dict"]]
