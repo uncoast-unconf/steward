@@ -5,6 +5,7 @@
 \alias{stw_check.default}
 \alias{stw_check.stw_dict}
 \alias{stw_check.stw_meta}
+\alias{stw_check.stw_dataset}
 \alias{stw_validate}
 \alias{stw_validate.default}
 \alias{stw_validate.stw_dict}
@@ -21,6 +22,9 @@ stw_check(...)
 
 \method{stw_check}{stw_meta}(meta, verbosity = c("error", "info", "all",
   "none"), ...)
+
+\method{stw_check}{stw_dataset}(dataset, verbosity = c("error", "info",
+  "all"), ...)
 
 stw_validate(...)
 

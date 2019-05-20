@@ -165,6 +165,9 @@ stw_check.stw_meta <- function(meta,
   invisible(meta)
 }
 
+#' @rdname stw_check
+#' @export
+#'
 stw_check.stw_dataset <- function(dataset,
                                   verbosity = c("error", "info", "all"),
                                   ...) {
