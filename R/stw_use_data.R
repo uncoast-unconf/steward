@@ -17,9 +17,12 @@ stw_use_data <- function(..., file_doc = NULL, overwrite = FALSE,
                          compress = "bzip", version = 2) {
 
   # can we "personalize" the error to the object being written?
-  # - yes, let's write function that turns ... into a named list
+  # - turn ... into a named list (based in the names of the objects)
+  # - extract the metadata
+  # - set the metadata name according to the object name
   stw_datasets <- name_dots(...)
   stw_metas <- purrr::map(stw_datasets, stw_meta)
+  stw_metas <- purrr::imap(stw_metas, ~stw_mutate_meta(.x, name = .y))
 
   # for each member of stw_datasets:
   # - ensure it is a valid stw_dataset object
@@ -27,11 +30,11 @@ stw_use_data <- function(..., file_doc = NULL, overwrite = FALSE,
 
   # for each memmber of stw_datasets:
   # - strip away the steward accoutrements
-  # - do what usethis::use_data() does
+  # - usethis::use_data()
   stw_datasets <- purrr::map(stw_datasets, strip_steward)
+  purrr::iwalk(stw_datasets, use_data_with_name)
 
   # for each member of named_list:
-  # - get set the name of the meta to the name of the call
   # - get the roxygen string and write it to a file
 
 
@@ -86,10 +89,13 @@ strip_steward <- function(x) {
   x
 }
 
-use_datas <- function(x, name) {
+use_data_with_name <- function(x, name) {
 
   assign(name, x)
+
   rlang::eval_tidy(
-    usethis::use_data()
+    rlang::quo(usethis::use_data(!!sym(name)))
   )
+
+  invisible(NULL)
 }
