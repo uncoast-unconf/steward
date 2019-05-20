@@ -51,6 +51,7 @@ Imports:
     magrittr,
     readr,
     stringr,
+    fs,
     gt,
     utils,
     usethis,

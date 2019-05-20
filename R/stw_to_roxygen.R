@@ -99,7 +99,7 @@ stw_to_roxygen.stw_meta <- function(meta, ...) {
 
   sandwich <-
     glue::glue_collapse(
-      c(top_bread, fillings, bottom_bread),
+      c(top_bread, fillings, bottom_bread, "", ""),
       sep = "\n"
     )
 

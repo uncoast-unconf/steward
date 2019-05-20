@@ -5,7 +5,7 @@
 \title{Create and document package-data}
 \usage{
 stw_use_data(..., file_doc = NULL, overwrite = FALSE,
-  compress = "bzip", version = 2)
+  compress = "bzip2", version = 2)
 }
 \arguments{
 \item{...}{Unquoted names of existing objects to save.}
@@ -28,5 +28,8 @@ R 3.6.0 and can only be read by R versions 3.5.0 and higher.}
 \code{invisible(NULL)}, called for side-effects
 }
 \description{
-Create and document package-data
+This function wraps the functionality of \code{\link[usethis:use_data]{usethis::use_data()}} and
+\code{\link[=stw_write_roxygen]{stw_write_roxygen()}} to write a data-frame (or tibble) to your package data,
+as well as to write the Roxygen-documentation to a file in your package's \code{R}
+directory.
 }

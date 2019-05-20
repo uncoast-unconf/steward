@@ -14,7 +14,7 @@
 #' @export
 #'
 stw_use_data <- function(..., file_doc = NULL, overwrite = FALSE,
-                         compress = "bzip", version = 2) {
+                         compress = "bzip2", version = 2) {
 
   # can we "personalize" the error to the object being written?
   # - turn ... into a named list (based in the names of the objects)
@@ -32,12 +32,38 @@ stw_use_data <- function(..., file_doc = NULL, overwrite = FALSE,
   # - strip away the steward accoutrements
   # - usethis::use_data()
   stw_datasets <- purrr::map(stw_datasets, strip_steward)
-  purrr::iwalk(stw_datasets, use_data_with_name)
+  purrr::iwalk(
+    stw_datasets,
+    use_data_with_name,
+    overwrite = overwrite,
+    compress = compress,
+    version = version
+  )
 
   # for each member of named_list:
-  # - get the roxygen string and write it to a file
+  # - get the roxygen string
+  list_roxygen <- purrr::map(stw_metas, stw_to_roxygen)
+  all_roxygen <- glue::glue_collapse(list_roxygen)
 
+  # determine file_doc, path_doc
+  file_doc <- file_doc %||% glue::glue("data-{names(stw_datasets)[1]}.R")
+  path_doc <- fs::path("R", file_doc)
+  proj_path_doc <- usethis::proj_path(path_doc)
 
+  # write roxygen to file
+  if (fs::file_exists(proj_path_doc) && !overwrite) {
+    stop(
+      glue::glue(
+        "File {usethis::ui_value(path_doc)} already exists, ",
+        "use {usethis::ui_code('overwrite = TRUE')} to overwrite."
+      )
+    )
+  }
+
+  readr::write_file(all_roxygen, path_doc)
+  usethis::ui_done(
+    "Writing roxygen-documentation to {usethis::ui_value(path_doc)}"
+  )
 
   invisible(NULL)
 }
@@ -89,12 +115,22 @@ strip_steward <- function(x) {
   x
 }
 
-use_data_with_name <- function(x, name) {
+use_data_with_name <- function(x, name, overwrite = FALSE,
+                               compress = "bzip2", version = 2) {
 
+  # assign the dataframe to the name, within this scope
   assign(name, x)
 
+  # call use_data(), as if we were using that name "natively"
   rlang::eval_tidy(
-    rlang::quo(usethis::use_data(!!sym(name)))
+    rlang::quo(
+      usethis::use_data(
+        !!sym(name),
+        overwrite = overwrite,
+        compress = compress,
+        version = version
+      )
+    )
   )
 
   invisible(NULL)
