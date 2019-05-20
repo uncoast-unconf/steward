@@ -19,7 +19,7 @@ stw_use_data <- function(..., file_doc = NULL, overwrite = FALSE,
   # can we "personalize" the error to the object being written?
   # - turn ... into a named list (based in the names of the objects)
   # - extract the metadata
-  # - set the metadata name according to the object name
+  # - set the metadata names according to the element names
   stw_datasets <- name_dots(...)
   stw_metas <- purrr::map(stw_datasets, stw_meta)
   stw_metas <- purrr::imap(stw_metas, ~stw_mutate_meta(.x, name = .y))
@@ -28,7 +28,7 @@ stw_use_data <- function(..., file_doc = NULL, overwrite = FALSE,
   # - ensure it is a valid stw_dataset object
   validate_list(stw_datasets)
 
-  # for each memmber of stw_datasets:
+  # for each member of stw_datasets:
   # - strip away the steward accoutrements
   # - usethis::use_data()
   stw_datasets <- purrr::map(stw_datasets, strip_steward)
