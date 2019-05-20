@@ -55,7 +55,8 @@ Imports:
     utils,
     usethis,
     withr,
-    tools
+    tools,
+    purrr
 Remotes: rstudio/gt
 Suggests: 
     testthat (>= 2.1.0),
