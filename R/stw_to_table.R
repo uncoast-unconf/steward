@@ -65,3 +65,11 @@ stw_to_table.stw_meta <- function(meta, ...) {
 
   table
 }
+
+#' @rdname stw_to_table
+#' @export
+#'
+stw_to_table.stw_dataset <- function(dataset, ...) {
+  meta <- stw_meta(dataset)
+  stw_to_table(meta)
+}

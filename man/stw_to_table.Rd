@@ -4,6 +4,7 @@
 \alias{stw_to_table}
 \alias{stw_to_table.default}
 \alias{stw_to_table.stw_meta}
+\alias{stw_to_table.stw_dataset}
 \title{Output to gt (table) format}
 \usage{
 stw_to_table(meta, ...)
@@ -11,11 +12,15 @@ stw_to_table(meta, ...)
 \method{stw_to_table}{default}(meta, ...)
 
 \method{stw_to_table}{stw_meta}(meta, ...)
+
+\method{stw_to_table}{stw_dataset}(dataset, ...)
 }
 \arguments{
 \item{meta}{Object with S3 class \code{stw_meta}, contains meta-data}
 
 \item{...}{additional arguments (not used)}
+
+\item{dataset}{Object with S3 class \code{stw_dataset}, a data frame with attached meta-data}
 }
 \value{
 A gt table
