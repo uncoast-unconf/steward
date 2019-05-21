@@ -60,7 +60,8 @@ stw_use_data <- function(..., file_doc = NULL, overwrite = FALSE,
     )
   }
 
-  readr::write_file(all_roxygen, path_doc)
+  message(proj_path_doc)
+  readr::write_file(all_roxygen, proj_path_doc)
   usethis::ui_done(
     "Writing roxygen-documentation to {usethis::ui_value(path_doc)}"
   )

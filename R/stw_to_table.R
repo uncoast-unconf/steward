@@ -8,15 +8,16 @@
 #' @examples
 #' stw_to_table(diamonds_meta)
 #'
-stw_to_table <- function(meta, ...) {
+stw_to_table <- function(...) {
   UseMethod("stw_to_table")
 }
 
 #' @rdname stw_to_table
 #' @export
 #'
-stw_to_table.default <- function(meta, ...) {
-  stop(error_message_method("stw_to_table()", class(meta)))
+stw_to_table.default <- function(...) {
+  dots <- rlang::list2(...)
+  stop(error_message_method("stw_to_table()", class(dots[[1]])))
 }
 
 #' @rdname stw_to_table

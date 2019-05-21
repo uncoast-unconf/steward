@@ -45,10 +45,9 @@ stw_mutate_meta.stw_meta <- function(meta, ...) {
   list_mutate <- list_mutate[!names(list_mutate) %in% extra_names]
 
   names <- names(list_mutate)
-  values <- unname(unlist(list_mutate))
 
   for (i in seq_along(names)) {
-    meta[[names[i]]] <- values[i]
+    meta[[names[i]]] <- list_mutate[[i]]
   }
 
   meta
