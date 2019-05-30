@@ -18,7 +18,7 @@ for:
     package
   - publishing a data dictionary in an R Markdown document
 
-Our current defintion of metadata includes the name, description and
+Our current definition of metadata includes the name, description and
 source of a dataset, as well as the name, type, and description of each
 of the variables in the dataset.
 
