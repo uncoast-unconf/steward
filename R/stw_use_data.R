@@ -9,12 +9,14 @@
 #' @param file_doc `character` name of the Roxygen-documentation file to be
 #'   written to the package's `R` directory; default is
 #'   `"data-{name-of-first-dataset}.R"`
+#' @param keep_steward `logical` indicates to keep the steward classes and
+#'   attributes when writing the dataset to the package.
 #'
 #' @return `invisible(NULL)`, called for side-effects
 #' @export
 #'
-stw_use_data <- function(..., file_doc = NULL, overwrite = FALSE,
-                         compress = "bzip2", version = 2) {
+stw_use_data <- function(..., file_doc = NULL, keep_steward = FALSE,
+                         overwrite = FALSE, compress = "bzip2", version = 2) {
 
   # can we "personalize" the error to the object being written?
   # - turn ... into a named list (based in the names of the objects)
@@ -31,7 +33,10 @@ stw_use_data <- function(..., file_doc = NULL, overwrite = FALSE,
   # for each member of stw_datasets:
   # - strip away the steward accoutrements
   # - usethis::use_data()
-  stw_datasets <- purrr::map(stw_datasets, strip_steward)
+  if (!keep_steward) {
+    stw_datasets <- purrr::map(stw_datasets, strip_steward)
+  }
+
   purrr::iwalk(
     stw_datasets,
     use_data_with_name,

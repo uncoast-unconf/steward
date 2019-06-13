@@ -4,8 +4,8 @@
 \alias{stw_use_data}
 \title{Create and document package-data}
 \usage{
-stw_use_data(..., file_doc = NULL, overwrite = FALSE,
-  compress = "bzip2", version = 2)
+stw_use_data(..., file_doc = NULL, keep_steward = FALSE,
+  overwrite = FALSE, compress = "bzip2", version = 2)
 }
 \arguments{
 \item{...}{Unquoted names of existing objects to save.}
@@ -13,6 +13,9 @@ stw_use_data(..., file_doc = NULL, overwrite = FALSE,
 \item{file_doc}{\code{character} name of the Roxygen-documentation file to be
 written to the package's \code{R} directory; default is
 \code{"data-{name-of-first-dataset}.R"}}
+
+\item{keep_steward}{\code{logical} indicates to keep the steward classes and
+attributes when writing the dataset to the package.}
 
 \item{overwrite}{By default, \code{use_data()} will not overwrite existing
 files. If you really want to do so, set this to \code{TRUE}.}
