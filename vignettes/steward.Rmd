@@ -43,13 +43,67 @@ knitr::knit_hooks$set(
 library("steward")
 ```
 
-The current capabilities all deal with metadata:
+This package offers a set of S3 classes designed to store data-frame metadata for the purposes of documenting it, in a report or as roxygen data-documentation. 
+
+These are the things we can do with steward objects:
+
+- [create dataset](#create) 
+- [write dataset to package with documentation](#write-to-package)
 
 - [read from YAML](#read-yaml) 
-- [read from CSV](#read-csv) 
 - [write to YAML](#write-yaml)
 - [write to roxygen](#write-roxygen) 
 - [write to gt table](#write-gt-table) 
+
+#### Create 
+
+We use the **ggplot2** `diamonds` dataset as our example. We build up the data-frame metadata using `stw_mutate_meta()` and the column-metadata using `stw_mutate_dict()`:
+
+```{r}
+diamonds <-
+  stw_dataset(ggplot2::diamonds) %>%
+  stw_mutate_meta(
+    name = "diamonds",
+    title = "Prices of 50,000 round cut diamonds",
+    description = "A dataset containing the prices and other attributes of almost 54,000 diamonds.",
+    sources = list(
+      list(
+        title = "DiamondSearchEngine",
+        path = "http://www.diamondse.info/"
+      )
+    )
+  ) %>%
+  stw_mutate_dict(
+    price = "price in US dollars ($326--$18,823)",
+    carat = "weight of diamond (0.2--5.01)",
+    cut = "quality of the cut (Fair, Good, Very Good, Premium, Ideal)",
+    color = "diamond color, from D (best) to J (worst)",
+    clarity = "a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))",
+    x = "length in mm (0--10.74)",
+    y = "width in mm (0--58.9)",
+    z = "depth in mm (0--31.8)",
+    depth = "total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)",
+    table = "width of top of diamond relative to widest point (43--95)"
+  )
+```
+
+```{r}
+stw_check(diamonds, verbosity = "all")
+```
+
+#### Write to package
+
+This bit assumes that you are working with a package project, where you want to include data with your package.
+
+A `stw_dataset` object contains the data itself, along with its metadata. By keeping all the "stuff" together, we can verify that we have everything documented and current.
+
+This allows us to write everything to a package. The function `stw_use_data()` wraps `usethis::use_data()` and `steward::stw_write_roxygen()`. For example:
+
+```r
+stw_use_data(diamonds_new)
+```
+
+Will write the `diamonds_new` dataset to your package, as well as roxygen documentation to `R/data-diamonds_new.R`.
 
 #### Read YAML
 
@@ -70,10 +124,6 @@ We can read a YAML file using `stw_read_meta_yaml()`:
 ```{r example_read_yaml}
 stw_read_meta_yaml(system.file("metadata/diamonds.yml", package = "steward"))
 ```
-
-#### Read CSV
-
-This is an emerging capability that we need to document.
 
 #### Write YAML
 

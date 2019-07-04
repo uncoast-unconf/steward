@@ -112,7 +112,7 @@ stw_to_roxygen.stw_meta <- function(meta, ...) {
 #' @rdname stw_to_roxygen
 #' @export
 #'
-stw_to_roxygen.stw_data <- function(dataset, ...) {
+stw_to_roxygen.stw_dataset <- function(dataset, ...) {
   meta <- stw_meta(dataset)
   stw_to_roxygen(meta)
 }
@@ -182,13 +182,24 @@ roxygen_substitute <- function(x) {
 
 source_to_markdown <- function(title, path = NULL, email = NULL) {
 
-  # at this point, let's ignore the email
-  if (rlang::is_empty(path)) {
-    # bare title
+  # path & email empty: bare title
+  if (rlang::is_empty(path) && rlang::is_empty(email)) {
     str <- "{title}"
-  } else {
-    # hyperlink to path
+  }
+
+  # only email empty: link to path
+  if (!rlang::is_empty(path) && rlang::is_empty(email)) {
     str <- "[{title}]({path})"
+  }
+
+  # only path empty: link to email
+  if (rlang::is_empty(path) && !rlang::is_empty(email)) {
+    str <- "[{title}](mailto:{email})"
+  }
+
+  # neither empty: provide two links
+  if (!rlang::is_empty(path) && !rlang::is_empty(email)) {
+    str <- "[{title}]({path}): ([email](mailto:{email}))"
   }
 
   glue::glue(str)
