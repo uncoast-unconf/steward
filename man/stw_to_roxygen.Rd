@@ -4,7 +4,7 @@
 \alias{stw_to_roxygen}
 \alias{stw_to_roxygen.default}
 \alias{stw_to_roxygen.stw_meta}
-\alias{stw_to_roxygen.stw_data}
+\alias{stw_to_roxygen.stw_dataset}
 \alias{stw_use_roxygen}
 \alias{stw_write_roxygen}
 \title{Output to roxygen format}
@@ -15,7 +15,7 @@ stw_to_roxygen(...)
 
 \method{stw_to_roxygen}{stw_meta}(meta, ...)
 
-\method{stw_to_roxygen}{stw_data}(dataset, ...)
+\method{stw_to_roxygen}{stw_dataset}(dataset, ...)
 
 stw_use_roxygen(meta)
 

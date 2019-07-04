@@ -112,7 +112,7 @@ stw_to_roxygen.stw_meta <- function(meta, ...) {
 #' @rdname stw_to_roxygen
 #' @export
 #'
-stw_to_roxygen.stw_data <- function(dataset, ...) {
+stw_to_roxygen.stw_dataset <- function(dataset, ...) {
   meta <- stw_meta(dataset)
   stw_to_roxygen(meta)
 }
