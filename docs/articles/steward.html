@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>steward • steward</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="steward">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">steward</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -52,7 +53,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/uncoast-unconf/steward">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -78,20 +79,69 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"steward"</span>)</a></code></pre></div>
-<p>The current capabilities all deal with metadata:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"steward"</span>)</a></code></pre></div>
+<p>This package offers a set of S3 classes designed to store data-frame metadata for the purposes of documenting it, in a report or as roxygen data-documentation.</p>
+<p>These are the things we can do with steward objects:</p>
 <ul>
+<li><a href="#create">create dataset</a></li>
+<li><p><a href="#write-to-package">write dataset to package with documentation</a></p></li>
 <li><a href="#read-yaml">read from YAML</a></li>
-<li><a href="#read-csv">read from CSV</a></li>
 <li><a href="#write-yaml">write to YAML</a></li>
 <li><a href="#write-roxygen">write to roxygen</a></li>
-<li><a href="#write-gt-table">write to gt table</a></li>
+<li><p><a href="#write-gt-table">write to gt table</a></p></li>
 </ul>
+<div id="create" class="section level4">
+<h4 class="hasAnchor">
+<a href="#create" class="anchor"></a>Create</h4>
+<p>We use the <strong>ggplot2</strong> <code>diamonds</code> dataset as our example. We build up the data-frame metadata using <code><a href="../reference/stw_mutate_meta.html">stw_mutate_meta()</a></code> and the column-metadata using <code><a href="../reference/stw_mutate_dict.html">stw_mutate_dict()</a></code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">diamonds &lt;-</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/stw_dataset.html">stw_dataset</a></span>(ggplot2<span class="op">::</span>diamonds) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/stw_mutate_meta.html">stw_mutate_meta</a></span>(</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="dt">name =</span> <span class="st">"diamonds"</span>,</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="dt">title =</span> <span class="st">"Prices of 50,000 round cut diamonds"</span>,</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="dt">description =</span> <span class="st">"A dataset containing the prices and other attributes of almost 54,000 diamonds."</span>,</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="dt">sources =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">      <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">        <span class="dt">title =</span> <span class="st">"DiamondSearchEngine"</span>,</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">        <span class="dt">path =</span> <span class="st">"http://www.diamondse.info/"</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">      )</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">    )</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="../reference/stw_mutate_dict.html">stw_mutate_dict</a></span>(</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">    <span class="dt">price =</span> <span class="st">"price in US dollars ($326--$18,823)"</span>,</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">    <span class="dt">carat =</span> <span class="st">"weight of diamond (0.2--5.01)"</span>,</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">    <span class="dt">cut =</span> <span class="st">"quality of the cut (Fair, Good, Very Good, Premium, Ideal)"</span>,</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">    <span class="dt">color =</span> <span class="st">"diamond color, from D (best) to J (worst)"</span>,</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">    <span class="dt">clarity =</span> <span class="st">"a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))"</span>,</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">    <span class="dt">x =</span> <span class="st">"length in mm (0--10.74)"</span>,</a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">    <span class="dt">y =</span> <span class="st">"width in mm (0--58.9)"</span>,</a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">    <span class="dt">z =</span> <span class="st">"depth in mm (0--31.8)"</span>,</a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">    <span class="dt">depth =</span> <span class="st">"total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)"</span>,</a>
+<a class="sourceLine" id="cb2-24" data-line-number="24">    <span class="dt">table =</span> <span class="st">"width of top of diamond relative to widest point (43--95)"</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25">  )</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/stw_check.html">stw_check</a></span>(diamonds, <span class="dt">verbosity =</span> <span class="st">"all"</span>)</a></code></pre></div>
+<pre><code>✔ Dictionary names are unique.
+✔ Dictionary names are all non-trivial.
+✔ Dictionary descriptions are all non-trivial.
+✔ Dictionary types are all recognized.
+✔ Metadata has all required fields.
+✔ Metadata sources valid.
+✔ Metadata has all optional fields.</code></pre>
+</div>
+<div id="write-to-package" class="section level4">
+<h4 class="hasAnchor">
+<a href="#write-to-package" class="anchor"></a>Write to package</h4>
+<p>This bit assumes that you are working with a package project, where you want to include data with your package.</p>
+<p>A <code>stw_dataset</code> object contains the data itself, along with its metadata. By keeping all the “stuff” together, we can verify that we have everything documented and current.</p>
+<p>This allows us to write everything to a package. The function <code><a href="../reference/stw_use_data.html">stw_use_data()</a></code> wraps <code><a href="https://usethis.r-lib.org/reference/use_data.html">usethis::use_data()</a></code> and <code><a href="../reference/stw_to_roxygen.html">steward::stw_write_roxygen()</a></code>. For example:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/stw_use_data.html">stw_use_data</a></span>(diamonds_new)</a></code></pre></div>
+<p>Will write the <code>diamonds_new</code> dataset to your package, as well as roxygen documentation to <code>R/data-diamonds_new.R</code>.</p>
+</div>
 <div id="read-yaml" class="section level4">
 <h4 class="hasAnchor">
 <a href="#read-yaml" class="anchor"></a>Read YAML</h4>
 <p>Here are the first lines of a YAML file containing metadata from <a href="http://ggplot2.tidyverse.org">ggplot2</a>’s <code>diamonds</code> dataset, which is available as:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"metadata/diamonds.yml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"metadata/diamonds.yml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>)</a></code></pre></div>
 <pre><code>name: diamonds
 title: Prices of 50,000 round cut diamonds
 description: |
@@ -105,7 +155,7 @@ sources:
     email: ""
 ...</code></pre>
 <p>We can read a YAML file using <code><a href="../reference/stw_read_meta_yaml.html">stw_read_meta_yaml()</a></code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/stw_read_meta_yaml.html">stw_read_meta_yaml</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"metadata/diamonds.yml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/stw_read_meta_yaml.html">stw_read_meta_yaml</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"metadata/diamonds.yml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>))</a></code></pre></div>
 <pre><code>List of 7
  $ name       : chr "diamonds"
  $ title      : chr "Prices of 50,000 round cut diamonds"
@@ -138,16 +188,11 @@ sources:
   .. ..$ : NULL
  - attr(*, "class")= chr "stw_meta"</code></pre>
 </div>
-<div id="read-csv" class="section level4">
-<h4 class="hasAnchor">
-<a href="#read-csv" class="anchor"></a>Read CSV</h4>
-<p>This is an emerging capability that we need to document.</p>
-</div>
 <div id="write-yaml" class="section level4">
 <h4 class="hasAnchor">
 <a href="#write-yaml" class="anchor"></a>Write YAML</h4>
 <p>To get a YAML string from metadata, you can use the <code><a href="../reference/stw_to_yaml.html">stw_to_yaml()</a></code> function. Here are the first few lines:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(<span class="kw"><a href="../reference/stw_to_yaml.html">stw_to_yaml</a></span>(diamonds_meta))</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="kw"><a href="../reference/stw_to_yaml.html">stw_to_yaml</a></span>(diamonds_meta))</a></code></pre></div>
 <pre><code>name: diamonds
 title: Prices of 50,000 round cut diamonds
 description: A dataset containing the prices and other attributes of almost 54,000
@@ -172,7 +217,7 @@ sources:
 <h4 class="hasAnchor">
 <a href="#write-roxygen" class="anchor"></a>Write roxygen</h4>
 <p>To get a roxygen string from metadata, you can use the <code><a href="../reference/stw_to_roxygen.html">stw_to_roxygen()</a></code> function:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(<span class="kw"><a href="../reference/stw_to_roxygen.html">stw_to_roxygen</a></span>(diamonds_meta))</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="kw"><a href="../reference/stw_to_roxygen.html">stw_to_roxygen</a></span>(diamonds_meta))</a></code></pre></div>
 <pre><code>#' Prices of 50,000 round cut diamonds
 #' 
 #' A dataset containing the prices and other attributes of almost 54,000 diamonds.
@@ -192,7 +237,7 @@ sources:
 #'   \item{table}{width of top of diamond relative to widest point (43--95)}
 #' }
 #' 
-#' @source [DiamondSearchEngine](http://www.diamondse.info/), [ggplot2 package](https://ggplot2.tidyverse.org/)
+#' @source [DiamondSearchEngine](http://www.diamondse.info/): ([email](mailto:)), [ggplot2 package](https://ggplot2.tidyverse.org/): ([email](mailto:))
 #' 
 "diamonds"</code></pre>
 <p>Other functions in this family:</p>
@@ -207,12 +252,12 @@ sources:
 <h4 class="hasAnchor">
 <a href="#write-gt-table" class="anchor"></a>Write gt Table</h4>
 <p>If you are creating an R Markdown document, you can use the <code><a href="../reference/stw_to_table.html">stw_to_table()</a></code> function to create a <a href="https://gt.rstudio.com">gt table</a>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/stw_to_table.html">stw_to_table</a></span>(diamonds_meta)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="../reference/stw_to_table.html">stw_to_table</a></span>(diamonds_meta)</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ypdvoyexuz .gt_table {
+#kayswrrwwr .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -231,13 +276,13 @@ sources:
   /* table.border.top.color */
 }
 
-#ypdvoyexuz .gt_heading {
+#kayswrrwwr .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#ypdvoyexuz .gt_title {
+#kayswrrwwr .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -248,7 +293,7 @@ sources:
   border-bottom-width: 0;
 }
 
-#ypdvoyexuz .gt_subtitle {
+#kayswrrwwr .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -259,7 +304,7 @@ sources:
   border-top-width: 0;
 }
 
-#ypdvoyexuz .gt_bottom_border {
+#kayswrrwwr .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -268,7 +313,7 @@ sources:
   /* heading.border.bottom.color */
 }
 
-#ypdvoyexuz .gt_column_spanner {
+#kayswrrwwr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -276,7 +321,7 @@ sources:
   padding-bottom: 4px;
 }
 
-#ypdvoyexuz .gt_col_heading {
+#kayswrrwwr .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -289,11 +334,11 @@ sources:
   margin: 10px;
 }
 
-#ypdvoyexuz .gt_sep_right {
+#kayswrrwwr .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#ypdvoyexuz .gt_group_heading {
+#kayswrrwwr .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -317,7 +362,7 @@ sources:
   vertical-align: middle;
 }
 
-#ypdvoyexuz .gt_empty_group_heading {
+#kayswrrwwr .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -341,37 +386,37 @@ sources:
   vertical-align: middle;
 }
 
-#ypdvoyexuz .gt_striped {
+#kayswrrwwr .gt_striped {
   background-color: #f2f2f2;
 }
 
-#ypdvoyexuz .gt_from_md > :first-child {
+#kayswrrwwr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ypdvoyexuz .gt_from_md > :last-child {
+#kayswrrwwr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ypdvoyexuz .gt_row {
+#kayswrrwwr .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#ypdvoyexuz .gt_stub {
+#kayswrrwwr .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#ypdvoyexuz .gt_stub.gt_row {
+#kayswrrwwr .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#ypdvoyexuz .gt_summary_row {
+#kayswrrwwr .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -380,13 +425,13 @@ sources:
   /* summary_row.text_transform */
 }
 
-#ypdvoyexuz .gt_first_summary_row {
+#kayswrrwwr .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#ypdvoyexuz .gt_table_body {
+#kayswrrwwr .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -401,55 +446,55 @@ sources:
   /* table_body.border.bottom.color */
 }
 
-#ypdvoyexuz .gt_footnote {
+#kayswrrwwr .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#ypdvoyexuz .gt_sourcenote {
+#kayswrrwwr .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#ypdvoyexuz .gt_center {
+#kayswrrwwr .gt_center {
   text-align: center;
 }
 
-#ypdvoyexuz .gt_left {
+#kayswrrwwr .gt_left {
   text-align: left;
 }
 
-#ypdvoyexuz .gt_right {
+#kayswrrwwr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ypdvoyexuz .gt_font_normal {
+#kayswrrwwr .gt_font_normal {
   font-weight: normal;
 }
 
-#ypdvoyexuz .gt_font_bold {
+#kayswrrwwr .gt_font_bold {
   font-weight: bold;
 }
 
-#ypdvoyexuz .gt_font_italic {
+#kayswrrwwr .gt_font_italic {
   font-style: italic;
 }
 
-#ypdvoyexuz .gt_super {
+#kayswrrwwr .gt_super {
   font-size: 65%;
 }
 
-#ypdvoyexuz .gt_footnote_glyph {
+#kayswrrwwr .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ypdvoyexuz" style="overflow-x:auto;">
+<div id="kayswrrwwr" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <thead>
@@ -529,8 +574,7 @@ sources:
 </tr>
 </tbody>
 <tfoot><tr>
-<td colspan="5" class="gt_sourcenote">Sources: <a href="http://www.diamondse.info/">DiamondSearchEngine</a>, <a href="https://ggplot2.tidyverse.org/">ggplot2 package</a>
-</td>
+<td colspan="5" class="gt_sourcenote">Sources: <a href="http://www.diamondse.info/">DiamondSearchEngine</a>: (<a href="mailto:">email</a>), <a href="https://ggplot2.tidyverse.org/">ggplot2 package</a>: (<a href="mailto:">email</a>)</td>
 </tr></tfoot>
 </table>
 <!--gt table end-->
@@ -549,7 +593,7 @@ sources:
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
 </div>

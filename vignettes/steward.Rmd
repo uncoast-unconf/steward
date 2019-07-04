@@ -47,8 +47,8 @@ This package offers a set of S3 classes designed to store data-frame metadata fo
 
 These are the things we can do with steward objects:
 
-- [create](#create) 
-- [write to package with documentation](#write-to-package)
+- [create dataset](#create) 
+- [write dataset to package with documentation](#write-to-package)
 
 - [read from YAML](#read-yaml) 
 - [write to YAML](#write-yaml)

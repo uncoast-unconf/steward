@@ -72,8 +72,9 @@ library("steward")
 
 You can read about these capabilities in the [getting started article](https://uncoast-unconf.github.io/steward/articles/steward.html):
 
+- create a "steward" dataset
+- write dataset to package with documentation
 - read from YAML
-- read from CSV
 - write to YAML
 - write to roxygen
 - write to [gt table](https://gt.rstudio.com)

@@ -49,8 +49,9 @@ library("steward")
 You can read about these capabilities in the [getting started
 article](https://uncoast-unconf.github.io/steward/articles/steward.html):
 
+  - create a “steward” dataset
+  - write dataset to package with documentation
   - read from YAML
-  - read from CSV
   - write to YAML
   - write to roxygen
   - write to [gt table](https://gt.rstudio.com)
@@ -67,20 +68,20 @@ system.file("metadata/diamonds.yml", package = "steward")
     title: Prices of 50,000 round cut diamonds
     description: |
      A dataset containing the prices and other attributes of almost 54,000 diamonds.
-    n_row: 53940
-    n_col: 10
-    source: <http://www.diamondse.info/>
-    dictionary:
-        - name: price
-          type: double
-          description: price in US dollars ($326--$18,823)
+    sources:
+      - title: DiamondSearchEngine
+        path: http://www.diamondse.info/
+        email: ""
+      - title: ggplot2 package
+        path: https://ggplot2.tidyverse.org/
+        email: ""
     ...
 
 You can read this YAML file using `stw_read_yaml()`:
 
 ``` r
 diamonds_meta <-
-  stw_read_yaml(system.file("metadata/diamonds.yml", package = "steward"))
+  stw_read_meta_yaml(system.file("metadata/diamonds.yml", package = "steward"))
 
 print(diamonds_meta)
 ```
@@ -89,13 +90,32 @@ print(diamonds_meta)
      $ name       : chr "diamonds"
      $ title      : chr "Prices of 50,000 round cut diamonds"
      $ description: chr "A dataset containing the prices and other attributes of almost 54,000 diamonds."
-     $ source     : chr "<http://www.diamondse.info/>"
-     $ n_row      : int 53940
-     $ n_col      : int 10
-     $ dictionary :Classes 'stw_dict' and 'data.frame': 10 obs. of  3 variables:
+     $ sources    :List of 2
+      ..$ :List of 3
+      .. ..$ title: chr "DiamondSearchEngine"
+      .. ..$ path : chr "http://www.diamondse.info/"
+      .. ..$ email: chr ""
+      ..$ :List of 3
+      .. ..$ title: chr "ggplot2 package"
+      .. ..$ path : chr "https://ggplot2.tidyverse.org/"
+      .. ..$ email: chr ""
+     $ n_row      : int(0) 
+     $ n_col      : int(0) 
+     $ dict       :Classes 'stw_dict', 'tbl_df', 'tbl' and 'data.frame':    10 obs. of  4 variables:
       ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...
-      ..$ type       : chr [1:10] "double" "double" "character" "character" ...
+      ..$ type       : chr [1:10] "number" "number" "string" "string" ...
       ..$ description: chr [1:10] "price in US dollars ($326--$18,823)" "weight of diamond (0.2--5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "diamond color, from D (best) to J (worst)" ...
+      ..$ levels     :List of 10
+      .. ..$ : NULL
+      .. ..$ : NULL
+      .. ..$ : chr [1:5] "Fair" "Good" "Very Good" "Premium" ...
+      .. ..$ : chr [1:7] "D" "E" "F" "G" ...
+      .. ..$ : chr [1:8] "I1" "SI2" "SI1" "VS2" ...
+      .. ..$ : NULL
+      .. ..$ : NULL
+      .. ..$ : NULL
+      .. ..$ : NULL
+      .. ..$ : NULL
      - attr(*, "class")= chr "stw_meta"
 
 To get a roxygen string from metadata, you can use the
@@ -109,7 +129,7 @@ cat(stw_to_roxygen(diamonds_meta))
     #' 
     #' A dataset containing the prices and other attributes of almost 54,000 diamonds.
     #' 
-    #' @format A data frame with 53940 rows and 10 variables:
+    #' @format 
     #' 
     #' \describe{ 
     #'   \item{price}{price in US dollars ($326--$18,823)}
@@ -123,7 +143,9 @@ cat(stw_to_roxygen(diamonds_meta))
     #'   \item{depth}{total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)}
     #'   \item{table}{width of top of diamond relative to widest point (43--95)}
     #' }
-    #' @source <http://www.diamondse.info/>
+    #' 
+    #' @source [DiamondSearchEngine](http://www.diamondse.info/): ([email](mailto:)), [ggplot2 package](https://ggplot2.tidyverse.org/): ([email](mailto:))
+    #' 
     "diamonds"
 
 You may also be interested in the related functions: `stw_use_roxygen()`
