@@ -42,6 +42,7 @@ stw_to_table.stw_meta <- function(meta, ...) {
   table <-
     dict %>%
     gt::gt() %>%
+    gt::fmt_markdown("Description") %>%
     gt::tab_header(
       title = name,
       subtitle = title
