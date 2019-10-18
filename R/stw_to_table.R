@@ -47,7 +47,7 @@ stw_to_table.stw_meta <- function(meta, ...) {
       subtitle = title
     ) %>%
     gt::tab_style(
-      style = gt::cells_styles(text_style = "italic"),
+      style = gt::cell_text(style = "italic"),
       locations = gt::cells_data("Name")
     ) %>%
     gt::cols_align("right", columns = "Name") %>%
