@@ -59,10 +59,11 @@ Imports:
     tools,
     purrr
 Remotes: rstudio/gt
-Suggests: 
+Suggests:
     testthat (>= 2.1.0),
     roxygen2,
     knitr,
     rmarkdown,
-    ggplot2
+    ggplot2,
+    covr
 VignetteBuilder: knitr
