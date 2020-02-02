@@ -41,7 +41,7 @@ RoxygenNote: 7.0.2
 URL: https://github.com/uncoast-unconf/steward
 BugReports: https://github.com/uncoast-unconf/steward/issues
 Depends:
-    R (>= 2.10)
+    R (>= 3.3)
 Imports: 
     assertthat,
     rlang (>= 0.1.2),
