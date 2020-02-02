@@ -13,8 +13,16 @@ stw_meta(...)
 
 \method{stw_meta}{default}(...)
 
-\method{stw_meta}{character}(name, title = NULL, description = NULL,
-  sources = NULL, n_row = NULL, n_col = NULL, dict = NULL, ...)
+\method{stw_meta}{character}(
+  name,
+  title = NULL,
+  description = NULL,
+  sources = NULL,
+  n_row = NULL,
+  n_col = NULL,
+  dict = NULL,
+  ...
+)
 
 \method{stw_meta}{list}(env, ...)
 

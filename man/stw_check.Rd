@@ -17,27 +17,21 @@ stw_check(...)
 
 \method{stw_check}{default}(...)
 
-\method{stw_check}{stw_dict}(dict, verbosity = c("error", "info", "all",
-  "none"), ...)
+\method{stw_check}{stw_dict}(dict, verbosity = c("error", "info", "all", "none"), ...)
 
-\method{stw_check}{stw_meta}(meta, verbosity = c("error", "info", "all",
-  "none"), ...)
+\method{stw_check}{stw_meta}(meta, verbosity = c("error", "info", "all", "none"), ...)
 
-\method{stw_check}{stw_dataset}(dataset, verbosity = c("error", "info",
-  "all"), ...)
+\method{stw_check}{stw_dataset}(dataset, verbosity = c("error", "info", "all"), ...)
 
 stw_validate(...)
 
 \method{stw_validate}{default}(...)
 
-\method{stw_validate}{stw_dict}(dict, verbosity = c("error", "info",
-  "all"), ...)
+\method{stw_validate}{stw_dict}(dict, verbosity = c("error", "info", "all"), ...)
 
-\method{stw_validate}{stw_meta}(meta, verbosity = c("error", "info",
-  "all"), ...)
+\method{stw_validate}{stw_meta}(meta, verbosity = c("error", "info", "all"), ...)
 
-\method{stw_validate}{stw_dataset}(dataset, verbosity = c("error",
-  "info", "all"), ...)
+\method{stw_validate}{stw_dataset}(dataset, verbosity = c("error", "info", "all"), ...)
 }
 \arguments{
 \item{...}{other arguments (not used)}

@@ -4,8 +4,14 @@
 \alias{stw_use_data}
 \title{Create and document package-data}
 \usage{
-stw_use_data(..., file_doc = NULL, keep_steward = FALSE,
-  overwrite = FALSE, compress = "bzip2", version = 2)
+stw_use_data(
+  ...,
+  file_doc = NULL,
+  keep_steward = FALSE,
+  overwrite = FALSE,
+  compress = "bzip2",
+  version = 2
+)
 }
 \arguments{
 \item{...}{Unquoted names of existing objects to save.}

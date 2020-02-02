@@ -14,7 +14,7 @@ stw_dict(...)
 
 \method{stw_dict}{default}(...)
 
-\method{stw_dict}{NULL}(data_dict, ...)
+\method{stw_dict}{`NULL`}(data_dict, ...)
 
 \method{stw_dict}{character}(name, type, description, levels = NULL, ...)
 
