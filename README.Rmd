@@ -42,6 +42,7 @@ knitr::knit_hooks$set(
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![R build status](https://github.com/uncoast-unconf/steward/workflows/R-CMD-check/badge.svg)](https://github.com/uncoast-unconf/steward)
 <!-- badges: end -->
 
 The goal of **steward** is to make it easier to import, manage, and publish the metadata associated with data frames. This might be useful for:
