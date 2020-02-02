@@ -7,6 +7,8 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![R build
+status](https://github.com/uncoast-unconf/steward/workflows/R-CMD-check/badge.svg)](https://github.com/uncoast-unconf/steward)
 <!-- badges: end -->
 
 The goal of **steward** is to make it easier to import, manage, and
@@ -18,7 +20,7 @@ for:
     package
   - publishing a data dictionary in an R Markdown document
 
-Our current definition of metadata includes the name, description and
+Our current defintion of metadata includes the name, description and
 source of a dataset, as well as the name, type, and description of each
 of the variables in the dataset.
 
