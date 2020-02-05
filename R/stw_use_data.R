@@ -100,8 +100,10 @@ validate_list <- function(named_datasets) {
   # if any result is false, give the output and throw an error
   results_false <- purrr::keep(results, ~ !.x$result)
 
+  print(results_false)
+
   if (!rlang::is_empty(results_false)) {
-    purrr::iwalk(results_false, ~ usethis::ui_oops("{.y}:\n {.x$output}"))
+    purrr::iwalk(results_false, ~ usethis::ui_oops("{.y}:\n {.x$messages}"))
     stop("invalid elements")
   }
 
