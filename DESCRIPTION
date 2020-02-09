@@ -56,7 +56,6 @@ Imports:
     utils,
     usethis,
     withr,
-    tools,
     purrr
 Remotes: rstudio/gt
 Suggests:
