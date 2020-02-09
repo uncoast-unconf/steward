@@ -43,21 +43,28 @@ knitr::knit_hooks$set(
 library("steward")
 ```
 
-This package offers a set of S3 classes designed to store data-frame metadata for the purposes of documenting it, in a report or as roxygen data-documentation. 
+The goal of this package is to make it a little easier to build and publish data-dictionaries, in particular:
 
-These are the things we can do with steward objects:
+- for [package documentation](https://r-pkgs.org/data.html#documenting-data). 
+- to produce [nicely-formatted](https://gt.rstudio.com) data-dictionaries in RMarkdown documents.
+
+In this article, we will look at a few (what we think are) common tasks:
 
 - [create dataset](#create) 
-- [write dataset to package with documentation](#write-to-package)
+- [write dataset to package-documentation](#write-to-package)
+- [write dataset to gt table](#write-gt-table) 
 
-- [read from YAML](#read-yaml) 
-- [write to YAML](#write-yaml)
-- [write to roxygen](#write-roxygen) 
-- [write to gt table](#write-gt-table) 
+## Create 
 
-#### Create 
+For this set of examples, we use the **ggplot2** `diamonds` dataset. We will create an `stw_dataset`, which is a data frame with an extra class attached to help manage metadata. An `stw_dataset` **is** a data frame, in the same way that a [tibble](https://tibble.tidyverse.org) is a data frame. 
 
-We use the **ggplot2** `diamonds` dataset as our example. We build up the data-frame metadata using `stw_mutate_meta()` and the column-metadata using `stw_mutate_dict()`:
+In the code that follows we have three steps:
+
+1. Create the `stw_dataset()` using a data frame.
+2. Add the top-level metadata using `stw_mutate_meta()`.
+3. Add the column-level metadata using `stw_mutate_dict()`.
+
+The functions `stw_mutate_meta()` and `stw_mutate_dict()` work a little bit like `dplyr::mutate()`. However, instead of mutating the colunms of a data frame, `stw_mutate_meta()` mutates the top-level metadata, and `stw_mutate_dict()` mutates the *descriptions* of columns in a data frame:
 
 ```{r}
 diamonds <-
@@ -87,76 +94,36 @@ diamonds <-
   )
 ```
 
+We also offer a function to make some basic checks on the completeness of the metadata:
+
 ```{r}
 stw_check(diamonds, verbosity = "all")
 ```
 
-#### Write to package
+## Write to package
 
-This bit assumes that you are working with a package project, where you want to include data with your package.
+If you are including a dataset in a package, it is good practice to [document it](https://r-pkgs.org/data.html#documenting-data); in fact, CRAN insists!
 
-A `stw_dataset` object contains the data itself, along with its metadata. By keeping all the "stuff" together, we can verify that we have everything documented and current.
+You can use an `stw_dataset` to keep your documentation associated with your dataset as you build it for your package.
+By keeping all the "stuff" together, this helps assure that the dataset documentation is complete and current.
 
-This allows us to write everything to a package. The function `stw_use_data()` wraps `usethis::use_data()` and `steward::stw_write_roxygen()`. For example:
+You can use the function `stw_use_data()` wraps `usethis::use_data()` and `steward::stw_write_roxygen()`. For example, by running:
 
 ```r
 stw_use_data(diamonds_new)
 ```
 
-Will write the `diamonds_new` dataset to your package, as well as roxygen documentation to `R/data-diamonds_new.R`.
+You will:
 
-#### Read YAML
+- validate that the metadata is complete.
+- write the `diamonds_new` dataset to your package.
+- write the roxygen documentation to `R/data-diamonds_new.R`.
 
-Here are the first lines of a YAML file containing metadata from [ggplot2](http://ggplot2.tidyverse.org)'s `diamonds` dataset, which is available as:
+## Write gt Table
 
-```r
-system.file("metadata/diamonds.yml", package = "steward")
-```
-
-```{r yaml, echo = FALSE, comment = "", output.lines = 11}
-system.file("metadata/diamonds.yml", package = "steward") %>%
-  readr::read_lines() %>%
-  glue::glue_collapse(sep = "\n")
-```
-
-We can read a YAML file using `stw_read_meta_yaml()`:
-
-```{r example_read_yaml}
-stw_read_meta_yaml(system.file("metadata/diamonds.yml", package = "steward"))
-```
-
-#### Write YAML
-
-To get a YAML string from metadata, you can use the `stw_to_yaml()` function. Here are the first few lines:
-
-```{r stw_to_yaml, output, output.lines = 11}
-cat(stw_to_yaml(diamonds_meta))
-```
-
-Other functions in this family:
-
-- `stw_use_yaml()` copies the YAML string to the clipboard.
-- `stw_write_yaml()` writes the YAML string to a file.
-
-#### Write roxygen
-
-To get a roxygen string from metadata, you can use the `stw_to_roxygen()` function:
-
-
-```{r example_roxygen}
-cat(stw_to_roxygen(diamonds_meta))
-```
-
-Other functions in this family:
-
-- `stw_use_roxygen()` copies the roxygen string to the clipboard.
-- `stw_write_roxygen()` writes the roxygen string to a file.
-
-#### Write gt Table
-
-If you are creating an R Markdown document, you can use the `stw_to_table()` function to create a [gt table](https://gt.rstudio.com):
+If you are creating an R Markdown document, you can use the `stw_to_table()` function to create a [gt](https://gt.rstudio.com) table:
 
 ```{r}
-stw_to_table(diamonds_meta)
+stw_to_table(diamonds)
 ```
 

@@ -1,25 +1,27 @@
 destination: docs
 
 reference:
-  - title: "Input functions"
+  - title: "Object constructors"
     contents:
-      - stw_read_meta_yaml
-      - stw_read_meta_csv
+      - stw_dataset
+      - stw_dict
+      - stw_meta
   - title: "Mutation functions"
     contents:
       - stw_mutate_dict
-  - title: "Validation functions"
+      - stw_mutate_meta
+  - title: "Validation"
     contents:
       - stw_check
-  - title: "Output functions"
+      - with_verbosity
+  - title: "Input-Output"
     contents:
-      - stw_to_yaml
+      - stw_use_data
       - stw_to_roxygen
       - stw_to_table
-  - title: "Object constructors"
-    contents:
-      - stw_dict
-      - stw_meta
+      - stw_to_yaml
+      - stw_read_meta_yaml
+      - stw_read_dataset
   - title: "Package data"
     contents:
       - diamonds_meta

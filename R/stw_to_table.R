@@ -49,7 +49,7 @@ stw_to_table.stw_meta <- function(meta, ...) {
     ) %>%
     gt::tab_style(
       style = gt::cell_text(style = "italic"),
-      locations = gt::cells_data("Name")
+      locations = gt::cells_body(columns = "Name")
     ) %>%
     gt::cols_align("right", columns = "Name") %>%
     gt::cols_align("left", columns = c("Type", "Description", "Levels"))
