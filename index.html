@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">steward</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9006</span>
       </span>
     </div>
 
@@ -83,10 +83,11 @@
 <ul>
 <li>
 <a href="https://r-pkgs.org/data.html#documenting-data">documenting a dataset</a> for a package</li>
-<li>publishing a data dictionary in an R Markdown document</li>
+<li>publishing a data-dictionary <a href="https://gt.rstudio.com">table</a> in an R Markdown document</li>
 </ul>
 <p>Our current defintion of metadata includes the name, description and source of a dataset, as well as the name, type, and description of each of the variables in the dataset.</p>
 <p>The name, steward, is an homage to the <a href="http://agron590-isu.github.io/">Data Stewardship</a> class taught by <a href="https://github.com/andeek">Andee Kaplan</a> and <a href="https://github.com/ranae">Ranae Dietzel</a> (also an author of this package) at Iowa State University in Fall 2016.</p>
+<p>This package was first built collaborativey at the <a href="https://uuconf.rbind.io">Uncoast Unconf</a>, held at Des Moines in April 2019.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -98,118 +99,39 @@
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"steward"</span>)</span></code></pre></div>
-<div id="current-capabilities" class="section level3">
-<h3 class="hasAnchor">
-<a href="#current-capabilities" class="anchor"></a>Current capabilities</h3>
+</div>
+<div id="current-capabilities" class="section level2">
+<h2 class="hasAnchor">
+<a href="#current-capabilities" class="anchor"></a>Current capabilities</h2>
 <p>You can read about these capabilities in the <a href="https://uncoast-unconf.github.io/steward/articles/steward.html">getting started article</a>:</p>
 <ul>
 <li>create a “steward” dataset</li>
 <li>write dataset to package with documentation</li>
-<li>read from YAML</li>
-<li>write to YAML</li>
-<li>write to roxygen</li>
 <li>write to <a href="https://gt.rstudio.com">gt table</a>
 </li>
 </ul>
-<p>Here are the first lines of a YAML file containing metadata from <a href="http://ggplot2.tidyverse.org">ggplot2</a>’s <code>diamonds</code> dataset, which is available as:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"metadata/diamonds.yml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>name<span class="op">:</span><span class="st"> </span>diamonds</span>
-<span id="cb4-2"><a href="#cb4-2"></a>title<span class="op">:</span><span class="st"> </span>Prices of <span class="dv">50</span>,<span class="dv">000</span> round cut diamonds</span>
-<span id="cb4-3"><a href="#cb4-3"></a>description<span class="op">:</span><span class="st"> </span><span class="er">|</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="st"> </span>A dataset containing the prices and other attributes of almost <span class="dv">54</span>,<span class="dv">000</span> diamonds.</span>
-<span id="cb4-5"><a href="#cb4-5"></a>sources<span class="op">:</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="st">  </span><span class="op">-</span><span class="st"> </span>title<span class="op">:</span><span class="st"> </span>DiamondSearchEngine</span>
-<span id="cb4-7"><a href="#cb4-7"></a>    path<span class="op">:</span><span class="st"> </span>http<span class="op">:</span><span class="er">//</span>www.diamondse.info<span class="op">/</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="st">    </span>email<span class="op">:</span><span class="st"> ""</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a>  <span class="op">-</span><span class="st"> </span>title<span class="op">:</span><span class="st"> </span>ggplot2 package</span>
-<span id="cb4-10"><a href="#cb4-10"></a>    path<span class="op">:</span><span class="st"> </span>https<span class="op">:</span><span class="er">//</span>ggplot2.tidyverse.org<span class="op">/</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="st">    </span>email<span class="op">:</span><span class="st"> ""</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a>...</span></code></pre></div>
-<p>You can read this YAML file using <code>stw_read_yaml()</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>diamonds_meta &lt;-</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="kw"><a href="reference/stw_read_meta_yaml.html">stw_read_meta_yaml</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"metadata/diamonds.yml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>))</span>
-<span id="cb5-3"><a href="#cb5-3"></a></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(diamonds_meta)</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>List of <span class="dv">7</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a> <span class="op">$</span><span class="st"> </span>name       <span class="op">:</span><span class="st"> </span>chr <span class="st">"diamonds"</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a> <span class="op">$</span><span class="st"> </span>title      <span class="op">:</span><span class="st"> </span>chr <span class="st">"Prices of 50,000 round cut diamonds"</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a> <span class="op">$</span><span class="st"> </span>description<span class="op">:</span><span class="st"> </span>chr <span class="st">"A dataset containing the prices and other attributes of almost 54,000 diamonds."</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a> <span class="op">$</span><span class="st"> </span>sources    <span class="op">:</span>List of <span class="dv">2</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span>List of <span class="dv">3</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a>  .. ..<span class="op">$</span><span class="st"> </span>title<span class="op">:</span><span class="st"> </span>chr <span class="st">"DiamondSearchEngine"</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a>  .. ..<span class="op">$</span><span class="st"> </span>path <span class="op">:</span><span class="st"> </span>chr <span class="st">"http://www.diamondse.info/"</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a>  .. ..<span class="op">$</span><span class="st"> </span>email<span class="op">:</span><span class="st"> </span>chr <span class="st">""</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a>  ..<span class="op">$</span><span class="st"> </span><span class="er">:</span>List of <span class="dv">3</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a>  .. ..<span class="op">$</span><span class="st"> </span>title<span class="op">:</span><span class="st"> </span>chr <span class="st">"ggplot2 package"</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a>  .. ..<span class="op">$</span><span class="st"> </span>path <span class="op">:</span><span class="st"> </span>chr <span class="st">"https://ggplot2.tidyverse.org/"</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a>  .. ..<span class="op">$</span><span class="st"> </span>email<span class="op">:</span><span class="st"> </span>chr <span class="st">""</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a> <span class="op">$</span><span class="st"> </span>n_row      <span class="op">:</span><span class="st"> </span><span class="kw">int</span>(<span class="dv">0</span>) </span>
-<span id="cb6-15"><a href="#cb6-15"></a> <span class="op">$</span><span class="st"> </span>n_col      <span class="op">:</span><span class="st"> </span><span class="kw">int</span>(<span class="dv">0</span>) </span>
-<span id="cb6-16"><a href="#cb6-16"></a> <span class="op">$</span><span class="st"> </span>dict       <span class="op">:</span>Classes <span class="st">'stw_dict'</span>, <span class="st">'tbl_df'</span>, <span class="st">'tbl'</span> and <span class="st">'data.frame'</span><span class="op">:</span><span class="st">    </span><span class="dv">10</span> obs. of  <span class="dv">4</span> variables<span class="op">:</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="st">  </span>..<span class="op">$</span><span class="st"> </span>name       <span class="op">:</span><span class="st"> </span>chr [<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>] <span class="st">"price"</span> <span class="st">"carat"</span> <span class="st">"cut"</span> <span class="st">"color"</span> ...</span>
-<span id="cb6-18"><a href="#cb6-18"></a>  ..<span class="op">$</span><span class="st"> </span>type       <span class="op">:</span><span class="st"> </span>chr [<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>] <span class="st">"number"</span> <span class="st">"number"</span> <span class="st">"string"</span> <span class="st">"string"</span> ...</span>
-<span id="cb6-19"><a href="#cb6-19"></a>  ..<span class="op">$</span><span class="st"> </span>description<span class="op">:</span><span class="st"> </span>chr [<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>] <span class="st">"price in US dollars ($326--$18,823)"</span> <span class="st">"weight of diamond (0.2--5.01)"</span> <span class="st">"quality of the cut (Fair, Good, Very Good, Premium, Ideal)"</span> <span class="st">"diamond color, from D (best) to J (worst)"</span> ...</span>
-<span id="cb6-20"><a href="#cb6-20"></a>  ..<span class="op">$</span><span class="st"> </span>levels     <span class="op">:</span>List of <span class="dv">10</span></span>
-<span id="cb6-21"><a href="#cb6-21"></a>  .. ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb6-22"><a href="#cb6-22"></a>  .. ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb6-23"><a href="#cb6-23"></a>  .. ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>chr [<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>] <span class="st">"Fair"</span> <span class="st">"Good"</span> <span class="st">"Very Good"</span> <span class="st">"Premium"</span> ...</span>
-<span id="cb6-24"><a href="#cb6-24"></a>  .. ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>chr [<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>] <span class="st">"D"</span> <span class="st">"E"</span> <span class="st">"F"</span> <span class="st">"G"</span> ...</span>
-<span id="cb6-25"><a href="#cb6-25"></a>  .. ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span>chr [<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>] <span class="st">"I1"</span> <span class="st">"SI2"</span> <span class="st">"SI1"</span> <span class="st">"VS2"</span> ...</span>
-<span id="cb6-26"><a href="#cb6-26"></a>  .. ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb6-27"><a href="#cb6-27"></a>  .. ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb6-28"><a href="#cb6-28"></a>  .. ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb6-29"><a href="#cb6-29"></a>  .. ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb6-30"><a href="#cb6-30"></a>  .. ..<span class="op">$</span><span class="st"> </span><span class="er">:</span><span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb6-31"><a href="#cb6-31"></a> <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>(<span class="op">*</span>, <span class="st">"class"</span>)=<span class="st"> </span>chr <span class="st">"stw_meta"</span></span></code></pre></div>
-<p>To get a roxygen string from metadata, you can use the <code><a href="reference/stw_to_roxygen.html">stw_to_roxygen()</a></code> function:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="kw"><a href="reference/stw_to_roxygen.html">stw_to_roxygen</a></span>(diamonds_meta))</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#' Prices of 50,000 round cut diamonds</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#' </span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#' A dataset containing the prices and other attributes of almost 54,000 diamonds.</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#' </span></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#' @format </span></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#' </span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#' \describe{ </span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#'   \item{price}{price in US dollars ($326--$18,823)}</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#'   \item{carat}{weight of diamond (0.2--5.01)}</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#'   \item{cut}{quality of the cut (Fair, Good, Very Good, Premium, Ideal)}</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#'   \item{color}{diamond color, from D (best) to J (worst)}</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#'   \item{clarity}{a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))}</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#'   \item{x}{length in mm (0--10.74)}</span></span>
-<span id="cb8-14"><a href="#cb8-14"></a><span class="co">#'   \item{y}{width in mm (0--58.9)}</span></span>
-<span id="cb8-15"><a href="#cb8-15"></a><span class="co">#'   \item{z}{depth in mm (0--31.8)}</span></span>
-<span id="cb8-16"><a href="#cb8-16"></a><span class="co">#'   \item{depth}{total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)}</span></span>
-<span id="cb8-17"><a href="#cb8-17"></a><span class="co">#'   \item{table}{width of top of diamond relative to widest point (43--95)}</span></span>
-<span id="cb8-18"><a href="#cb8-18"></a><span class="co">#' }</span></span>
-<span id="cb8-19"><a href="#cb8-19"></a><span class="co">#' </span></span>
-<span id="cb8-20"><a href="#cb8-20"></a><span class="co">#' @source [DiamondSearchEngine](http://www.diamondse.info/): ([email](mailto:)), [ggplot2 package](https://ggplot2.tidyverse.org/): ([email](mailto:))</span></span>
-<span id="cb8-21"><a href="#cb8-21"></a><span class="co">#' </span></span>
-<span id="cb8-22"><a href="#cb8-22"></a><span class="st">"diamonds"</span></span></code></pre></div>
-<p>You may also be interested in the related functions: <code><a href="reference/stw_to_roxygen.html">stw_use_roxygen()</a></code> and <code><a href="reference/stw_to_roxygen.html">stw_write_roxygen()</a></code>.</p>
 </div>
-<div id="future-capabilities" class="section level3">
-<h3 class="hasAnchor">
-<a href="#future-capabilities" class="anchor"></a>Future capabilities</h3>
-<p>Soon, we hope to add additional capabilities:</p>
+<div id="future-development" class="section level2">
+<h2 class="hasAnchor">
+<a href="#future-development" class="anchor"></a>Future development</h2>
+<p>We plan to release this package to CRAN as soon as the <a href="https://gt.rstudio.com">gt</a> package is released there.</p>
+<p>Some of the capabilities we plan to develop:</p>
 <ul>
-<li>
-<a href="https://github.com/uncoast-unconf/steward/issues/36">combine metadata with dataset</a>
-<ul>
-<li>
-<a href="https://github.com/uncoast-unconf/steward/issues/41">read and write combined dataset</a> from/to flat files</li>
-</ul>
-</li>
 <li>take into account <a href="https://github.com/uncoast-unconf/steward/issues/39">timezone as column metadata</a>
 </li>
 <li>
 <a href="https://github.com/uncoast-unconf/steward/issues/43">build metadata from package-documentation</a> (<code>.Rd</code> file)</li>
 </ul>
 </div>
-</div>
 <div id="related-work" class="section level2">
 <h2 class="hasAnchor">
 <a href="#related-work" class="anchor"></a>Related work</h2>
 <p>The <a href="https://rubenarslan.github.io/codebook/">codebook</a> package can help you manage dataset metadata.</p>
+</div>
+<div id="code-of-conduct" class="section level2">
+<h2 class="hasAnchor">
+<a href="#code-of-conduct" class="anchor"></a>Code of conduct</h2>
+<p>Please note that the {steward} project is released with a <a href="CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
   </div>
@@ -229,6 +151,12 @@
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
 <li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+</ul>
+</div>
+<div class="community">
+<h2>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
 <div class="developers">

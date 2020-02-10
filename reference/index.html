@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">steward</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9006</span>
       </span>
     </div>
 
@@ -123,16 +123,28 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-input-functions" class="hasAnchor"><a href="#section-input-functions" class="anchor"></a>Input functions</h2>
+          <h2 id="section-object-constructors" class="hasAnchor"><a href="#section-object-constructors" class="anchor"></a>Object constructors</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="stw_read_meta_yaml.html">stw_read_meta_yaml()</a></code> </p>
+          <p><code><a href="stw_dataset.html">stw_dataset()</a></code> </p>
         </td>
-        <td><p>Create metadata-object from YAML</p></td>
+        <td><p>Create new dataset object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="stw_dict.html">stw_dict()</a></code> </p>
+        </td>
+        <td><p>Create new data-dictionary object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="stw_meta.html">stw_meta()</a></code> </p>
+        </td>
+        <td><p>Create new metadata object</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -147,11 +159,17 @@
           <p><code><a href="stw_mutate_dict.html">stw_mutate_dict()</a></code> </p>
         </td>
         <td><p>Modify descriptions in data-dictionary</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="stw_mutate_meta.html">stw_mutate_meta()</a></code> </p>
+        </td>
+        <td><p>Modify metadata-object</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-validation-functions" class="hasAnchor"><a href="#section-validation-functions" class="anchor"></a>Validation functions</h2>
+          <h2 id="section-validation" class="hasAnchor"><a href="#section-validation" class="anchor"></a>Validation</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -161,20 +179,26 @@
           <p><code><a href="stw_check.html">stw_check()</a></code> <code><a href="stw_check.html">stw_validate()</a></code> </p>
         </td>
         <td><p>Check steward object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="with_verbosity.html">with_verbosity()</a></code> <code><a href="with_verbosity.html">verbosely()</a></code> </p>
+        </td>
+        <td><p>Run code with verbosity</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-output-functions" class="hasAnchor"><a href="#section-output-functions" class="anchor"></a>Output functions</h2>
+          <h2 id="section-input-output" class="hasAnchor"><a href="#section-input-output" class="anchor"></a>Input-Output</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="stw_to_yaml.html">stw_to_yaml()</a></code> <code><a href="stw_to_yaml.html">stw_use_yaml()</a></code> <code><a href="stw_to_yaml.html">stw_write_yaml()</a></code> </p>
+          <p><code><a href="stw_use_data.html">stw_use_data()</a></code> </p>
         </td>
-        <td><p>Output to YAML format</p></td>
+        <td><p>Create and document package-data</p></td>
       </tr><tr>
         
         <td>
@@ -187,26 +211,24 @@
           <p><code><a href="stw_to_table.html">stw_to_table()</a></code> </p>
         </td>
         <td><p>Output to gt (table) format</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-object-constructors" class="hasAnchor"><a href="#section-object-constructors" class="anchor"></a>Object constructors</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="stw_dict.html">stw_dict()</a></code> </p>
-        </td>
-        <td><p>Create new data-dictionary object</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="stw_meta.html">stw_meta()</a></code> </p>
+          <p><code><a href="stw_to_yaml.html">stw_to_yaml()</a></code> <code><a href="stw_to_yaml.html">stw_use_yaml()</a></code> <code><a href="stw_to_yaml.html">stw_write_yaml()</a></code> </p>
         </td>
-        <td><p>Create new metadata object</p></td>
+        <td><p>Output to YAML format</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="stw_read_meta_yaml.html">stw_read_meta_yaml()</a></code> </p>
+        </td>
+        <td><p>Create metadata-object from YAML</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="stw_read_dataset.html">stw_read_dataset()</a></code> <code><a href="stw_read_dataset.html">stw_write_dataset()</a></code> </p>
+        </td>
+        <td><p>Read or write a steward dataset</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -229,11 +251,10 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-input-functions">Input functions</a></li>
-      <li><a href="#section-mutation-functions">Mutation functions</a></li>
-      <li><a href="#section-validation-functions">Validation functions</a></li>
-      <li><a href="#section-output-functions">Output functions</a></li>
       <li><a href="#section-object-constructors">Object constructors</a></li>
+      <li><a href="#section-mutation-functions">Mutation functions</a></li>
+      <li><a href="#section-validation">Validation</a></li>
+      <li><a href="#section-input-output">Input-Output</a></li>
       <li><a href="#section-package-data">Package data</a></li>
     </ul>
   </div>

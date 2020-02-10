@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">steward</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9006</span>
       </span>
     </div>
 
@@ -84,20 +84,28 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"steward"</span>)</span></code></pre></div>
-<p>This package offers a set of S3 classes designed to store data-frame metadata for the purposes of documenting it, in a report or as roxygen data-documentation.</p>
-<p>These are the things we can do with steward objects:</p>
+<p>The goal of this package is to make it a little easier to build and publish data-dictionaries, in particular:</p>
 <ul>
-<li><p><a href="#create">create dataset</a></p></li>
-<li><p><a href="#write-to-package">write dataset to package with documentation</a></p></li>
-<li><p><a href="#read-yaml">read from YAML</a></p></li>
-<li><p><a href="#write-yaml">write to YAML</a></p></li>
-<li><p><a href="#write-roxygen">write to roxygen</a></p></li>
-<li><p><a href="#write-gt-table">write to gt table</a></p></li>
+<li>for <a href="https://r-pkgs.org/data.html#documenting-data">package documentation</a>.</li>
+<li>to produce <a href="https://gt.rstudio.com">nicely-formatted</a> data-dictionaries in RMarkdown documents.</li>
 </ul>
-<div id="create" class="section level4">
-<h4 class="hasAnchor">
-<a href="#create" class="anchor"></a>Create</h4>
-<p>We use the <strong>ggplot2</strong> <code>diamonds</code> dataset as our example. We build up the data-frame metadata using <code><a href="../reference/stw_mutate_meta.html">stw_mutate_meta()</a></code> and the column-metadata using <code><a href="../reference/stw_mutate_dict.html">stw_mutate_dict()</a></code>:</p>
+<p>In this article, we will look at a few (what we think are) common tasks:</p>
+<ul>
+<li><a href="#create">create dataset</a></li>
+<li><a href="#write-to-package">write dataset to package-documentation</a></li>
+<li><a href="#write-gt-table">write dataset to gt table</a></li>
+</ul>
+<div id="create" class="section level2">
+<h2 class="hasAnchor">
+<a href="#create" class="anchor"></a>Create</h2>
+<p>For this set of examples, we use the <strong>ggplot2</strong> <code>diamonds</code> dataset. We will create an <code>stw_dataset</code>, which is a data frame with an extra class attached to help manage metadata. An <code>stw_dataset</code> <strong>is</strong> a data frame, in the same way that a <a href="https://tibble.tidyverse.org">tibble</a> is a data frame.</p>
+<p>In the code that follows we have three steps:</p>
+<ol style="list-style-type: decimal">
+<li>Create the <code><a href="../reference/stw_dataset.html">stw_dataset()</a></code> using a data frame.</li>
+<li>Add the top-level metadata using <code><a href="../reference/stw_mutate_meta.html">stw_mutate_meta()</a></code>.</li>
+<li>Add the column-level metadata using <code><a href="../reference/stw_mutate_dict.html">stw_mutate_dict()</a></code>.</li>
+</ol>
+<p>The functions <code><a href="../reference/stw_mutate_meta.html">stw_mutate_meta()</a></code> and <code><a href="../reference/stw_mutate_dict.html">stw_mutate_dict()</a></code> work a little bit like <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>. However, instead of mutating the colunms of a data frame, <code><a href="../reference/stw_mutate_meta.html">stw_mutate_meta()</a></code> mutates the top-level metadata, and <code><a href="../reference/stw_mutate_dict.html">stw_mutate_dict()</a></code> mutates the <em>descriptions</em> of columns in a data frame:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>diamonds &lt;-</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="st">  </span><span class="kw"><a href="../reference/stw_dataset.html">stw_dataset</a></span>(ggplot2<span class="op">::</span>diamonds) <span class="op">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="st">  </span><span class="kw"><a href="../reference/stw_mutate_meta.html">stw_mutate_meta</a></span>(</span>
@@ -123,6 +131,7 @@
 <span id="cb2-23"><a href="#cb2-23"></a>    <span class="dt">depth =</span> <span class="st">"total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)"</span>,</span>
 <span id="cb2-24"><a href="#cb2-24"></a>    <span class="dt">table =</span> <span class="st">"width of top of diamond relative to widest point (43--95)"</span></span>
 <span id="cb2-25"><a href="#cb2-25"></a>  )</span></code></pre></div>
+<p>We also offer a function to make some basic checks on the completeness of the metadata:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="../reference/stw_check.html">stw_check</a></span>(diamonds, <span class="dt">verbosity =</span> <span class="st">"all"</span>)</span></code></pre></div>
 <pre><code>✔ Dictionary names are unique.
 ✔ Dictionary names are all non-trivial.
@@ -132,138 +141,30 @@
 ✔ Metadata sources valid.
 ✔ Metadata has all optional fields.</code></pre>
 </div>
-<div id="write-to-package" class="section level4">
-<h4 class="hasAnchor">
-<a href="#write-to-package" class="anchor"></a>Write to package</h4>
-<p>This bit assumes that you are working with a package project, where you want to include data with your package.</p>
-<p>A <code>stw_dataset</code> object contains the data itself, along with its metadata. By keeping all the “stuff” together, we can verify that we have everything documented and current.</p>
-<p>This allows us to write everything to a package. The function <code><a href="../reference/stw_use_data.html">stw_use_data()</a></code> wraps <code><a href="https://usethis.r-lib.org/reference/use_data.html">usethis::use_data()</a></code> and <code><a href="../reference/stw_to_roxygen.html">steward::stw_write_roxygen()</a></code>. For example:</p>
+<div id="write-to-package" class="section level2">
+<h2 class="hasAnchor">
+<a href="#write-to-package" class="anchor"></a>Write to package</h2>
+<p>If you are including a dataset in a package, it is good practice to <a href="https://r-pkgs.org/data.html#documenting-data">document it</a>; in fact, CRAN insists!</p>
+<p>You can use an <code>stw_dataset</code> to keep your documentation associated with your dataset as you build it for your package. By keeping all the “stuff” together, this helps assure that the dataset documentation is complete and current.</p>
+<p>You can use the function <code><a href="../reference/stw_use_data.html">stw_use_data()</a></code> wraps <code><a href="https://usethis.r-lib.org/reference/use_data.html">usethis::use_data()</a></code> and <code><a href="../reference/stw_to_roxygen.html">steward::stw_write_roxygen()</a></code>. For example, by running:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="../reference/stw_use_data.html">stw_use_data</a></span>(diamonds_new)</span></code></pre></div>
-<p>Will write the <code>diamonds_new</code> dataset to your package, as well as roxygen documentation to <code>R/data-diamonds_new.R</code>.</p>
-</div>
-<div id="read-yaml" class="section level4">
-<h4 class="hasAnchor">
-<a href="#read-yaml" class="anchor"></a>Read YAML</h4>
-<p>Here are the first lines of a YAML file containing metadata from <a href="http://ggplot2.tidyverse.org">ggplot2</a>’s <code>diamonds</code> dataset, which is available as:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"metadata/diamonds.yml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>)</span></code></pre></div>
-<pre><code>name: diamonds
-title: Prices of 50,000 round cut diamonds
-description: |
- A dataset containing the prices and other attributes of almost 54,000 diamonds.
-sources:
-  - title: DiamondSearchEngine
-    path: http://www.diamondse.info/
-    email: ""
-  - title: ggplot2 package
-    path: https://ggplot2.tidyverse.org/
-    email: ""
-...</code></pre>
-<p>We can read a YAML file using <code><a href="../reference/stw_read_meta_yaml.html">stw_read_meta_yaml()</a></code>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw"><a href="../reference/stw_read_meta_yaml.html">stw_read_meta_yaml</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"metadata/diamonds.yml"</span>, <span class="dt">package =</span> <span class="st">"steward"</span>))</span></code></pre></div>
-<pre><code>List of 7
- $ name       : chr "diamonds"
- $ title      : chr "Prices of 50,000 round cut diamonds"
- $ description: chr "A dataset containing the prices and other attributes of almost 54,000 diamonds."
- $ sources    :List of 2
-  ..$ :List of 3
-  .. ..$ title: chr "DiamondSearchEngine"
-  .. ..$ path : chr "http://www.diamondse.info/"
-  .. ..$ email: chr ""
-  ..$ :List of 3
-  .. ..$ title: chr "ggplot2 package"
-  .. ..$ path : chr "https://ggplot2.tidyverse.org/"
-  .. ..$ email: chr ""
- $ n_row      : int(0) 
- $ n_col      : int(0) 
- $ dict       :Classes 'stw_dict', 'tbl_df', 'tbl' and 'data.frame':    10 obs. of  4 variables:
-  ..$ name       : chr [1:10] "price" "carat" "cut" "color" ...
-  ..$ type       : chr [1:10] "number" "number" "string" "string" ...
-  ..$ description: chr [1:10] "price in US dollars ($326--$18,823)" "weight of diamond (0.2--5.01)" "quality of the cut (Fair, Good, Very Good, Premium, Ideal)" "diamond color, from D (best) to J (worst)" ...
-  ..$ levels     :List of 10
-  .. ..$ : NULL
-  .. ..$ : NULL
-  .. ..$ : chr [1:5] "Fair" "Good" "Very Good" "Premium" ...
-  .. ..$ : chr [1:7] "D" "E" "F" "G" ...
-  .. ..$ : chr [1:8] "I1" "SI2" "SI1" "VS2" ...
-  .. ..$ : NULL
-  .. ..$ : NULL
-  .. ..$ : NULL
-  .. ..$ : NULL
-  .. ..$ : NULL
- - attr(*, "class")= chr "stw_meta"</code></pre>
-</div>
-<div id="write-yaml" class="section level4">
-<h4 class="hasAnchor">
-<a href="#write-yaml" class="anchor"></a>Write YAML</h4>
-<p>To get a YAML string from metadata, you can use the <code><a href="../reference/stw_to_yaml.html">stw_to_yaml()</a></code> function. Here are the first few lines:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="kw"><a href="../reference/stw_to_yaml.html">stw_to_yaml</a></span>(diamonds_meta))</span></code></pre></div>
-<pre><code>name: diamonds
-title: Prices of 50,000 round cut diamonds
-description: A dataset containing the prices and other attributes of almost 54,000
-  diamonds.
-sources:
-- title: DiamondSearchEngine
-  path: http://www.diamondse.info/
-  email: ''
-- title: ggplot2 package
-  path: https://ggplot2.tidyverse.org/
-  email: ''
-...</code></pre>
-<p>Other functions in this family:</p>
+<p>You will:</p>
 <ul>
-<li>
-<code><a href="../reference/stw_to_yaml.html">stw_use_yaml()</a></code> copies the YAML string to the clipboard.</li>
-<li>
-<code><a href="../reference/stw_to_yaml.html">stw_write_yaml()</a></code> writes the YAML string to a file.</li>
+<li>validate that the metadata is complete.</li>
+<li>write the <code>diamonds_new</code> dataset to your package.</li>
+<li>write the roxygen documentation to <code>R/data-diamonds_new.R</code>.</li>
 </ul>
 </div>
-<div id="write-roxygen" class="section level4">
-<h4 class="hasAnchor">
-<a href="#write-roxygen" class="anchor"></a>Write roxygen</h4>
-<p>To get a roxygen string from metadata, you can use the <code><a href="../reference/stw_to_roxygen.html">stw_to_roxygen()</a></code> function:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="kw"><a href="../reference/stw_to_roxygen.html">stw_to_roxygen</a></span>(diamonds_meta))</span></code></pre></div>
-<pre><code>#' Prices of 50,000 round cut diamonds
-#' 
-#' A dataset containing the prices and other attributes of almost 54,000 diamonds.
-#' 
-#' @format A data frame with 53940 rows and 10 variables:
-#' 
-#' \describe{ 
-#'   \item{price}{price in US dollars ($326--$18,823)}
-#'   \item{carat}{weight of diamond (0.2--5.01)}
-#'   \item{cut}{quality of the cut (Fair, Good, Very Good, Premium, Ideal)}
-#'   \item{color}{diamond color, from D (best) to J (worst)}
-#'   \item{clarity}{a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))}
-#'   \item{x}{length in mm (0--10.74)}
-#'   \item{y}{width in mm (0--58.9)}
-#'   \item{z}{depth in mm (0--31.8)}
-#'   \item{depth}{total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)}
-#'   \item{table}{width of top of diamond relative to widest point (43--95)}
-#' }
-#' 
-#' @source [DiamondSearchEngine](http://www.diamondse.info/): ([email](mailto:)), [ggplot2 package](https://ggplot2.tidyverse.org/): ([email](mailto:))
-#' 
-"diamonds"</code></pre>
-<p>Other functions in this family:</p>
-<ul>
-<li>
-<code><a href="../reference/stw_to_roxygen.html">stw_use_roxygen()</a></code> copies the roxygen string to the clipboard.</li>
-<li>
-<code><a href="../reference/stw_to_roxygen.html">stw_write_roxygen()</a></code> writes the roxygen string to a file.</li>
-</ul>
-</div>
-<div id="write-gt-table" class="section level4">
-<h4 class="hasAnchor">
-<a href="#write-gt-table" class="anchor"></a>Write gt Table</h4>
-<p>If you are creating an R Markdown document, you can use the <code><a href="../reference/stw_to_table.html">stw_to_table()</a></code> function to create a <a href="https://gt.rstudio.com">gt table</a>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw"><a href="../reference/stw_to_table.html">stw_to_table</a></span>(diamonds_meta)</span></code></pre></div>
-<pre><code>Warning: The `cells_data()` function is deprecated and will soon be removed
- * Use the `cells_body()` function instead</code></pre>
+<div id="write-gt-table" class="section level2">
+<h2 class="hasAnchor">
+<a href="#write-gt-table" class="anchor"></a>Write gt Table</h2>
+<p>If you are creating an R Markdown document, you can use the <code><a href="../reference/stw_to_table.html">stw_to_table()</a></code> function to create a <a href="https://gt.rstudio.com">gt</a> table:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="../reference/stw_to_table.html">stw_to_table</a></span>(diamonds)</span></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ivczqzdqwp .gt_table {
+#idvamxsyjc .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -291,7 +192,7 @@ sources:
   /* table.border.bottom.color */
 }
 
-#ivczqzdqwp .gt_heading {
+#idvamxsyjc .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
@@ -310,7 +211,7 @@ sources:
   /* heading.border.lr.color */
 }
 
-#ivczqzdqwp .gt_title {
+#idvamxsyjc .gt_title {
   color: #333333;
   font-size: 125%;
   /* heading.title.font.size */
@@ -324,7 +225,7 @@ sources:
   border-bottom-width: 0;
 }
 
-#ivczqzdqwp .gt_subtitle {
+#idvamxsyjc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -338,7 +239,7 @@ sources:
   border-top-width: 0;
 }
 
-#ivczqzdqwp .gt_bottom_border {
+#idvamxsyjc .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -347,7 +248,7 @@ sources:
   /* heading.border.bottom.color */
 }
 
-#ivczqzdqwp .gt_column_spanner {
+#idvamxsyjc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -355,7 +256,7 @@ sources:
   padding-bottom: 4px;
 }
 
-#ivczqzdqwp .gt_col_headings {
+#idvamxsyjc .gt_col_headings {
   border-top-style: solid;
   /* column_labels.border.top.style */
   border-top-width: 2px;
@@ -382,7 +283,7 @@ sources:
   /* column_labels.border.lr.color */
 }
 
-#ivczqzdqwp .gt_col_heading {
+#idvamxsyjc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -398,11 +299,11 @@ sources:
   overflow-x: hidden;
 }
 
-#ivczqzdqwp .gt_sep_right {
+#idvamxsyjc .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#ivczqzdqwp .gt_group_heading {
+#idvamxsyjc .gt_group_heading {
   padding: 8px;
   /* row_group.padding */
   color: #333333;
@@ -441,7 +342,7 @@ sources:
   vertical-align: middle;
 }
 
-#ivczqzdqwp .gt_empty_group_heading {
+#idvamxsyjc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -465,20 +366,20 @@ sources:
   vertical-align: middle;
 }
 
-#ivczqzdqwp .gt_striped {
+#idvamxsyjc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
   /* row.striping.background_color */
 }
 
-#ivczqzdqwp .gt_from_md > :first-child {
+#idvamxsyjc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ivczqzdqwp .gt_from_md > :last-child {
+#idvamxsyjc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ivczqzdqwp .gt_row {
+#idvamxsyjc .gt_row {
   padding-top: 8px;
   /* data_row.padding */
   padding-bottom: 8px;
@@ -508,7 +409,7 @@ sources:
   overflow-x: hidden;
 }
 
-#ivczqzdqwp .gt_stub {
+#idvamxsyjc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   /* stub.background.color */
@@ -525,7 +426,7 @@ sources:
   padding-left: 12px;
 }
 
-#ivczqzdqwp .gt_summary_row {
+#idvamxsyjc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -539,7 +440,7 @@ sources:
   padding-right: 5px;
 }
 
-#ivczqzdqwp .gt_first_summary_row {
+#idvamxsyjc .gt_first_summary_row {
   padding-top: 8px;
   /* summary_row.padding */
   padding-bottom: 8px;
@@ -554,7 +455,7 @@ sources:
   /* summary_row.border.color */
 }
 
-#ivczqzdqwp .gt_grand_summary_row {
+#idvamxsyjc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -568,7 +469,7 @@ sources:
   padding-right: 5px;
 }
 
-#ivczqzdqwp .gt_first_grand_summary_row {
+#idvamxsyjc .gt_first_grand_summary_row {
   padding-top: 8px;
   /* grand_summary_row.padding */
   padding-bottom: 8px;
@@ -583,7 +484,7 @@ sources:
   /* grand_summary_row.border.color */
 }
 
-#ivczqzdqwp .gt_table_body {
+#idvamxsyjc .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -598,7 +499,7 @@ sources:
   /* table_body.border.bottom.color */
 }
 
-#ivczqzdqwp .gt_footnotes {
+#idvamxsyjc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   /* footnotes.background.color */
@@ -622,7 +523,7 @@ sources:
   /* footnotes.border.lr.color */
 }
 
-#ivczqzdqwp .gt_footnote {
+#idvamxsyjc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   /* footnotes.font.size */
@@ -630,7 +531,7 @@ sources:
   /* footnotes.padding */
 }
 
-#ivczqzdqwp .gt_sourcenotes {
+#idvamxsyjc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   /* source_notes.background.color */
@@ -654,48 +555,48 @@ sources:
   /* source_notes.border.lr.style */
 }
 
-#ivczqzdqwp .gt_sourcenote {
+#idvamxsyjc .gt_sourcenote {
   font-size: 90%;
   /* source_notes.font.size */
   padding: 4px;
   /* source_notes.padding */
 }
 
-#ivczqzdqwp .gt_left {
+#idvamxsyjc .gt_left {
   text-align: left;
 }
 
-#ivczqzdqwp .gt_center {
+#idvamxsyjc .gt_center {
   text-align: center;
 }
 
-#ivczqzdqwp .gt_right {
+#idvamxsyjc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ivczqzdqwp .gt_font_normal {
+#idvamxsyjc .gt_font_normal {
   font-weight: normal;
 }
 
-#ivczqzdqwp .gt_font_bold {
+#idvamxsyjc .gt_font_bold {
   font-weight: bold;
 }
 
-#ivczqzdqwp .gt_font_italic {
+#idvamxsyjc .gt_font_italic {
   font-style: italic;
 }
 
-#ivczqzdqwp .gt_super {
+#idvamxsyjc .gt_super {
   font-size: 65%;
 }
 
-#ivczqzdqwp .gt_footnote_marks {
+#idvamxsyjc .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ivczqzdqwp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<div id="idvamxsyjc" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
 <thead class="gt_header">
 <tr>
 <th colspan="4" class="gt_heading gt_title gt_font_normal gt_center" style>DIAMONDS</th>
@@ -712,44 +613,60 @@ sources:
     </tr></thead>
 <tbody class="gt_table_body">
 <tr>
-<td class="gt_row gt_right" style="font-style: italic;">price</td>
+<td class="gt_row gt_right" style="font-style: italic;">carat</td>
       <td class="gt_row gt_left">number</td>
       <td class="gt_row gt_left"><div class="gt_from_md">
-<p>price in US dollars ($326--$18,823)</p>
+<p>weight of diamond (0.2--5.01)</p>
 </div></td>
       <td class="gt_row gt_left"></td>
     </tr>
 <tr>
-<td class="gt_row gt_right gt_striped" style="font-style: italic;">carat</td>
+<td class="gt_row gt_right gt_striped" style="font-style: italic;">cut</td>
+      <td class="gt_row gt_left gt_striped">string</td>
+      <td class="gt_row gt_left gt_striped"><div class="gt_from_md">
+<p>quality of the cut (Fair, Good, Very Good, Premium, Ideal)</p>
+</div></td>
+      <td class="gt_row gt_left gt_striped">Fair, Good, Very Good, Premium, Ideal</td>
+    </tr>
+<tr>
+<td class="gt_row gt_right" style="font-style: italic;">color</td>
+      <td class="gt_row gt_left">string</td>
+      <td class="gt_row gt_left"><div class="gt_from_md">
+<p>diamond color, from D (best) to J (worst)</p>
+</div></td>
+      <td class="gt_row gt_left">D, E, F, G, H, I, J</td>
+    </tr>
+<tr>
+<td class="gt_row gt_right gt_striped" style="font-style: italic;">clarity</td>
+      <td class="gt_row gt_left gt_striped">string</td>
+      <td class="gt_row gt_left gt_striped"><div class="gt_from_md">
+<p>a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))</p>
+</div></td>
+      <td class="gt_row gt_left gt_striped">I1, SI2, SI1, VS2, VS1, VVS2, VVS1, IF</td>
+    </tr>
+<tr>
+<td class="gt_row gt_right" style="font-style: italic;">depth</td>
+      <td class="gt_row gt_left">number</td>
+      <td class="gt_row gt_left"><div class="gt_from_md">
+<p>total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)</p>
+</div></td>
+      <td class="gt_row gt_left"></td>
+    </tr>
+<tr>
+<td class="gt_row gt_right gt_striped" style="font-style: italic;">table</td>
       <td class="gt_row gt_left gt_striped">number</td>
       <td class="gt_row gt_left gt_striped"><div class="gt_from_md">
-<p>weight of diamond (0.2--5.01)</p>
+<p>width of top of diamond relative to widest point (43--95)</p>
 </div></td>
       <td class="gt_row gt_left gt_striped"></td>
     </tr>
 <tr>
-<td class="gt_row gt_right" style="font-style: italic;">cut</td>
-      <td class="gt_row gt_left">string</td>
+<td class="gt_row gt_right" style="font-style: italic;">price</td>
+      <td class="gt_row gt_left">integer</td>
       <td class="gt_row gt_left"><div class="gt_from_md">
-<p>quality of the cut (Fair, Good, Very Good, Premium, Ideal)</p>
+<p>price in US dollars ($326--$18,823)</p>
 </div></td>
-      <td class="gt_row gt_left">Fair, Good, Very Good, Premium, Ideal</td>
-    </tr>
-<tr>
-<td class="gt_row gt_right gt_striped" style="font-style: italic;">color</td>
-      <td class="gt_row gt_left gt_striped">string</td>
-      <td class="gt_row gt_left gt_striped"><div class="gt_from_md">
-<p>diamond color, from D (best) to J (worst)</p>
-</div></td>
-      <td class="gt_row gt_left gt_striped">D, E, F, G, H, I, J</td>
-    </tr>
-<tr>
-<td class="gt_row gt_right" style="font-style: italic;">clarity</td>
-      <td class="gt_row gt_left">string</td>
-      <td class="gt_row gt_left"><div class="gt_from_md">
-<p>a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))</p>
-</div></td>
-      <td class="gt_row gt_left">I1, SI2, SI1, VS2, VS1, VVS2, VVS1, IF</td>
+      <td class="gt_row gt_left"></td>
     </tr>
 <tr>
 <td class="gt_row gt_right gt_striped" style="font-style: italic;">x</td>
@@ -775,25 +692,10 @@ sources:
 </div></td>
       <td class="gt_row gt_left gt_striped"></td>
     </tr>
-<tr>
-<td class="gt_row gt_right" style="font-style: italic;">depth</td>
-      <td class="gt_row gt_left">number</td>
-      <td class="gt_row gt_left"><div class="gt_from_md">
-<p>total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)</p>
-</div></td>
-      <td class="gt_row gt_left"></td>
-    </tr>
-<tr>
-<td class="gt_row gt_right gt_striped" style="font-style: italic;">table</td>
-      <td class="gt_row gt_left gt_striped">number</td>
-      <td class="gt_row gt_left gt_striped"><div class="gt_from_md">
-<p>width of top of diamond relative to widest point (43--95)</p>
-</div></td>
-      <td class="gt_row gt_left gt_striped"></td>
-    </tr>
 </tbody>
 <tfoot class="gt_sourcenotes"><tr>
-<td class="gt_sourcenote" colspan="4">Sources: <a href="http://www.diamondse.info/">DiamondSearchEngine</a>: (<a href="mailto:">email</a>), <a href="https://ggplot2.tidyverse.org/">ggplot2 package</a>: (<a href="mailto:">email</a>)</td>
+<td class="gt_sourcenote" colspan="4">Sources: <a href="http://www.diamondse.info/">DiamondSearchEngine</a>
+</td>
     </tr></tfoot>
 </table></div>
 </div>
@@ -801,6 +703,15 @@ sources:
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
 
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#create">Create</a></li>
+      <li><a href="#write-to-package">Write to package</a></li>
+      <li><a href="#write-gt-table">Write gt Table</a></li>
+      </ul>
+</div>
       </div>
 
 </div>
