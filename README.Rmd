@@ -48,11 +48,13 @@ knitr::knit_hooks$set(
 The goal of **steward** is to make it easier to import, manage, and publish the metadata associated with data frames. This might be useful for:
 
 - [documenting a dataset](https://r-pkgs.org/data.html#documenting-data) for a package
-- publishing a data dictionary in an R Markdown document
+- publishing a data-dictionary [table](https://gt.rstudio.com) in an R Markdown document
 
 Our current defintion of metadata includes the name, description and source of a dataset, as well as the name, type, and description of each of the variables in the dataset.
 
 The name, steward, is an homage to the [Data Stewardship](http://agron590-isu.github.io/) class taught by [Andee Kaplan](https://github.com/andeek) and [Ranae Dietzel](https://github.com/ranae) (also an author of this package) at Iowa State University in Fall 2016.
+
+This package was first built collaborativey at the [Uncoast Unconf](https://uuconf.rbind.io), held at Des Moines in April 2019.
 
 ## Installation
 
@@ -69,52 +71,20 @@ devtools::install_github("uncoast-unconf/steward")
 library("steward")
 ```
 
-### Current capabilities
+## Current capabilities
 
 You can read about these capabilities in the [getting started article](https://uncoast-unconf.github.io/steward/articles/steward.html):
 
 - create a "steward" dataset
 - write dataset to package with documentation
-- read from YAML
-- write to YAML
-- write to roxygen
 - write to [gt table](https://gt.rstudio.com)
 
-Here are the first lines of a YAML file containing metadata from [ggplot2](http://ggplot2.tidyverse.org)'s `diamonds` dataset, which is available as:
+## Future development
 
-```r
-system.file("metadata/diamonds.yml", package = "steward")
-```
+We plan to release this package to CRAN as soon as the [gt](https://gt.rstudio.com) package is released there.
 
-```{r yaml, echo = FALSE, comment = "", output.lines = 11}
-system.file("metadata/diamonds.yml", package = "steward") %>%
-  readr::read_lines() %>%
-  glue::glue_collapse(sep = "\n")
-```
+Some of the capabilities we plan to develop:
 
-You can read this YAML file using `stw_read_yaml()`:
-
-```{r read_yaml}
-diamonds_meta <-
-  stw_read_meta_yaml(system.file("metadata/diamonds.yml", package = "steward"))
-
-print(diamonds_meta)
-```
-
-To get a roxygen string from metadata, you can use the `stw_to_roxygen()` function:
-
-```{r to_roxygen}
-cat(stw_to_roxygen(diamonds_meta))
-```
-
-You may also be interested in the related functions: `stw_use_roxygen()` and `stw_write_roxygen()`.
-
-### Future capabilities
-
-Soon, we hope to add additional capabilities:
-
-- [combine metadata with dataset](https://github.com/uncoast-unconf/steward/issues/36)
-  - [read and write combined dataset](https://github.com/uncoast-unconf/steward/issues/41) from/to flat files
 - take into account [timezone as column metadata](https://github.com/uncoast-unconf/steward/issues/39)
 - [build metadata from package-documentation](https://github.com/uncoast-unconf/steward/issues/43) (`.Rd` file)
 
@@ -122,7 +92,9 @@ Soon, we hope to add additional capabilities:
 
 The [codebook](https://rubenarslan.github.io/codebook/) package can help you manage dataset metadata.
 
-
+## Code of conduct
+  
+Please note that the {steward} project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
 
 
 
