@@ -64,10 +64,10 @@ In the code that follows we have three steps:
 2. Add the top-level metadata using `stw_mutate_meta()`.
 3. Add the column-level metadata using `stw_mutate_dict()`.
 
-The functions `stw_mutate_meta()` and `stw_mutate_dict()` work a little bit like `dplyr::mutate()`. However, instead of mutating the colunms of a data frame, `stw_mutate_meta()` mutates the top-level metadata, and `stw_mutate_dict()` mutates the *descriptions* of columns in a data frame:
+The functions `stw_mutate_meta()` and `stw_mutate_dict()` work a little bit like `dplyr::mutate()`. However, instead of mutating the columns of a data frame, `stw_mutate_meta()` mutates the top-level metadata, and `stw_mutate_dict()` mutates the *descriptions* of columns in a data frame:
 
 ```{r}
-diamonds <-
+diamonds_new <-
   stw_dataset(ggplot2::diamonds) %>%
   stw_mutate_meta(
     name = "diamonds",
@@ -97,7 +97,7 @@ diamonds <-
 We also offer a function to make some basic checks on the completeness of the metadata:
 
 ```{r}
-stw_check(diamonds, verbosity = "all")
+stw_check(diamonds_new, verbosity = "all")
 ```
 
 ## Write to package
@@ -124,6 +124,6 @@ You will:
 If you are creating an RMarkdown document, you can use the `stw_to_table()` function to create a [gt](https://gt.rstudio.com) table:
 
 ```{r}
-stw_to_table(diamonds)
+stw_to_table(diamonds_new)
 ```
 
