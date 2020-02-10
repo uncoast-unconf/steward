@@ -119,7 +119,7 @@ You will:
 - write the `diamonds_new` dataset to your package.
 - write the roxygen documentation to `R/data-diamonds_new.R`.
 
-## Write gt Table
+## Create gt table
 
 If you are creating an RMarkdown document, you can use the `stw_to_table()` function to create a [gt](https://gt.rstudio.com) table:
 
