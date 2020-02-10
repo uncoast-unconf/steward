@@ -46,20 +46,15 @@ devtools::install_github("uncoast-unconf/steward")
 
 ## Usage
 
-``` r
-library("steward")
-```
+In our [getting started
+article](https://uncoast-unconf.github.io/steward/articles/steward.html),
+we describe some common tasks:
 
-## Current capabilities
+  - create a “steward” dataset.
+  - write a dataset to a package, with documentation.
+  - create a [gt table](https://gt.rstudio.com).
 
-You can read about these capabilities in the [getting started
-article](https://uncoast-unconf.github.io/steward/articles/steward.html):
-
-  - create a “steward” dataset
-  - write dataset to package with documentation
-  - write to [gt table](https://gt.rstudio.com)
-
-## Future development
+### Future development
 
 We plan to release this package to CRAN as soon as the
 [gt](https://gt.rstudio.com) package is released there.
@@ -74,7 +69,7 @@ Some of the capabilities we plan to develop:
 
 ## Related work
 
-The [codebook](https://rubenarslan.github.io/codebook/) package can help
+The [codebook](https://rubenarslan.github.io/codebook) package can help
 you manage dataset metadata.
 
 ## Code of conduct
