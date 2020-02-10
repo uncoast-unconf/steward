@@ -1,6 +1,6 @@
 Package: steward
 Title: Helps you manage metadata for published datasets
-Version: 0.0.0.9006
+Version: 0.0.0.9007
 Authors@R: 
     c(
       person(given = "Ian",
