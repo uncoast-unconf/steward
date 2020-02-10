@@ -64,7 +64,7 @@ In the code that follows we have three steps:
 2. Add the top-level metadata using `stw_mutate_meta()`.
 3. Add the column-level metadata using `stw_mutate_dict()`.
 
-The functions `stw_mutate_meta()` and `stw_mutate_dict()` work a little bit like `dplyr::mutate()`. However, instead of mutating the colunms of a data frame, `stw_mutate_meta()` mutates the top-level metadata, and `stw_mutate_dict()` mutates the *descriptions* of columns in a data frame:
+The functions `stw_mutate_meta()` and `stw_mutate_dict()` work a little bit like `dplyr::mutate()`. However, instead of mutating the columns of a data frame, `stw_mutate_meta()` mutates the top-level metadata, and `stw_mutate_dict()` mutates the *descriptions* of columns in a data frame:
 
 ```{r}
 diamonds_new <-
