@@ -103,26 +103,6 @@ result_wrong_class <-
     )
   )
 
-iris_missing_extra_cols_wrong_class <-
-  iris_missing_extra_cols %>%
-  mutate(Species = as.character(Species))
-
-result_wrong_class <-
-  col_spec_diff(
-    identical = FALSE,
-    names = list(
-      identical = TRUE,
-      equivalent = TRUE,
-      x_not_y = col_spec_iris_null,
-      y_not_x = col_spec_iris_null
-    ),
-    specs_common = list(
-      identical = FALSE,
-      diff_x = as.col_spec(iris_wrong_class) %>% col_spec_select("Species"),
-      diff_y = col_spec_select(col_spec_iris, "Species")
-    )
-  )
-
 iris_diff_order <-
   iris %>%
   select(Species, everything())
@@ -140,6 +120,42 @@ result_diff_order <-
       identical = TRUE,
       diff_x = col_spec_iris_null,
       diff_y = col_spec_iris_null
+    )
+  )
+
+iris_missing_extra_cols_wrong_class <-
+  iris_missing_extra_cols %>%
+  mutate(Species = as.character(Species))
+
+result_missing_extra_cols_wrong_class <-
+  col_spec_diff(
+    identical = FALSE,
+    names = list(
+      identical = FALSE,
+      equivalent = FALSE,
+      x_not_y = as.col_spec(iris_extra_cols) %>% col_spec_select("Specieso"),
+      y_not_x = col_spec_select(col_spec_iris, "Sepal.Length")
+    ),
+    specs_common = list(
+      identical = FALSE,
+      diff_x = as.col_spec(iris_wrong_class) %>% col_spec_select("Species"),
+      diff_y = col_spec_select(col_spec_iris, "Species")
+    )
+  )
+
+result_mtcars <-
+  col_spec_diff(
+    identical = FALSE,
+    names = list(
+      identical = FALSE,
+      equivalent = FALSE,
+      x_not_y = col_spec_iris,
+      y_not_x = as.col_spec(mtcars)
+    ),
+    specs_common = list(
+      identical = as.logical(NA),
+      diff_x = col_spec_iris_null,
+      diff_y = col_spec_select(as.col_spec(mtcars))
     )
   )
 
@@ -197,6 +213,39 @@ test_that("iris checks out with different order", {
 
 })
 
+test_that("iris checks out with all problems", {
+
+  expect_identical(
+    col_spec_compare(iris_missing_extra_cols_wrong_class, iris),
+    result_missing_extra_cols_wrong_class
+  )
+
+})
+
+test_that("iris checks out with mtcars", {
+
+  expect_identical(
+    col_spec_compare(iris, mtcars),
+    result_mtcars
+  )
+
+})
+
+test_that("col_spec_diff printing works", {
+
+  verify_output(test_path("col_spec_diff-print.txt"), {
+    result_identical
+    result_missing_cols
+    result_extra_cols
+    result_missing_extra_cols
+    result_diff_order
+    result_wrong_class
+    result_missing_extra_cols_wrong_class
+    result_mtcars
+  })
+
+})
+
 test_that("col_spec_select works", {
 
   expect_identical(
@@ -218,4 +267,6 @@ test_that("col_spec_select works", {
   )
 
 })
+
+
 

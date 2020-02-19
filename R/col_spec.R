@@ -43,7 +43,7 @@ col_spec_compare <- function(x, y) {
 
   specs_common <-
     list(
-      identical = all(is_same),
+      identical = ifelse(length(is_same) > 0, all(is_same), as.logical(NA)),
       diff_x = col_spec_select(cols_x_common, names_not_same),
       diff_y = col_spec_select(cols_y_common, names_not_same)
     )
@@ -74,6 +74,34 @@ print.col_spec_diff <- function(x, ...) {
 
   bold <- function(x) cli::style_bold(x)
 
+  # determine the amount of space to give names so that everything lines up
+  col_names <- function(x) {
+    names(x$cols)
+  }
+
+  # is there a way to do this with purrr and a predicate?
+  cols <- list(
+    x$names$x_not_y,
+    x$names$y_not_x,
+    x$specs_common$diff_x,
+    x$specs_common$diff_y
+  )
+
+  # find the longest name for a "problem" column
+  get_max_size <- function(x) {
+
+    if (identical(length(x$cols), 0L)) {
+      return(0L)
+    }
+
+    names <- names(x$cols)
+    max(nchar(names))
+  }
+  size <- purrr::map_int(cols, ~get_max_size(.x))
+  size <- max(size)
+
+  cli::cli_h1("Column comparison")
+
   if (x$identical) {
     cli::cli_alert_success("Column names and specifications are identical and have same order.")
     return(invisible(x))
@@ -88,13 +116,44 @@ print.col_spec_diff <- function(x, ...) {
   }
 
   if (has_cols(x$names$x_not_y)) {
-    cli::cli_alert_warning("Columns in {bold('x')} but not {bold('y')}:")
-    cols_out(x$names$x_not_y)
+    cli::cli_alert_warning("Column names in {bold('x')} but not {bold('y')}:")
+    cols_out(x$names$x_not_y, size)
   }
 
   if (has_cols(x$names$y_not_x)) {
-    cli::cli_alert_warning("Columns in {bold('y')} but not {bold('x')}:")
-    cols_out(x$names$y_not_x)
+    cli::cli_alert_warning("Column names in {bold('y')} but not {bold('x')}:")
+    cols_out(x$names$y_not_x, size)
+  }
+
+  if (identical(x$specs_common$identical, TRUE)) {
+    cli::cli_alert_success(
+      c(
+        "Column names in both {bold('x')} and {bold('y')} ",
+        "have identical specifications."
+      )
+    )
+    return(invisible(x))
+  }
+
+  if (is.na(x$specs_common$identical)){
+    cli::cli_alert_warning(
+      "There are no column names common to both {bold('x')} and {bold('y')}."
+    )
+    return(invisible(x))
+  }
+
+  if (has_cols(x$specs_common$diff_x)) {
+    cli::cli_alert_warning(
+      "Column specifications different in {bold('x')}:"
+    )
+    cols_out(x$specs_common$diff_x, size)
+  }
+
+  if (has_cols(x$specs_common$diff_y)) {
+    cli::cli_alert_warning(
+      "Column specifications different in {bold('y')}:"
+    )
+    cols_out(x$specs_common$diff_y, size)
   }
 
   return(invisible(x))
@@ -109,14 +168,14 @@ col_cli <- function(x, name, size) {
   cli::cat_bullet(glue::glue("{cli::style_bold(fname)} {fspec}"))
 }
 
-cols_out <- function(x) {
+cols_out <- function(x, size = NULL) {
   tbl <- cols_parse(x)
 
-  size <- max(nchar(tbl$name))
+  size <- size %||% max(nchar(tbl$name))
 
   fout <- function(name, spec, size) {
-    fname <- sprintf(glue::glue("%{size}s"), name)
-    cli::cat_bullet(glue::glue("{cli::style_bold(fname)}   {spec}"))
+    fname <- sprintf(glue::glue("%{size+3}s"), name)
+    cat(glue::glue("{cli::style_bold(fname)}  {spec}"), "\n")
   }
 
   purrr::pwalk(tbl, fout, size)
@@ -136,7 +195,6 @@ cols_parse <- function(x) {
 
   tibble::tibble(name, spec)
 }
-
 
 col_spec_diff <- function(identical, names, specs_common) {
   structure(
