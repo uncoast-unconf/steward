@@ -66,13 +66,77 @@ col_spec_select <- function(x, ...) {
   x
 }
 
-col_spec_cli <- function(x) {
-
+has_cols <- function(x) {
+  length(x$cols) > 0
 }
 
 print.col_spec_diff <- function(x, ...) {
 
+  bold <- function(x) cli::style_bold(x)
+
+  if (x$identical) {
+    cli::cli_alert_success("Column names and specifications are identical and have same order.")
+    return(invisible(x))
+  }
+
+  if (x$names$identical) {
+    cli::cli_alert_success("Column names are identical and have same order.")
+  }
+
+  if (!x$names$identical && x$names$equivalent) {
+    cli::cli_alert_info("Column names are identical but have different order.")
+  }
+
+  if (has_cols(x$names$x_not_y)) {
+    cli::cli_alert_warning("Columns in {bold('x')} but not {bold('y')}:")
+    cols_out(x$names$x_not_y)
+  }
+
+  if (has_cols(x$names$y_not_x)) {
+    cli::cli_alert_warning("Columns in {bold('y')} but not {bold('x')}:")
+    cols_out(x$names$y_not_x)
+  }
+
+  return(invisible(x))
 }
+
+col_cli <- function(x, name, size) {
+  fname <- sprintf(glue::glue("%{size}s"), name)
+
+  type <- sub(".*_", "", class(x)[1])
+  fspec <- glue::glue("col_{type}()")
+
+  cli::cat_bullet(glue::glue("{cli::style_bold(fname)} {fspec}"))
+}
+
+cols_out <- function(x) {
+  tbl <- cols_parse(x)
+
+  size <- max(nchar(tbl$name))
+
+  fout <- function(name, spec, size) {
+    fname <- sprintf(glue::glue("%{size}s"), name)
+    cli::cat_bullet(glue::glue("{cli::style_bold(fname)}   {spec}"))
+  }
+
+  purrr::pwalk(tbl, fout, size)
+}
+
+cols_parse <- function(x) {
+  fmt <- format(x)
+  content <- sub("^cols\\((.*)\\)\n$", "\\1", fmt)
+  content <- trimws(content)
+
+  lines <- strsplit(content, ",\n")[[1]]
+  lines <- purrr::map_chr(lines, trimws)
+
+  regex <- "^([^=]*)( = )(.*)$"
+  name <- sub(regex, "\\1", lines)
+  spec <- sub(regex, "\\3", lines)
+
+  tibble::tibble(name, spec)
+}
+
 
 col_spec_diff <- function(identical, names, specs_common) {
   structure(
