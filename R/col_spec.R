@@ -1,9 +1,14 @@
 #' Determine amount of disagreement
 #'
+#' @description
+#'
+#' \Sexpr[results=rd, stage=render]{rlang:::lifecycle("experimental")}
+#'
 #' @param x [readr::cols()] column-specification, or `data.frame`
 #' @param y [readr::cols()] column-specification, or `data.frame`
 #'
 #' @return object with S3 class `col_spec_diff`
+#' @export
 #'
 col_spec_compare <- function(x, y) {
 
@@ -70,6 +75,7 @@ has_cols <- function(x) {
   length(x$cols) > 0
 }
 
+#' @export
 print.col_spec_diff <- function(x, ...) {
 
   bold <- function(x) cli::style_bold(x)

@@ -15,5 +15,5 @@ col_spec_compare(x, y)
 object with S3 class \code{col_spec_diff}
 }
 \description{
-Determine amount of disagreement
+\Sexpr[results=rd, stage=render]{rlang:::lifecycle("experimental")}
 }
