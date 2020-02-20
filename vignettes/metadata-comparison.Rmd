@@ -1,0 +1,206 @@
+---
+title: "Metadata Comparison"
+author: "Ian Lyttle"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+options(cli.width = 80)
+```
+
+```{r setup}
+library("steward")
+library("conflicted")
+library("dplyr")
+```
+
+Let's say you have two data frames, and you would like to know how compatible they are. This problem had been floating around in my head for a while, then I saw this [tweet from Sharla Gelfand](https://twitter.com/sharlagelfand/status/1229512910591885317):
+
+> anyone aware of an #rstats package that will compare two data frames' names/types and output nice, descriptive errors if they don't match? do i have to build this myself? - @sharlagelfand
+
+Sharla followed this up with a comprehensive [blog post](https://sharla.party/post/comparing-two-dfs) where she details what she wants  to do, then shows how existing solutions perform. Happily, Sharla's view of the problem matches perfectly my view of the problem. What's more, Sharla has specified what she wants in a solution, with reprexes! As "calls to action" go, what's not to like?!
+
+Here's my proposed solution to the problem, an experimental function called `col_spec_diff()` - it's called this because it's based on the implementation of column-specifications in [readr](https://readr.tidyverse.org) and [vroom](https://vroom.r-lib.org). 
+
+**NOTE**: As of Feb. 2020, this is an experimental function in a maturing package which is not yet on CRAN. I am writing this up to get feedback on what such a function *should* do, rather than as an annoucement of a solution you should feel confident to use in your day-to-day work. 
+
+Following Sharla's lead, when we compare a data frame with itself, we get nothing but success:
+
+```{r identity}
+col_spec_compare(iris, iris)
+```
+
+This function has two arguments `x` and `y`; these names are used to identify the data frames when there are differences. For example, we are told if there is a missing column:
+
+```{r missing}
+iris_missing_cols <-
+  iris %>%
+  select(-Sepal.Length)
+
+col_spec_compare(iris_missing_cols, iris)
+```
+
+You can see that the "missing" column is identified by name, `Sepal.Length`, then described by a column specification, `col_double()`. We see a second piece of information that tells us that for column names that are common to `x` and `y`, the specifications are identical.
+
+The column specifications are defined in readr (and vroom). If fact, we are using a function in the dev version of readr to determine the column specifications for each of `x` and `y` (building on what the Tidyverse team have already done):
+
+```{r col_spec}
+readr::as.col_spec(iris)
+```
+
+Resuming the examples, we are told if there is an extra column:
+
+```{r extra}
+iris_extra_cols <-
+  iris %>%
+  mutate(Specieso = Species)
+
+col_spec_compare(iris_extra_cols, iris)
+```
+
+At this point it may be useful to "peek under the hood" a little bit (this article has a [larger section on this](#under-the-hood)). The function `col_spec_compare()` returns an object with S3 class `col_spec_diff`, which is just a way of saying "it's a `list()` with extra functionality." We can use the `str()` function to have a closer look:
+
+```{r str-extra}
+diff_extra_cols <- col_spec_compare(iris_extra_cols, iris)
+
+str(diff_extra_cols)
+```
+
+This list describes the match between the columns of data-frame `x` and data-frame `y`. It has a print method that provides the (hopefully) user-friendly and informative feedback, which is what we are seeing used elsewhere in this article.
+
+```{r}
+print(diff_extra_cols)
+```
+
+The observant reader will have noticed that `col_spec_compare()` gives us feedback, but it does not *act* on any of its information. It does not throw errors or issue warnings. This is because *I* have no idea what an acceptable match means to you in your situation. Maybe it's OK that there's an extra column, maybe not? I'll talk about this more, [later in this article](#extension).
+
+What if we have both a missing column and and extra column?
+
+```{r missing-extra}
+iris_missing_extra_cols <-
+  iris_missing_cols %>%
+  mutate(Specieso = Species)
+
+col_spec_compare(iris_missing_extra_cols, iris)
+```
+
+Let's say that the columns are ordered differently:
+
+```{r order}
+iris_diff_order <-
+  iris %>%
+  select(Species, everything())
+
+col_spec_compare(iris_diff_order, iris)
+```
+
+Or if a column has the same name, but has a different class:
+
+```{r class}
+iris_wrong_class <-
+  iris %>%
+  mutate(Species = as.character(Species))
+
+col_spec_compare(iris_wrong_class, iris)
+```
+
+The feedback here focuses on those columns names that are common to both data frames, but have different specifications.
+
+We have a couple more examples - first, Sharla has a "throw the kitchen sink at it" problem:
+
+```{r kitchen-sink}
+iris_missing_extra_cols_wrong_class <-
+  iris_missing_extra_cols %>%
+  mutate(Species = as.character(Species))
+
+col_spec_compare(iris_missing_extra_cols_wrong_class, iris)
+```
+
+I offer a final example myself, in the spirit of something I am likely to do:
+
+```{r ian}
+col_spec_compare(mtcars, iris)
+```
+
+## Under the hood
+
+This function takes advantage of the column-specifications already defined in readr and vroom. This introduces a limitation, we can consider a column only if it is one of:
+
+- logical
+- integer
+- double
+- character
+- date
+- time
+- datetime
+- factor (including ordered)
+
+This covers quite a lot, so I don't think this is a huge limitation.
+
+As discussed above, the `col_spec_diff` class is a list. Its values are either logicals  or sets of column-specifications:
+
+- **`identical`** `logical`: are the two sets of specifications entirely identical?
+- **`names`** `list()` with elements:
+  - **`identical`** `logical`: are the two sets of names identical (same and in the same order)?
+  - **`equivalent`** `logical`: do the two sets of names contain the same names, but in a different order?
+  - **`x_not_y`** `col_spec`: specifications for columns names that exist in `x` but not `y`. 
+  - **`y_not_x`** `col_spec`: specifications for columns names that exist in `y` but not `x`.
+- **`specs_common`** `list()` concerning those names in common for `x` and `y`, with elements:
+  - **`identical`** `logical`: do the common names each have identical specifications, `NA` if no common names.
+  - **`x_diff_y`** `col_spec`: specifications in `x`, among common names, that are different from `y`.
+  - **`y_diff_x`** `col_spec`: specifications in `y`, among common names, that are different from `x`.
+
+This function is separate from the rest of the infrastructure in the steward package. It is much closer to the infrastructure in readr and vroom. Both of those packages are designed to read data, rather than to compare it. That being said, they both use the `cols()` infrastructure, and as best as I can tell, it is implemented independently in both packages.
+
+Far be it from me to suggest anything to the Tidyverse team, but there seems to be an opportunity for another r-lib package, perhaps named **colspec**, that both readr and vroom could use. If such a package were to come to pass, perhaps this functionality could be part of such a package. 
+
+## Extension
+
+As discussed earlier in this article, the function `col_spec_compare()` does not take any action, it simply returns information on the comparison of two data frames.
+
+However you might have a situation where you build a data frame, validate it against a reference (stopping if need be), then return your data-frame. Something like this:
+
+```r
+iris_new <-
+  iris_building_function() %>%
+  validate_col_spec(iris)
+```
+
+Here's a first idea on what `validate_col_spec()` might look like:
+
+```r
+validate_col_spec(x, y, predicate = NULL) {
+
+  is_identical <- function(diff) {
+    diff$identical
+  }
+  
+  predicate <- predicate %||% is_identical
+
+  diff <- col_spec_diff(x, y)
+  
+  if (!predicate(diff)) {
+    print(diff)
+    stop("validation failed", call. = FALSE)
+  }
+  
+  x
+}
+```
+
+For this function, you could supply a `predicate` function, which would take a single argument, a `col_spec_diff` object. It would return a logical that would indicate if execution should proceed. If the predicate is not satisfied, the `diff` object would be printed and execution stopped.
+
+We could also imagine specifying that a predicate function would return a list containing the logical result, and an error message to pass to `stop()`.
+
+In this scenario, "we" would provide the `validate_col_spec()` function; "you" would provide the `predicate` function.
+
+
+
+
+
+
+

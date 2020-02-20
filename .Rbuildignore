@@ -11,3 +11,4 @@
 ^\.github/workflows/pr-commands\.yaml$
 ^\.github/workflows/pkgdown\.yaml$
 ^CODE_OF_CONDUCT\.md$
+^vignettes/metadata-comparison\.Rmd$
