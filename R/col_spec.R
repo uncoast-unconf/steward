@@ -49,8 +49,8 @@ col_spec_compare <- function(x, y) {
   specs_common <-
     list(
       identical = ifelse(length(is_same) > 0, all(is_same), as.logical(NA)),
-      diff_x = col_spec_select(cols_x_common, names_not_same),
-      diff_y = col_spec_select(cols_y_common, names_not_same)
+      x_diff_y = col_spec_select(cols_x_common, names_not_same),
+      y_diff_x = col_spec_select(cols_y_common, names_not_same)
     )
 
   col_spec_diff(
@@ -89,8 +89,8 @@ print.col_spec_diff <- function(x, ...) {
   cols <- list(
     x$names$x_not_y,
     x$names$y_not_x,
-    x$specs_common$diff_x,
-    x$specs_common$diff_y
+    x$specs_common$x_diff_y,
+    x$specs_common$y_diff_x
   )
 
   # find the longest name for a "problem" column
@@ -148,18 +148,18 @@ print.col_spec_diff <- function(x, ...) {
     return(invisible(x))
   }
 
-  if (has_cols(x$specs_common$diff_x)) {
+  if (has_cols(x$specs_common$x_diff_y)) {
     cli::cli_alert_warning(
       "Column specifications different in {bold('x')}:"
     )
-    cols_out(x$specs_common$diff_x, size)
+    cols_out(x$specs_common$x_diff_y, size)
   }
 
-  if (has_cols(x$specs_common$diff_y)) {
+  if (has_cols(x$specs_common$y_diff_x)) {
     cli::cli_alert_warning(
       "Column specifications different in {bold('y')}:"
     )
-    cols_out(x$specs_common$diff_y, size)
+    cols_out(x$specs_common$y_diff_x, size)
   }
 
   return(invisible(x))

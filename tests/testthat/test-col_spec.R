@@ -17,8 +17,8 @@ result_identical <-
     ),
     specs_common = list(
       identical = TRUE,
-      diff_x = col_spec_iris_null,
-      diff_y = col_spec_iris_null
+      x_diff_y = col_spec_iris_null,
+      y_diff_x = col_spec_iris_null
     )
   )
 
@@ -37,8 +37,8 @@ result_missing_cols <-
     ),
     specs_common = list(
       identical = TRUE,
-      diff_x = col_spec_iris_null,
-      diff_y = col_spec_iris_null
+      x_diff_y = col_spec_iris_null,
+      y_diff_x = col_spec_iris_null
     )
   )
 
@@ -57,8 +57,8 @@ result_extra_cols <-
     ),
     specs_common = list(
       identical = TRUE,
-      diff_x = col_spec_iris_null,
-      diff_y = col_spec_iris_null
+      x_diff_y = col_spec_iris_null,
+      y_diff_x = col_spec_iris_null
     )
   )
 
@@ -78,8 +78,8 @@ result_missing_extra_cols <-
     ),
     specs_common = list(
       identical = TRUE,
-      diff_x = col_spec_iris_null,
-      diff_y = col_spec_iris_null
+      x_diff_y = col_spec_iris_null,
+      y_diff_x = col_spec_iris_null
     )
   )
 
@@ -98,8 +98,8 @@ result_wrong_class <-
     ),
     specs_common = list(
       identical = FALSE,
-      diff_x = as.col_spec(iris_wrong_class) %>% col_spec_select("Species"),
-      diff_y = col_spec_select(col_spec_iris, "Species")
+      x_diff_y = as.col_spec(iris_wrong_class) %>% col_spec_select("Species"),
+      y_diff_x = col_spec_select(col_spec_iris, "Species")
     )
   )
 
@@ -118,8 +118,8 @@ result_diff_order <-
     ),
     specs_common = list(
       identical = TRUE,
-      diff_x = col_spec_iris_null,
-      diff_y = col_spec_iris_null
+      x_diff_y = col_spec_iris_null,
+      y_diff_x = col_spec_iris_null
     )
   )
 
@@ -138,8 +138,8 @@ result_missing_extra_cols_wrong_class <-
     ),
     specs_common = list(
       identical = FALSE,
-      diff_x = as.col_spec(iris_wrong_class) %>% col_spec_select("Species"),
-      diff_y = col_spec_select(col_spec_iris, "Species")
+      x_diff_y = as.col_spec(iris_wrong_class) %>% col_spec_select("Species"),
+      y_diff_x = col_spec_select(col_spec_iris, "Species")
     )
   )
 
@@ -154,8 +154,8 @@ result_mtcars <-
     ),
     specs_common = list(
       identical = as.logical(NA),
-      diff_x = col_spec_iris_null,
-      diff_y = col_spec_select(as.col_spec(mtcars))
+      x_diff_y = col_spec_iris_null,
+      y_diff_x = col_spec_select(as.col_spec(mtcars))
     )
   )
 
