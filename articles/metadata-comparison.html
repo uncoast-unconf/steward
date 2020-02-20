@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">steward</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9010</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9011</span>
       </span>
     </div>
 
@@ -99,19 +99,19 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"steward"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"conflicted"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"dplyr"</span>)</span></code></pre></div>
-<p>Let’s say you have two data frames, and you would like to know how compatible they are. This problem had been floating around in my head for a while, then I saw this <a href="https://twitter.com/sharlagelfand/status/1229512910591885317">tweet from Sharla Gelfand</a>:</p>
+<p>Let’s say you have two data frames, and you would like to know how compatible they are with each other. This problem had been floating around my head when I saw this <a href="https://twitter.com/sharlagelfand/status/1229512910591885317">tweet from Sharla Gelfand</a>:</p>
 <blockquote>
 <p>anyone aware of an #rstats package that will compare two data frames’ names/types and output nice, descriptive errors if they don’t match? do i have to build this myself? - <span class="citation">@sharlagelfand</span></p>
 </blockquote>
 <p>Sharla followed this up with a comprehensive <a href="https://sharla.party/post/comparing-two-dfs">blog post</a> where she details what she wants to do, then shows how existing solutions perform. Happily, Sharla’s view of the problem matches perfectly my view of the problem. What’s more, Sharla has specified what she wants in a solution, with reprexes! As “calls to action” go, what’s not to like?!</p>
-<p>Here’s my proposed solution to the problem, an experimental function called <code>col_spec_diff()</code> - it’s called this because it’s based on the implementation of column-specifications in <a href="https://readr.tidyverse.org">readr</a> and <a href="https://vroom.r-lib.org">vroom</a>.</p>
+<p>Here’s my proposed solution to the problem, an experimental function called <code><a href="../reference/col_spec_compare.html">col_spec_compare()</a></code> - it’s called this because it’s based on the implementation of column-specifications in <a href="https://readr.tidyverse.org">readr</a> and <a href="https://vroom.r-lib.org">vroom</a>.</p>
 <p><strong>NOTE</strong>: As of Feb. 2020, this is an experimental function in a maturing package which is not yet on CRAN. I am writing this up to get feedback on what such a function <em>should</em> do, rather than as an annoucement of a solution you should feel confident to use in your day-to-day work.</p>
 <p>Following Sharla’s lead, when we compare a data frame with itself, we get nothing but success:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(iris, iris)</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; </span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt; ✔ Column names and specifications are identical and have same order.</span></span></code></pre></div>
-<p>This function has two arguments <code>x</code> and <code>y</code>; these names are used to identify the data frames when there are differences. For example, we are told if there is a missing column:</p>
+<p>This function has two arguments <code>x</code> and <code>y</code>; these names are used to identify the data frames when there are differences. For example, what if there is a missing column?</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>iris_missing_cols &lt;-</span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>Sepal.Length)</span>
@@ -132,7 +132,7 @@
 <span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt;   Petal.Width = col_double(),</span></span>
 <span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt;   Species = col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span>
 <span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; )</span></span></code></pre></div>
-<p>Resuming the examples, we are told if there is an extra column:</p>
+<p>Resuming the examples, what if there is an extra column?</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>iris_extra_cols &lt;-</span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">Specieso =</span> Species)</span>
@@ -165,27 +165,28 @@
 <span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt;   ..$ y_diff_x :</span></span>
 <span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt;   .. .. cols()</span></span>
 <span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt;  - attr(*, "class")= chr "col_spec_diff"</span></span></code></pre></div>
-<p>This list describes the match between the columns of data-frame <code>x</code> and data-frame <code>y</code>. It has a print method that provides the (hopefully) user-friendly and informative feedback, which is what we are seeing used elsewhere in this article.</p>
+<p>This list describes the match between the columns of data frame <code>x</code> and data frame <code>y</code>. It has a print method that provides (hopefully) user-friendly and informative feedback.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(diff_extra_cols)</span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="co">#&gt; </span></span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
 <span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt; ! Column names in x but not y:</span></span>
 <span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt;    Specieso  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span>
 <span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt; ✔ Column names in both x and y have identical specifications.</span></span></code></pre></div>
-<p>The observant reader will have noticed that <code><a href="../reference/col_spec_compare.html">col_spec_compare()</a></code> gives us feedback, but it does not <em>act</em> on any of its information. It does not throw errors or issue warnings. This is because <em>I</em> have no idea what an acceptable match means to you in your situation. Maybe it’s OK that there’s an extra column, maybe not? I’ll talk about this more, <a href="#extension">later in this article</a>.</p>
+<p>The observant reader will have noticed that <code><a href="../reference/col_spec_compare.html">col_spec_compare()</a></code> gives us feedback, but it does not <em>act</em> on any of its information. It does not throw errors or issue warnings. This is because <em>I</em> have no idea what an acceptable match means to you in your situation. Maybe it’s OK that there’s an extra column, maybe not? I’ll talk about this more <a href="#extension">later in this article</a>.</p>
 <p>What if we have both a missing column and and extra column?</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>iris_missing_extra_cols &lt;-</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="st">  </span>iris_missing_cols <span class="op">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">Specieso =</span> Species)</span>
-<span id="cb8-4"><a href="#cb8-4"></a></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(iris_missing_extra_cols, iris)</span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt; </span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt; ! Column names in x but not y:</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt;        Specieso  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; ! Column names in y but not x:</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt;    Sepal.Length  col_double()</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt; ✔ Column names in both x and y have identical specifications.</span></span></code></pre></div>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>Sepal.Length) <span class="op">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">Specieso =</span> Species)</span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(iris_missing_extra_cols, iris)</span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt; </span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt; ! Column names in x but not y:</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt;        Specieso  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt; ! Column names in y but not x:</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt;    Sepal.Length  col_double()</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; ✔ Column names in both x and y have identical specifications.</span></span></code></pre></div>
 <p>Let’s say that the columns are ordered differently:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>iris_diff_order &lt;-</span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span></span>
@@ -212,20 +213,22 @@
 <p>The feedback here focuses on those columns names that are common to both data frames, but have different specifications.</p>
 <p>We have a couple more examples - first, Sharla has a “throw the kitchen sink at it” problem:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>iris_missing_extra_cols_wrong_class &lt;-</span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="st">  </span>iris_missing_extra_cols <span class="op">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">Species =</span> <span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(Species))</span>
-<span id="cb11-4"><a href="#cb11-4"></a></span>
-<span id="cb11-5"><a href="#cb11-5"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(iris_missing_extra_cols_wrong_class, iris)</span>
-<span id="cb11-6"><a href="#cb11-6"></a><span class="co">#&gt; </span></span>
-<span id="cb11-7"><a href="#cb11-7"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
-<span id="cb11-8"><a href="#cb11-8"></a><span class="co">#&gt; ! Column names in x but not y:</span></span>
-<span id="cb11-9"><a href="#cb11-9"></a><span class="co">#&gt;        Specieso  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span>
-<span id="cb11-10"><a href="#cb11-10"></a><span class="co">#&gt; ! Column names in y but not x:</span></span>
-<span id="cb11-11"><a href="#cb11-11"></a><span class="co">#&gt;    Sepal.Length  col_double()</span></span>
-<span id="cb11-12"><a href="#cb11-12"></a><span class="co">#&gt; ! Column specifications different in x:</span></span>
-<span id="cb11-13"><a href="#cb11-13"></a><span class="co">#&gt;         Species  col_character()</span></span>
-<span id="cb11-14"><a href="#cb11-14"></a><span class="co">#&gt; ! Column specifications different in y:</span></span>
-<span id="cb11-15"><a href="#cb11-15"></a><span class="co">#&gt;         Species  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span></code></pre></div>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>Sepal.Length) <span class="op">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">Specieso =</span> Species) <span class="op">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">Species =</span> <span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(Species))</span>
+<span id="cb11-6"><a href="#cb11-6"></a></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(iris_missing_extra_cols_wrong_class, iris)</span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="co">#&gt; </span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="co">#&gt; ! Column names in x but not y:</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="co">#&gt;        Specieso  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="co">#&gt; ! Column names in y but not x:</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a><span class="co">#&gt;    Sepal.Length  col_double()</span></span>
+<span id="cb11-14"><a href="#cb11-14"></a><span class="co">#&gt; ! Column specifications different in x:</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="co">#&gt;         Species  col_character()</span></span>
+<span id="cb11-16"><a href="#cb11-16"></a><span class="co">#&gt; ! Column specifications different in y:</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a><span class="co">#&gt;         Species  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span></code></pre></div>
 <p>I offer a final example myself, in the spirit of something I am likely to do:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(mtcars, iris)</span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="co">#&gt; </span></span>
@@ -285,7 +288,7 @@
 <strong><code>specs_common</code></strong> <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> concerning those names in common for <code>x</code> and <code>y</code>, with elements:
 <ul>
 <li>
-<strong><code>identical</code></strong> <code>logical</code>: do the common names each have identical specifications, <code>NA</code> if no common names.</li>
+<strong><code>identical</code></strong> <code>logical</code>: do the common names each have identical specifications? <code>NA</code> if no common names.</li>
 <li>
 <strong><code>x_diff_y</code></strong> <code>col_spec</code>: specifications in <code>x</code>, among common names, that are different from <code>y</code>.</li>
 <li>
@@ -293,7 +296,7 @@
 </ul>
 </li>
 </ul>
-<p>This function is separate from the rest of the infrastructure in the steward package. It is much closer to the infrastructure in readr and vroom. Both of those packages are designed to read data, rather than to compare it. That being said, they both use the <code>cols()</code> infrastructure, and as best as I can tell, it is implemented independently in both packages.</p>
+<p>This function is separate from the rest of the infrastructure in the steward package. It is much closer to the infrastructure in readr and vroom; these packages are designed to read data, rather than to compare it. That being said, they both use the <code>cols()</code> infrastructure, and as best as I can tell, it is implemented independently in both packages.</p>
 <p>Far be it from me to suggest anything to the Tidyverse team, but there seems to be an opportunity for another r-lib package, perhaps named <strong>colspec</strong>, that both readr and vroom could use. If such a package were to come to pass, perhaps this functionality could be part of such a package.</p>
 </div>
 <div id="extension" class="section level2">
@@ -303,7 +306,8 @@
 <p>However you might have a situation where you build a data frame, validate it against a reference (stopping if need be), then return your data-frame. Something like this:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>iris_new &lt;-</span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="st">  </span><span class="kw">iris_building_function</span>() <span class="op">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="st">  </span><span class="kw">validate_col_spec</span>(iris)</span></code></pre></div>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="st">  </span><span class="kw">validate_col_spec</span>(iris) <span class="op">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="st">  </span><span class="kw">do_more_stuff</span>()</span></code></pre></div>
 <p>Here’s a first idea on what <code>validate_col_spec()</code> might look like:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">validate_col_spec</span>(x, y, <span class="dt">predicate =</span> <span class="ot">NULL</span>) {</span>
 <span id="cb14-2"><a href="#cb14-2"></a></span>
