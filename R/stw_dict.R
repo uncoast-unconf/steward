@@ -101,9 +101,9 @@ stw_dict.stw_dataset <- function(dataset, ...) {
 
   df <- tibble::tibble(
     name = names(dataset),
-    type = vapply(dataset, type, character(1)),
-    description = vapply(dataset, get_desc, character(1)),
-    levels = lapply(dataset, levels)
+    type = purrr::map_chr(dataset, type),
+    description = purrr::map_chr(dataset, get_desc),
+    levels = purrr::map(dataset, levels)
   )
 
   stw_dict(df)

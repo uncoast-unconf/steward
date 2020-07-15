@@ -66,7 +66,7 @@ stw_to_roxygen.stw_meta <- function(meta, ...) {
   if (rlang::is_empty(sources)) {
     str_source <- ""
   } else {
-    str_sources <- lapply(sources, function(x) do.call(source_to_markdown, x))
+    str_sources <- purrr::map(sources, function(x) do.call(source_to_markdown, x))
     str_sources <- glue::glue_collapse(str_sources, sep = ", ")
     str_source <- glue::glue("@source {str_sources}")
   }
@@ -158,11 +158,11 @@ dict_to_roxygen <- function(dict) {
     )
   }
 
-  temp <- transpose(dict)
+  temp <- purrr::transpose(dict)
 
-  fillings_processed <- unlist(lapply(temp, make_filling))
+  fillings_processed <- unlist(purrr::map(temp, make_filling))
 
-  fillings <- glue::glue_collapse(fillings_processed,sep = "\n")
+  fillings <- glue::glue_collapse(fillings_processed, sep = "\n")
 
   fillings
 }

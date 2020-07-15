@@ -77,7 +77,7 @@ stw_use_data <- function(..., file_doc = NULL, keep_steward = FALSE,
 
 name_dots <- function(...) {
   syms <- rlang::enexprs(...)
-  names <- unlist(lapply(syms, rlang::as_name))
+  names <- unlist(purrr::map(syms, rlang::as_name))
 
   named_list <- rlang::list2(...)
   names(named_list) <- names

@@ -61,7 +61,7 @@ stw_dataset.stw_dataset <- function(dataset, meta = NULL, ...) {
   attr(dataset, "steward_meta") <- meta
 
   # incorporate dictionary
-  t_dict <- transpose(dict)
+  t_dict <- purrr::transpose(dict)
 
   # to hold names of misbhaving entries
   names_extra <- NULL
