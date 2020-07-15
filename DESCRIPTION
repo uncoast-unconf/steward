@@ -59,9 +59,6 @@ Imports:
     purrr,
     cli,
     tidyselect
-Remotes: 
-    rstudio/gt,
-    tidyverse/readr
 Suggests:
     testthat (>= 2.1.0),
     roxygen2,
