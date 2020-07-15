@@ -13,9 +13,7 @@ diamonds$clarity <- factor(diamonds$clarity, ordered = FALSE)
 diamonds <- stw_dataset(diamonds, diamonds_meta)
 
 test_that("we can write a dataset", {
-  expect_output(
-    expect_identical(stw_write_dataset(diamonds, file_data), diamonds)
-  )
+  expect_identical(stw_write_dataset(diamonds, file_data), diamonds)
   expect_true(fs::file_exists(file_data))
   expect_true(fs::file_exists(file_meta))
 })

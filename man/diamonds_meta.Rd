@@ -4,7 +4,9 @@
 \name{diamonds_meta}
 \alias{diamonds_meta}
 \title{Diamonds metadata from ggplot2 package}
-\format{Object with S3 class \code{stw_meta}}
+\format{
+Object with S3 class \code{stw_meta}
+}
 \source{
 \url{https://CRAN.R-project.org/package=ggplot2}
 }

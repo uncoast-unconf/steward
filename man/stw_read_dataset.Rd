@@ -15,8 +15,8 @@ stw_write_dataset(dataset, file_data, file_meta = NULL, ...)
 \item{file_meta}{\code{character}, path to write the YAML file; default is to
 use the wame directory and file-root as \code{file_data}}
 
-\item{...}{additional arguments passed on to \code{\link[readr:read_csv]{readr::read_csv()}} or
-\code{\link[readr:write_csv]{readr::write_csv()}}}
+\item{...}{additional arguments passed on to \code{\link[readr:read_delim]{readr::read_csv()}} or
+\code{\link[readr:write_delim]{readr::write_csv()}}}
 
 \item{dataset}{Object with S3 class \code{stw_dataset}, a data frame with attached meta-data}
 }
@@ -24,7 +24,7 @@ use the wame directory and file-root as \code{file_data}}
 invisible copy of \code{dataset}
 }
 \description{
-This will read from or write to a set of files: o CSV file for the data,
+This will read from or write to a set of files: a CSV file for the data,
 and a YAML file for the meta-data.
 }
 \details{

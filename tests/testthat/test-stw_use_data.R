@@ -18,8 +18,8 @@ test_that("validate_list works", {
   named_not <- list(a = 1)
 
   expect_identical(validate_list(named_good), named_good)
-  expect_output(expect_error(validate_list(named_bad)), "missing")
-  expect_output(expect_error(validate_list(named_not)), "Not a stw_dataset")
+  expect_error(validate_list(named_bad), "invalid elements")
+  expect_error(validate_list(named_not), "invalid elements")
 })
 
 test_that("strip_steward works", {

@@ -35,13 +35,12 @@ test_that("check works for dictionary", {
   }
 
   # check we get the right result
-  expect_output({
-    expect_true(get_valid(stw_check(dict_good)))
-    expect_true(get_valid(stw_check(dict_type_not_recognized)))
-    expect_false(get_valid(stw_check(dict_names_repeated)))
-    expect_false(get_valid(stw_check(dict_names_trivial)))
-    expect_false(get_valid(stw_check(dict_desc_trivial)))
-  })
+  expect_true(get_valid(stw_check(dict_good)))
+  expect_true(get_valid(stw_check(dict_type_not_recognized)))
+  expect_false(get_valid(stw_check(dict_names_repeated)))
+  expect_false(get_valid(stw_check(dict_names_trivial)))
+  expect_false(get_valid(stw_check(dict_desc_trivial)))
+
 
   # TODO: sort out equivalent
   # check we reutrn the item
@@ -55,54 +54,69 @@ test_that("check works for dictionary", {
   }
 
   # check we get the right result
-  expect_output({
-    expect_true(get_valid(stw_check(meta_good)))
-    expect_true(get_valid(stw_check(meta_missing_source)))
-    expect_false(get_valid(stw_check(meta_missing_name)))
-  })
+  expect_true(get_valid(stw_check(meta_good)))
+  expect_true(get_valid(stw_check(meta_missing_source)))
+  expect_false(get_valid(stw_check(meta_missing_name)))
+
 
   # check we reutrn the item
   expect_identical(stw_check(meta_good), meta_good)
 })
 
 test_that("check side-effects are correct for dictionary", {
-  # everything OK
-  expect_output(stw_check(meta_good, verbosity = "all"), )
-  expect_silent(stw_check(meta_good, verbosity = "info"))
-  expect_silent(stw_check(meta_good, verbosity = "error"))
-  expect_silent(stw_check(meta_good, verbosity = "none"))
 
-  # missing type
-  expect_output(stw_check(meta_missing_source, verbosity = "all"))
-  expect_output(stw_check(meta_missing_source, verbosity = "info"))
-  expect_silent(stw_check(meta_missing_source, verbosity = "error"))
-  expect_silent(stw_check(meta_missing_source, verbosity = "none"))
+  verify_output(
+    test_path("stw-validate-dict.txt"),
+    crayon = TRUE,
+    {
+      # everything OK
+      stw_check(meta_good, verbosity = "all")
+      stw_check(meta_good, verbosity = "info")
+      stw_check(meta_good, verbosity = "error")
+      stw_check(meta_good, verbosity = "none")
 
-  # repeated name
-  expect_output(stw_check(meta_missing_name, verbosity = "all"))
-  expect_output(stw_check(meta_missing_name, verbosity = "info"))
-  expect_output(stw_check(meta_missing_name, verbosity = "error"))
-  expect_silent(stw_check(meta_missing_name, verbosity = "none"))
+      # missing type
+      stw_check(meta_missing_source, verbosity = "all")
+      stw_check(meta_missing_source, verbosity = "info")
+      stw_check(meta_missing_source, verbosity = "error")
+      stw_check(meta_missing_source, verbosity = "none")
+
+      # repeated name
+      stw_check(meta_missing_name, verbosity = "all")
+      stw_check(meta_missing_name, verbosity = "info")
+      stw_check(meta_missing_name, verbosity = "error")
+      stw_check(meta_missing_name, verbosity = "none")
+    }
+  )
+
 })
 
 test_that("check side-effects are correct for meta", {
-  # everything OK
-  expect_output(stw_check(dict_good, verbosity = "all"))
-  expect_silent(stw_check(dict_good, verbosity = "info"))
-  expect_silent(stw_check(dict_good, verbosity = "error"))
-  expect_silent(stw_check(dict_good, verbosity = "none"))
 
-  # missing type
-  expect_output(stw_check(dict_type_not_recognized, verbosity = "all"))
-  expect_output(stw_check(dict_type_not_recognized, verbosity = "info"))
-  expect_silent(stw_check(dict_type_not_recognized, verbosity = "error"))
-  expect_silent(stw_check(dict_type_not_recognized, verbosity = "none"))
+  verify_output(
+    test_path("stw-validate-meta.txt"),
+    crayon = TRUE,
+    {
+      # everything OK
+      stw_check(dict_good, verbosity = "all")
+      stw_check(dict_good, verbosity = "info")
+      stw_check(dict_good, verbosity = "error")
+      stw_check(dict_good, verbosity = "none")
 
-  # repeated name
-  expect_output(stw_check(dict_names_repeated, verbosity = "all"))
-  expect_output(stw_check(dict_names_repeated, verbosity = "info"))
-  expect_output(stw_check(dict_names_repeated, verbosity = "error"))
-  expect_silent(stw_check(dict_names_repeated, verbosity = "none"))
+      # missing type
+      stw_check(dict_type_not_recognized, verbosity = "all")
+      stw_check(dict_type_not_recognized, verbosity = "info")
+      stw_check(dict_type_not_recognized, verbosity = "error")
+      stw_check(dict_type_not_recognized, verbosity = "none")
+
+      # repeated name
+      stw_check(dict_names_repeated, verbosity = "all")
+      stw_check(dict_names_repeated, verbosity = "info")
+      stw_check(dict_names_repeated, verbosity = "error")
+      stw_check(dict_names_repeated, verbosity = "none")
+    }
+  )
+
 })
 
 test_that("validate works", {
@@ -116,9 +130,8 @@ test_that("validate works", {
   expect_identical(stw_validate(meta_good), meta_good)
 
   # throws error
-  expect_output({
-    expect_error(stw_validate(dict_names_repeated))
-    expect_error(stw_validate(meta_missing_name))
-  })
+  expect_error(stw_validate(dict_names_repeated))
+  expect_error(stw_validate(meta_missing_name))
+
 
 })

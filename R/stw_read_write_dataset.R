@@ -1,6 +1,6 @@
 #' Read or write a steward dataset
 #'
-#' This will read from or write to a set of files: o CSV file for the data,
+#' This will read from or write to a set of files: a CSV file for the data,
 #' and a YAML file for the meta-data.
 #'
 #' At the moment, this provides minimal functionality. In the future, we can
@@ -53,6 +53,7 @@ stw_write_dataset <- function(dataset, file_data, file_meta = NULL, ...) {
 
   readr::write_csv(dataset, file_data, ...)
   stw_write_yaml(stw_meta(dataset), file_meta)
+  usethis::ui_done("CSV data written to {usethis::ui_value(file_data)}.")
 
   invisible(dataset)
 }
