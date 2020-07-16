@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">steward</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9014</span>
       </span>
     </div>
 
@@ -107,44 +107,50 @@
 <p>Here’s my proposed solution to the problem, an experimental function called <code><a href="../reference/col_spec_compare.html">col_spec_compare()</a></code> - it’s called this because it’s based on the implementation of column-specifications in <a href="https://readr.tidyverse.org">readr</a> and <a href="https://vroom.r-lib.org">vroom</a>.</p>
 <p><strong>NOTE</strong>: As of Feb. 2020, this is an experimental function in a maturing package which is not yet on CRAN. I am writing this up to get feedback on what such a function <em>should</em> do, rather than as an annoucement of a solution you should feel confident to use in your day-to-day work.</p>
 <p>Following Sharla’s lead, when we compare a data frame with itself, we get nothing but success:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(iris, iris)</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(mtcars, mtcars)</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; </span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt; ✔ Column names and specifications are identical and have same order.</span></span></code></pre></div>
 <p>This function has two arguments <code>x</code> and <code>y</code>; these names are used to identify the data frames when there are differences. For example, what if there is a missing column?</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>iris_missing_cols &lt;-</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>Sepal.Length)</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>mtcars_missing_cols &lt;-</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="st">  </span>mtcars <span class="op">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>mpg)</span>
 <span id="cb3-4"><a href="#cb3-4"></a></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(iris_missing_cols, iris)</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(mtcars_missing_cols, mtcars)</span>
 <span id="cb3-6"><a href="#cb3-6"></a><span class="co">#&gt; </span></span>
 <span id="cb3-7"><a href="#cb3-7"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
 <span id="cb3-8"><a href="#cb3-8"></a><span class="co">#&gt; ! Column names in y but not x:</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt;    Sepal.Length  col_double()</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt;    mpg  col_double()</span></span>
 <span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt; ✔ Column names in both x and y have identical specifications.</span></span></code></pre></div>
-<p>You can see that the “missing” column is identified by name, <code>Sepal.Length</code>, then described by a column specification, <code>col_double()</code>. We see a second piece of information that tells us that for column names that are common to <code>x</code> and <code>y</code>, the specifications are identical.</p>
+<p>You can see that the “missing” column is identified by name, <code>mpg</code>, then described by a column specification, <code>col_double()</code>. We see a second piece of information that tells us that for column names that are common to <code>x</code> and <code>y</code>, the specifications are identical.</p>
 <p>The column specifications are defined in readr (and vroom). If fact, we are using a function in the dev version of readr to determine the column specifications for each of <code>x</code> and <code>y</code> (building on what the Tidyverse team have already done):</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/as.col_spec.html">as.col_spec</a></span>(iris)</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/as.col_spec.html">as.col_spec</a></span>(mtcars)</span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="co">#&gt; cols(</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt;   Sepal.Length = col_double(),</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt;   Sepal.Width = col_double(),</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt;   Petal.Length = col_double(),</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt;   Petal.Width = col_double(),</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt;   Species = col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; )</span></span></code></pre></div>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt;   mpg = col_double(),</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt;   cyl = col_double(),</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt;   disp = col_double(),</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt;   hp = col_double(),</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt;   drat = col_double(),</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt;   wt = col_double(),</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt;   qsec = col_double(),</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;   vs = col_double(),</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;   am = col_double(),</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;   gear = col_double(),</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;   carb = col_double()</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt; )</span></span></code></pre></div>
 <p>Resuming the examples, what if there is an extra column?</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>iris_extra_cols &lt;-</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">Specieso =</span> Species)</span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>mtcars_extra_cols &lt;-</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span>mtcars <span class="op">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">mpgo =</span> mpg)</span>
 <span id="cb5-4"><a href="#cb5-4"></a></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(iris_extra_cols, iris)</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(mtcars_extra_cols, mtcars)</span>
 <span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; </span></span>
 <span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
 <span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt; ! Column names in x but not y:</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;    Specieso  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;    mpgo  col_double()</span></span>
 <span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; ✔ Column names in both x and y have identical specifications.</span></span></code></pre></div>
 <p>At this point it may be useful to “peek under the hood” a little bit (this article has a <a href="#under-the-hood">larger section on this</a>). The function <code><a href="../reference/col_spec_compare.html">col_spec_compare()</a></code> returns an object with S3 class <code>col_spec_diff</code>, which is just a way of saying “it’s a <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> with extra functionality.” We can use the <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> function to have a closer look:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>diff_extra_cols &lt;-<span class="st"> </span><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(iris_extra_cols, iris)</span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>diff_extra_cols &lt;-<span class="st"> </span><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(mtcars_extra_cols, mtcars)</span>
 <span id="cb6-2"><a href="#cb6-2"></a></span>
 <span id="cb6-3"><a href="#cb6-3"></a><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(diff_extra_cols)</span>
 <span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; List of 3</span></span>
@@ -154,7 +160,7 @@
 <span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt;   ..$ equivalent: logi FALSE</span></span>
 <span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt;   ..$ x_not_y   :</span></span>
 <span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;   .. .. cols(</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;   .. ..   Specieso = col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;   .. ..   mpgo = col_double()</span></span>
 <span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt;   .. .. )</span></span>
 <span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt;   ..$ y_not_x   :</span></span>
 <span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt;   .. .. cols()</span></span>
@@ -170,88 +176,85 @@
 <span id="cb7-2"><a href="#cb7-2"></a><span class="co">#&gt; </span></span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
 <span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt; ! Column names in x but not y:</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt;    Specieso  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt;    mpgo  col_double()</span></span>
 <span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt; ✔ Column names in both x and y have identical specifications.</span></span></code></pre></div>
 <p>The observant reader will have noticed that <code><a href="../reference/col_spec_compare.html">col_spec_compare()</a></code> gives us feedback, but it does not <em>act</em> on any of its information. It does not throw errors or issue warnings. This is because <em>I</em> have no idea what an acceptable match means to you in your situation. Maybe it’s OK that there’s an extra column, maybe not? I’ll talk about this more <a href="#extension">later in this article</a>.</p>
 <p>What if we have both a missing column and and extra column?</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>iris_missing_extra_cols &lt;-</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>Sepal.Length) <span class="op">%&gt;%</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">Specieso =</span> Species)</span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>mtcars_missing_extra_cols &lt;-</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="st">  </span>mtcars <span class="op">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>cyl) <span class="op">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">mpgo =</span> mpg)</span>
 <span id="cb8-5"><a href="#cb8-5"></a></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(iris_missing_extra_cols, iris)</span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(mtcars_missing_extra_cols, mtcars)</span>
 <span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt; </span></span>
 <span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
 <span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt; ! Column names in x but not y:</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt;        Specieso  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt;    mpgo  col_double()</span></span>
 <span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt; ! Column names in y but not x:</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt;    Sepal.Length  col_double()</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt;     cyl  col_double()</span></span>
 <span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; ✔ Column names in both x and y have identical specifications.</span></span></code></pre></div>
 <p>Let’s say that the columns are ordered differently:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>iris_diff_order &lt;-</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(Species, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">everything</a></span>())</span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>mtcars_diff_order &lt;-</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="st">  </span>mtcars <span class="op">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(cyl, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">everything</a></span>())</span>
 <span id="cb9-4"><a href="#cb9-4"></a></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(iris_diff_order, iris)</span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(mtcars_diff_order, mtcars)</span>
 <span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; </span></span>
 <span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
 <span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; ℹ Column names are identical but have different order.</span></span>
 <span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; ✔ Column names in both x and y have identical specifications.</span></span></code></pre></div>
 <p>Or if a column has the same name, but has a different class:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>iris_wrong_class &lt;-</span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">Species =</span> <span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(Species))</span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>mtcars_wrong_class &lt;-</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="st">  </span>mtcars <span class="op">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">mpg =</span> <span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(mpg))</span>
 <span id="cb10-4"><a href="#cb10-4"></a></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(iris_wrong_class, iris)</span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(mtcars_wrong_class, mtcars)</span>
 <span id="cb10-6"><a href="#cb10-6"></a><span class="co">#&gt; </span></span>
 <span id="cb10-7"><a href="#cb10-7"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
 <span id="cb10-8"><a href="#cb10-8"></a><span class="co">#&gt; ✔ Column names are identical and have same order.</span></span>
 <span id="cb10-9"><a href="#cb10-9"></a><span class="co">#&gt; ! Column specifications different in x:</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a><span class="co">#&gt;    Species  col_character()</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co">#&gt;    mpg  col_character()</span></span>
 <span id="cb10-11"><a href="#cb10-11"></a><span class="co">#&gt; ! Column specifications different in y:</span></span>
-<span id="cb10-12"><a href="#cb10-12"></a><span class="co">#&gt;    Species  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span></code></pre></div>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="co">#&gt;    mpg  col_double()</span></span></code></pre></div>
 <p>The feedback here focuses on those columns names that are common to both data frames, but have different specifications.</p>
 <p>We have a couple more examples - first, Sharla has a “throw the kitchen sink at it” problem:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>iris_missing_extra_cols_wrong_class &lt;-</span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>Sepal.Length) <span class="op">%&gt;%</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">Specieso =</span> Species) <span class="op">%&gt;%</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">Species =</span> <span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(Species))</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>mtcars_missing_extra_cols_wrong_class &lt;-</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="st">  </span>mtcars <span class="op">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>cyl) <span class="op">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">mpgo =</span> mpg) <span class="op">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">mpg =</span> <span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(mpg))</span>
 <span id="cb11-6"><a href="#cb11-6"></a></span>
-<span id="cb11-7"><a href="#cb11-7"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(iris_missing_extra_cols_wrong_class, iris)</span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(mtcars_missing_extra_cols_wrong_class, mtcars)</span>
 <span id="cb11-8"><a href="#cb11-8"></a><span class="co">#&gt; </span></span>
 <span id="cb11-9"><a href="#cb11-9"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
 <span id="cb11-10"><a href="#cb11-10"></a><span class="co">#&gt; ! Column names in x but not y:</span></span>
-<span id="cb11-11"><a href="#cb11-11"></a><span class="co">#&gt;        Specieso  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="co">#&gt;    mpgo  col_double()</span></span>
 <span id="cb11-12"><a href="#cb11-12"></a><span class="co">#&gt; ! Column names in y but not x:</span></span>
-<span id="cb11-13"><a href="#cb11-13"></a><span class="co">#&gt;    Sepal.Length  col_double()</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a><span class="co">#&gt;     cyl  col_double()</span></span>
 <span id="cb11-14"><a href="#cb11-14"></a><span class="co">#&gt; ! Column specifications different in x:</span></span>
-<span id="cb11-15"><a href="#cb11-15"></a><span class="co">#&gt;         Species  col_character()</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="co">#&gt;     mpg  col_character()</span></span>
 <span id="cb11-16"><a href="#cb11-16"></a><span class="co">#&gt; ! Column specifications different in y:</span></span>
-<span id="cb11-17"><a href="#cb11-17"></a><span class="co">#&gt;         Species  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span></code></pre></div>
+<span id="cb11-17"><a href="#cb11-17"></a><span class="co">#&gt;     mpg  col_double()</span></span></code></pre></div>
 <p>I offer a final example myself, in the spirit of something I am likely to do:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(mtcars, iris)</span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="../reference/col_spec_compare.html">col_spec_compare</a></span>(mtcars, cars)</span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="co">#&gt; </span></span>
 <span id="cb12-3"><a href="#cb12-3"></a><span class="co">#&gt; ── Column comparison ───────────────────────────────────────────────────────────</span></span>
 <span id="cb12-4"><a href="#cb12-4"></a><span class="co">#&gt; ! Column names in x but not y:</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="co">#&gt;             mpg  col_double() </span></span>
-<span id="cb12-6"><a href="#cb12-6"></a><span class="co">#&gt;             cyl  col_double() </span></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="co">#&gt;            disp  col_double() </span></span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="co">#&gt;              hp  col_double() </span></span>
-<span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt;            drat  col_double() </span></span>
-<span id="cb12-10"><a href="#cb12-10"></a><span class="co">#&gt;              wt  col_double() </span></span>
-<span id="cb12-11"><a href="#cb12-11"></a><span class="co">#&gt;            qsec  col_double() </span></span>
-<span id="cb12-12"><a href="#cb12-12"></a><span class="co">#&gt;              vs  col_double() </span></span>
-<span id="cb12-13"><a href="#cb12-13"></a><span class="co">#&gt;              am  col_double() </span></span>
-<span id="cb12-14"><a href="#cb12-14"></a><span class="co">#&gt;            gear  col_double() </span></span>
-<span id="cb12-15"><a href="#cb12-15"></a><span class="co">#&gt;            carb  col_double()</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="co">#&gt;      mpg  col_double() </span></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="co">#&gt;      cyl  col_double() </span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="co">#&gt;     disp  col_double() </span></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="co">#&gt;       hp  col_double() </span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt;     drat  col_double() </span></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co">#&gt;       wt  col_double() </span></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="co">#&gt;     qsec  col_double() </span></span>
+<span id="cb12-12"><a href="#cb12-12"></a><span class="co">#&gt;       vs  col_double() </span></span>
+<span id="cb12-13"><a href="#cb12-13"></a><span class="co">#&gt;       am  col_double() </span></span>
+<span id="cb12-14"><a href="#cb12-14"></a><span class="co">#&gt;     gear  col_double() </span></span>
+<span id="cb12-15"><a href="#cb12-15"></a><span class="co">#&gt;     carb  col_double()</span></span>
 <span id="cb12-16"><a href="#cb12-16"></a><span class="co">#&gt; ! Column names in y but not x:</span></span>
-<span id="cb12-17"><a href="#cb12-17"></a><span class="co">#&gt;    Sepal.Length  col_double() </span></span>
-<span id="cb12-18"><a href="#cb12-18"></a><span class="co">#&gt;     Sepal.Width  col_double() </span></span>
-<span id="cb12-19"><a href="#cb12-19"></a><span class="co">#&gt;    Petal.Length  col_double() </span></span>
-<span id="cb12-20"><a href="#cb12-20"></a><span class="co">#&gt;     Petal.Width  col_double() </span></span>
-<span id="cb12-21"><a href="#cb12-21"></a><span class="co">#&gt;         Species  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE)</span></span>
-<span id="cb12-22"><a href="#cb12-22"></a><span class="co">#&gt; ! There are no column names common to both x and y.</span></span></code></pre></div>
+<span id="cb12-17"><a href="#cb12-17"></a><span class="co">#&gt;    speed  col_double() </span></span>
+<span id="cb12-18"><a href="#cb12-18"></a><span class="co">#&gt;     dist  col_double()</span></span>
+<span id="cb12-19"><a href="#cb12-19"></a><span class="co">#&gt; ! There are no column names common to both x and y.</span></span></code></pre></div>
 <div id="under-the-hood" class="section level2">
 <h2 class="hasAnchor">
 <a href="#under-the-hood" class="anchor"></a>Under the hood</h2>
@@ -304,9 +307,9 @@
 <a href="#extension" class="anchor"></a>Extension</h2>
 <p>As discussed earlier in this article, the function <code><a href="../reference/col_spec_compare.html">col_spec_compare()</a></code> does not take any action, it simply returns information on the comparison of two data frames.</p>
 <p>However you might have a situation where you build a data frame, validate it against a reference (stopping if need be), then return your data-frame. Something like this:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>iris_new &lt;-</span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="st">  </span><span class="kw">iris_building_function</span>() <span class="op">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="st">  </span><span class="kw">validate_col_spec</span>(iris) <span class="op">%&gt;%</span></span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>mtcars_new &lt;-</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="st">  </span><span class="kw">mtcars_building_function</span>() <span class="op">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="st">  </span><span class="kw">validate_col_spec</span>(mtcars) <span class="op">%&gt;%</span></span>
 <span id="cb13-4"><a href="#cb13-4"></a><span class="st">  </span><span class="kw">do_more_stuff</span>()</span></code></pre></div>
 <p>Here’s a first idea on what <code>validate_col_spec()</code> might look like:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">validate_col_spec</span>(x, y, <span class="dt">predicate =</span> <span class="ot">NULL</span>) {</span>
