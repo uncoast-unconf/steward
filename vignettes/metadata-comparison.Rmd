@@ -31,41 +31,41 @@ Here's my proposed solution to the problem, an experimental function called `col
 Following Sharla's lead, when we compare a data frame with itself, we get nothing but success:
 
 ```{r identity}
-col_spec_compare(iris, iris)
+col_spec_compare(mtcars, mtcars)
 ```
 
 This function has two arguments `x` and `y`; these names are used to identify the data frames when there are differences. For example, what if there is a missing column?
 
 ```{r missing}
-iris_missing_cols <-
-  iris %>%
-  select(-Sepal.Length)
+mtcars_missing_cols <-
+  mtcars %>%
+  select(-mpg)
 
-col_spec_compare(iris_missing_cols, iris)
+col_spec_compare(mtcars_missing_cols, mtcars)
 ```
 
-You can see that the "missing" column is identified by name, `Sepal.Length`, then described by a column specification, `col_double()`. We see a second piece of information that tells us that for column names that are common to `x` and `y`, the specifications are identical.
+You can see that the "missing" column is identified by name, `mpg`, then described by a column specification, `col_double()`. We see a second piece of information that tells us that for column names that are common to `x` and `y`, the specifications are identical.
 
 The column specifications are defined in readr (and vroom). If fact, we are using a function in the dev version of readr to determine the column specifications for each of `x` and `y` (building on what the Tidyverse team have already done):
 
 ```{r col_spec}
-readr::as.col_spec(iris)
+readr::as.col_spec(mtcars)
 ```
 
 Resuming the examples, what if there is an extra column?
 
 ```{r extra}
-iris_extra_cols <-
-  iris %>%
-  mutate(Specieso = Species)
+mtcars_extra_cols <-
+  mtcars %>%
+  mutate(mpgo = mpg)
 
-col_spec_compare(iris_extra_cols, iris)
+col_spec_compare(mtcars_extra_cols, mtcars)
 ```
 
 At this point it may be useful to "peek under the hood" a little bit (this article has a [larger section on this](#under-the-hood)). The function `col_spec_compare()` returns an object with S3 class `col_spec_diff`, which is just a way of saying "it's a `list()` with extra functionality." We can use the `str()` function to have a closer look:
 
 ```{r str-extra}
-diff_extra_cols <- col_spec_compare(iris_extra_cols, iris)
+diff_extra_cols <- col_spec_compare(mtcars_extra_cols, mtcars)
 
 str(diff_extra_cols)
 ```
@@ -81,32 +81,32 @@ The observant reader will have noticed that `col_spec_compare()` gives us feedba
 What if we have both a missing column and and extra column?
 
 ```{r missing-extra}
-iris_missing_extra_cols <-
-  iris %>%
-  select(-Sepal.Length) %>%
-  mutate(Specieso = Species)
+mtcars_missing_extra_cols <-
+  mtcars %>%
+  select(-cyl) %>%
+  mutate(mpgo = mpg)
 
-col_spec_compare(iris_missing_extra_cols, iris)
+col_spec_compare(mtcars_missing_extra_cols, mtcars)
 ```
 
 Let's say that the columns are ordered differently:
 
 ```{r order}
-iris_diff_order <-
-  iris %>%
-  select(Species, everything())
+mtcars_diff_order <-
+  mtcars %>%
+  select(cyl, everything())
 
-col_spec_compare(iris_diff_order, iris)
+col_spec_compare(mtcars_diff_order, mtcars)
 ```
 
 Or if a column has the same name, but has a different class:
 
 ```{r class}
-iris_wrong_class <-
-  iris %>%
-  mutate(Species = as.character(Species))
+mtcars_wrong_class <-
+  mtcars %>%
+  mutate(mpg = as.character(mpg))
 
-col_spec_compare(iris_wrong_class, iris)
+col_spec_compare(mtcars_wrong_class, mtcars)
 ```
 
 The feedback here focuses on those columns names that are common to both data frames, but have different specifications.
@@ -114,19 +114,19 @@ The feedback here focuses on those columns names that are common to both data fr
 We have a couple more examples - first, Sharla has a "throw the kitchen sink at it" problem:
 
 ```{r kitchen-sink}
-iris_missing_extra_cols_wrong_class <-
-  iris %>%
-  select(-Sepal.Length) %>%
-  mutate(Specieso = Species) %>%
-  mutate(Species = as.character(Species))
+mtcars_missing_extra_cols_wrong_class <-
+  mtcars %>%
+  select(-cyl) %>%
+  mutate(mpgo = mpg) %>%
+  mutate(mpg = as.character(mpg))
 
-col_spec_compare(iris_missing_extra_cols_wrong_class, iris)
+col_spec_compare(mtcars_missing_extra_cols_wrong_class, mtcars)
 ```
 
 I offer a final example myself, in the spirit of something I am likely to do:
 
 ```{r ian}
-col_spec_compare(mtcars, iris)
+col_spec_compare(mtcars, cars)
 ```
 
 ## Under the hood
@@ -168,9 +168,9 @@ As discussed earlier in this article, the function `col_spec_compare()` does not
 However you might have a situation where you build a data frame, validate it against a reference (stopping if need be), then return your data-frame. Something like this:
 
 ```r
-iris_new <-
-  iris_building_function() %>%
-  validate_col_spec(iris) %>%
+mtcars_new <-
+  mtcars_building_function() %>%
+  validate_col_spec(mtcars) %>%
   do_more_stuff()
 ```
 
