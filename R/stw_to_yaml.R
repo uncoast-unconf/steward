@@ -44,7 +44,7 @@ stw_to_yaml.stw_meta <- function(meta, ...) {
   meta[["n_col"]] <- NULL
 
   # dict -> schema$fields
-  dict <- transpose(meta[["dict"]])
+  dict <- purrr::transpose(meta[["dict"]])
 
   # levels -> constraints$enum
   to_enum <- function(x) {
@@ -57,7 +57,8 @@ stw_to_yaml.stw_meta <- function(meta, ...) {
 
     x
   }
-  dict <- lapply(dict, to_enum)
+
+  dict <- purrr::map(dict, to_enum)
 
   meta[["dict"]] <- NULL
   meta[["schema"]] <- list(fields = dict)

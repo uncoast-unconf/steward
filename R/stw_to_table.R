@@ -33,7 +33,7 @@ stw_to_table.stw_meta <- function(meta, ...) {
 
   dict <- meta[["dict"]]
   # convert NULL values to `""`
-  dict[["levels"]] <- lapply(dict[["levels"]], `%|0|%`, "")
+  dict[["levels"]] <- purrr::map(dict[["levels"]], `%|0|%`, "")
   # capitalize the variable-names in the dictionary, e.g. "name", "type", ...
   names(dict) <- stringr::str_to_title(names(dict))
 
@@ -58,7 +58,7 @@ stw_to_table.stw_meta <- function(meta, ...) {
   sources <- meta[["sources"]]
   if (!rlang::is_empty(sources)) {
 
-    str_sources <- lapply(sources, function(x) do.call(source_to_markdown, x))
+    str_sources <- purrr::map(sources, function(x) do.call(source_to_markdown, x))
     str_sources <- glue::glue_collapse(str_sources, sep = ", ")
     str_source <- glue::glue("Sources: {str_sources}")
 

@@ -29,10 +29,8 @@ stw_read_meta_yaml <- function(file) {
     x
   }
 
-  dict <- lapply(dict, to_level)
-  dict <- lapply(dict, function(x) {do.call(stw_dict, x)})
-
-  dict <- do.call(rbind, dict) # this combines all the different values into 1 tibble
+  dict <- purrr::map(dict, to_level)
+  dict <- purrr::map_dfr(dict, function(x) {do.call(stw_dict, x)})
 
   infile$dict <- stw_dict(dict)
 

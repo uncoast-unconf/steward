@@ -318,7 +318,7 @@ check_elements <- function(names, item) {
     valid
   }
 
-  vapply(names, is_valid, FUN.VALUE = logical(1), item)
+  purrr::map_lgl(names, is_valid, item)
 }
 
 check_sources <- function(x, ui_fn) {
@@ -347,5 +347,5 @@ check_sources <- function(x, ui_fn) {
     TRUE
   }
 
-  all(vapply(x, check_source, logical(1)))
+  all(purrr::map_lgl(x, check_source))
 }
