@@ -12,7 +12,7 @@ Message: -- Column comparison --------------------------------------------------
 
 Message: ! Column names in y but not x:
 
-   Sepal.Length  col_double() 
+   mpg  col_double() 
 
 Message: v Column names in both x and y have identical specifications.
 
@@ -23,7 +23,7 @@ Message: -- Column comparison --------------------------------------------------
 
 Message: ! Column names in x but not y:
 
-   Specieso  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE) 
+   cylo  col_double() 
 
 Message: v Column names in both x and y have identical specifications.
 
@@ -34,11 +34,11 @@ Message: -- Column comparison --------------------------------------------------
 
 Message: ! Column names in x but not y:
 
-       Specieso  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE) 
+   cylo  col_double() 
 
 Message: ! Column names in y but not x:
 
-   Sepal.Length  col_double() 
+    mpg  col_double() 
 
 Message: v Column names in both x and y have identical specifications.
 
@@ -60,11 +60,11 @@ Message: v Column names are identical and have same order.
 
 Message: ! Column specifications different in x:
 
-   Species  col_character() 
+   disp  col_character() 
 
 Message: ! Column specifications different in y:
 
-   Species  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE) 
+   disp  col_double() 
 
 > result_missing_extra_cols_wrong_class
 Message: 
@@ -73,46 +73,43 @@ Message: -- Column comparison --------------------------------------------------
 
 Message: ! Column names in x but not y:
 
-       Specieso  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE) 
+   cylo  col_double() 
 
 Message: ! Column names in y but not x:
 
-   Sepal.Length  col_double() 
+    mpg  col_double() 
 
 Message: ! Column specifications different in x:
 
-        Species  col_character() 
+   disp  col_character() 
 
 Message: ! Column specifications different in y:
 
-        Species  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE) 
+   disp  col_double() 
 
-> result_mtcars
+> result_cars
 Message: 
 
 Message: -- Column comparison -----------------------------------------------------------
 
 Message: ! Column names in x but not y:
 
-   Sepal.Length  col_double() 
-    Sepal.Width  col_double() 
-   Petal.Length  col_double() 
-    Petal.Width  col_double() 
-        Species  col_factor(levels = c("setosa", "versicolor", "virginica"), ordered = FALSE, include_na = FALSE) 
+     mpg  col_double() 
+     cyl  col_double() 
+    disp  col_double() 
+      hp  col_double() 
+    drat  col_double() 
+      wt  col_double() 
+    qsec  col_double() 
+      vs  col_double() 
+      am  col_double() 
+    gear  col_double() 
+    carb  col_double() 
 
 Message: ! Column names in y but not x:
 
-            mpg  col_double() 
-            cyl  col_double() 
-           disp  col_double() 
-             hp  col_double() 
-           drat  col_double() 
-             wt  col_double() 
-           qsec  col_double() 
-             vs  col_double() 
-             am  col_double() 
-           gear  col_double() 
-           carb  col_double() 
+   speed  col_double() 
+    dist  col_double() 
 
 Message: ! There are no column names common to both x and y.
 
