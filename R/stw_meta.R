@@ -136,6 +136,7 @@ stw_meta.stw_dataset <- function(dataset, ...) {
 #'
 format.stw_meta <- function(x, ...) {
   utils::str(x)
+  invisible(x)
 }
 
 #' @export
