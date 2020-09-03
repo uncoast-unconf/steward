@@ -96,6 +96,7 @@ format.stw_dataset <- function(x, ...) {
   print(x_df)
   cat("Metadata:\n")
   print(stw_meta(x))
+  invisible(x)
 }
 
 #' @export

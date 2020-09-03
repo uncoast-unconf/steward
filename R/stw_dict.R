@@ -113,6 +113,7 @@ stw_dict.stw_dataset <- function(dataset, ...) {
 #'
 format.stw_dict <- function(x, ...) {
   utils::str(x)
+  invisible(x)
 }
 
 #' @export

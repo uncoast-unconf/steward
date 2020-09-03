@@ -81,8 +81,11 @@ stw_check.stw_dict <- function(dict,
   }
 
   # descriptions are non-trivial
+  is_trivial <- function(x) {
+    is.na(x) | stringr::str_detect(dict[["description"]], "^\\s*$")
+  }
   desc_trivial <-
-    dict[["name"]][stringr::str_detect(dict[["description"]], "^\\s*$")]
+    dict[["name"]][is_trivial(dict[["description"]])]
   if (length(desc_trivial) > 0) {
     valid <- FALSE
     ui_fn$ui_oops(
