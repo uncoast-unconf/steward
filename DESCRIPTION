@@ -60,7 +60,7 @@ Imports:
     cli,
     tidyselect
 Remotes:
-    tidyverse/readr@ec0d898992359389dce5e565e2591463baf18adc
+    tidyverse/readr
 Suggests:
     testthat (>= 2.1.0),
     roxygen2,
