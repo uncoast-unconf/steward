@@ -1,6 +1,6 @@
 Package: steward
 Title: Helps you manage metadata for published datasets
-Version: 0.0.0.9015
+Version: 0.0.0.9016
 Authors@R: 
     c(
       person(given = "Ian",
@@ -49,7 +49,7 @@ Imports:
     tibble,
     glue,
     magrittr,
-    readr (>= 1.3.1.9000),
+    readr (>= 1.4.0),
     stringr,
     fs,
     gt,
@@ -59,8 +59,6 @@ Imports:
     purrr,
     cli,
     tidyselect
-Remotes:
-    tidyverse/readr@ec0d898992359389dce5e565e2591463baf18adc
 Suggests:
     testthat (>= 2.1.0),
     roxygen2,
