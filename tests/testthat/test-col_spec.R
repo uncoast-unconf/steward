@@ -233,16 +233,14 @@ test_that("mtcars checks out with mtcars", {
 
 test_that("col_spec_diff printing works", {
 
-  verify_output(test_path("col_spec_diff-print.txt"), {
-    result_identical
-    result_missing_cols
-    result_extra_cols
-    result_missing_extra_cols
-    result_diff_order
-    result_wrong_class
-    result_missing_extra_cols_wrong_class
-    result_cars
-  })
+  expect_snapshot(result_identical)
+  expect_snapshot(result_missing_cols)
+  expect_snapshot(result_extra_cols)
+  expect_snapshot(result_missing_extra_cols)
+  expect_snapshot(result_diff_order)
+  expect_snapshot(result_wrong_class)
+  expect_snapshot(result_missing_extra_cols_wrong_class)
+  expect_snapshot(result_cars)
 
 })
 
