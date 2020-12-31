@@ -1,6 +1,6 @@
 # this follows Sharla's post: https://sharla.party/post/comparing-two-dfs/
 
-library("dplyr")
+library("dplyr", warn.conflicts = FALSE)
 library("readr")
 
 col_spec_mtcars <- as.col_spec(mtcars)

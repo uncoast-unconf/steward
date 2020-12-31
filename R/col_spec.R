@@ -14,43 +14,36 @@ col_spec_compare <- function(x, y) {
 
   # what to do if no names?
 
-  assertthat::assert_that(
-    # do have dev version of "readr"
-    utils::compareVersion(
-      as.character(utils::packageVersion("readr")),
-      "1.3.1"
-    ) > 0,
-    msg = glue::glue(
-      "This function requires dev version of readr. ",
-      "You can install with `devtools::install_github(\"tidyverse/readr\")`."
-    )
-  )
-
   col_spec_x <- readr::as.col_spec(x)
   col_spec_y <- readr::as.col_spec(y)
 
   names_x <- names(col_spec_x$cols)
   names_y <- names(col_spec_y$cols)
 
+  # local variant
+  cs_sel_local <- function(spec, names) {
+    col_spec_select(spec, tidyselect::all_of(names))
+  }
+
   names <-
     list(
       identical = identical(names_x, names_y),
       equivalent = identical(sort(names_x), sort(names_y)),
-      x_not_y = col_spec_select(col_spec_x, names_x[!(names_x %in% names_y)]),
-      y_not_x = col_spec_select(col_spec_y, names_y[!(names_y %in% names_x)])
+      x_not_y = cs_sel_local(col_spec_x, names_x[!(names_x %in% names_y)]),
+      y_not_x = cs_sel_local(col_spec_y, names_y[!(names_y %in% names_x)])
     )
 
   names_common <- intersect(names_x, names_y)
-  cols_x_common <- col_spec_select(col_spec_x, names_common)
-  cols_y_common <- col_spec_select(col_spec_y, names_common)
+  cols_x_common <- cs_sel_local(col_spec_x, names_common)
+  cols_y_common <- cs_sel_local(col_spec_y, names_common)
   is_same <- purrr::map2_lgl(cols_x_common$cols, cols_y_common$cols, identical)
   names_not_same <- names_common[!is_same]
 
   specs_common <-
     list(
       identical = ifelse(length(is_same) > 0, all(is_same), as.logical(NA)),
-      x_diff_y = col_spec_select(cols_x_common, names_not_same),
-      y_diff_x = col_spec_select(cols_y_common, names_not_same)
+      x_diff_y = cs_sel_local(cols_x_common, names_not_same),
+      y_diff_x = cs_sel_local(cols_y_common, names_not_same)
     )
 
   col_spec_diff(

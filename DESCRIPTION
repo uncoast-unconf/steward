@@ -60,7 +60,7 @@ Imports:
     cli,
     tidyselect
 Suggests:
-    testthat (>= 2.1.0),
+    testthat (>= 3.0.0),
     roxygen2,
     knitr,
     rmarkdown,
@@ -69,3 +69,4 @@ Suggests:
     covr,
     conflicted
 VignetteBuilder: knitr
+Config/testthat/edition: 3

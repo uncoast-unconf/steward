@@ -30,6 +30,8 @@ meta_missing_source$sources <- NULL
 
 test_that("check works for dictionary", {
 
+  withr::local_options(list(usethis.quiet = TRUE))
+
   get_valid <- function(x) {
     identical(attr(x, "is_valid"), TRUE)
   }
@@ -43,11 +45,13 @@ test_that("check works for dictionary", {
 
 
   # TODO: sort out equivalent
-  # check we reutrn the item
+  # check we return the item
   # expect_equivalent(stw_check(dict_good), dict_good)
 })
 
 test_that("check works for dictionary", {
+
+  withr::local_options(list(usethis.quiet = TRUE))
 
   get_valid <- function(x) {
     identical(attr(x, "is_valid"), TRUE)
@@ -59,7 +63,7 @@ test_that("check works for dictionary", {
   expect_false(get_valid(stw_check(meta_missing_name)))
 
 
-  # check we reutrn the item
+  # check we return the item
   expect_identical(stw_check(meta_good), meta_good)
 })
 
@@ -124,6 +128,8 @@ test_that("validate works", {
   # silent
   expect_silent(stw_validate(dict_good))
   expect_silent(stw_validate(meta_good))
+
+  withr::local_options(list(usethis.quiet = TRUE))
 
   # returns argument
   # expect_identical(stw_validate(dict_good), dict_good)

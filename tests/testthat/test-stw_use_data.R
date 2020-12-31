@@ -11,6 +11,8 @@ test_that("named_dots works", {
 
 test_that("validate_list works", {
 
+  withr::local_options(list(usethis.quiet = TRUE))
+
   diamonds_bad <- diamonds %>% stw_mutate_meta(name = NULL)
 
   named_good <- list(diamonds = diamonds)
