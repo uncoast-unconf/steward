@@ -69,57 +69,39 @@ test_that("check works for dictionary", {
 
 test_that("check side-effects are correct for dictionary", {
 
-  verify_output(
-    test_path("stw-validate-dict.txt"),
-    crayon = TRUE,
-    {
-      # everything OK
-      stw_check(meta_good, verbosity = "all")
-      stw_check(meta_good, verbosity = "info")
-      stw_check(meta_good, verbosity = "error")
-      stw_check(meta_good, verbosity = "none")
+  expect_snapshot(stw_check(meta_good, verbosity = "all"))
+  expect_snapshot(stw_check(meta_good, verbosity = "info"))
+  expect_snapshot(stw_check(meta_good, verbosity = "error"))
+  expect_snapshot(stw_check(meta_good, verbosity = "none"))
 
-      # missing type
-      stw_check(meta_missing_source, verbosity = "all")
-      stw_check(meta_missing_source, verbosity = "info")
-      stw_check(meta_missing_source, verbosity = "error")
-      stw_check(meta_missing_source, verbosity = "none")
+  expect_snapshot(stw_check(meta_missing_source, verbosity = "all"))
+  expect_snapshot(stw_check(meta_missing_source, verbosity = "info"))
+  expect_snapshot(stw_check(meta_missing_source, verbosity = "error"))
+  expect_snapshot(stw_check(meta_missing_source, verbosity = "none"))
 
-      # repeated name
-      stw_check(meta_missing_name, verbosity = "all")
-      stw_check(meta_missing_name, verbosity = "info")
-      stw_check(meta_missing_name, verbosity = "error")
-      stw_check(meta_missing_name, verbosity = "none")
-    }
-  )
+  expect_snapshot(stw_check(meta_missing_name, verbosity = "all"))
+  expect_snapshot(stw_check(meta_missing_name, verbosity = "info"))
+  expect_snapshot(stw_check(meta_missing_name, verbosity = "error"))
+  expect_snapshot(stw_check(meta_missing_name, verbosity = "none"))
 
 })
 
 test_that("check side-effects are correct for meta", {
 
-  verify_output(
-    test_path("stw-validate-meta.txt"),
-    crayon = TRUE,
-    {
-      # everything OK
-      stw_check(dict_good, verbosity = "all")
-      stw_check(dict_good, verbosity = "info")
-      stw_check(dict_good, verbosity = "error")
-      stw_check(dict_good, verbosity = "none")
+  expect_snapshot(stw_check(dict_good, verbosity = "all"))
+  expect_snapshot(stw_check(dict_good, verbosity = "info"))
+  expect_snapshot(stw_check(dict_good, verbosity = "error"))
+  expect_snapshot(stw_check(dict_good, verbosity = "none"))
 
-      # missing type
-      stw_check(dict_type_not_recognized, verbosity = "all")
-      stw_check(dict_type_not_recognized, verbosity = "info")
-      stw_check(dict_type_not_recognized, verbosity = "error")
-      stw_check(dict_type_not_recognized, verbosity = "none")
+  expect_snapshot(stw_check(dict_type_not_recognized, verbosity = "all"))
+  expect_snapshot(stw_check(dict_type_not_recognized, verbosity = "info"))
+  expect_snapshot(stw_check(dict_type_not_recognized, verbosity = "error"))
+  expect_snapshot(stw_check(dict_type_not_recognized, verbosity = "none"))
 
-      # repeated name
-      stw_check(dict_names_repeated, verbosity = "all")
-      stw_check(dict_names_repeated, verbosity = "info")
-      stw_check(dict_names_repeated, verbosity = "error")
-      stw_check(dict_names_repeated, verbosity = "none")
-    }
-  )
+  expect_snapshot(stw_check(dict_names_repeated, verbosity = "all"))
+  expect_snapshot(stw_check(dict_names_repeated, verbosity = "info"))
+  expect_snapshot(stw_check(dict_names_repeated, verbosity = "error"))
+  expect_snapshot(stw_check(dict_names_repeated, verbosity = "none"))
 
 })
 
