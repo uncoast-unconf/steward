@@ -1,6 +1,6 @@
 Package: steward
 Title: Helps you manage metadata for published datasets
-Version: 0.0.0.9016
+Version: 0.0.0.9017
 Authors@R: 
     c(
       person(given = "Ian",
@@ -60,7 +60,7 @@ Imports:
     cli,
     tidyselect
 Suggests:
-    testthat (>= 2.1.0),
+    testthat (>= 3.0.0),
     roxygen2,
     knitr,
     rmarkdown,
@@ -69,3 +69,4 @@ Suggests:
     covr,
     conflicted
 VignetteBuilder: knitr
+Config/testthat/edition: 3
