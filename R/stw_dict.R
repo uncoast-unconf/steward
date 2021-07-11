@@ -8,7 +8,7 @@ new_stw_dict <- function(dict) {
 #' Create new data-dictionary object
 #'
 #' @param data_dict `data.frame` that has columns `name`, `type`, `description`
-#' @param description `character`, description of the varaible
+#' @param description `character`, description of the variable
 #' @param type `character`, type of the variable, see Details
 #' @param levels `character`, if `type` is `"factor"`, the levels of the factor
 #' @inheritParams stw_meta

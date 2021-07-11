@@ -1,0 +1,136 @@
+---
+title: "Design Philosophy"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{design-philosophy}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The purpose of this vignette is to explain the philosophy and ambitions of this package, if only to the maintainer.
+
+In short, the goal is to make it easier to work with metadata for data frames.
+This can be useful for:
+
+-   making a data-frame specification, i.e. a `readr::cols()` specification to parse a CSV file.
+-   including a data-dictionary as a table in an RMarkdown document.
+-   [documenting data for a package](https://r-pkgs.org/data.html#documenting-data).
+
+While we want to remain as faithful as possible to the [Frictionless Table Schema](https://specs.frictionlessdata.io/table-schema/), we extend it to cover ordered factors and timezones for datetimes.
+We will follow the [extension made by Pandas](https://pandas.pydata.org/docs/user_guide/io.html#table-schema).
+
+## Limitations
+
+Keeping metadata current within a data frame is a fragile process; a single `mutate()` can mess everything up.
+Thus, I see using this package as part of an opening process or a finishing process, i.e. at the point of reading a file from the filesystem or writing it to the filesystem.
+This is when we are thinking most about what the data "is" ("are"?).
+
+We also limit ourselves to describing only those data frames with columns that could be parsed from CSV using `readr::read_csv()`.
+This limits the columns we consider to these classes/types.
+These use the types described in the Table Schema, with R equivalents in parentheses.
+
+-   boolean
+
+-   integer
+
+-   number (`double`)
+
+-   string (`character`), with optional enum constraint (`factor`)
+
+-   datetime (`POSIXct`)
+
+-   date (`Date`)
+
+-   time ([`hms::hms`](https://hms.tidyverse.org/reference/hms.html))
+
+### Extensions to Table Schema
+
+We implement two extensions to Table Schema; these are the same as [implemented by Pandas](https://pandas.pydata.org/docs/user_guide/io.html#table-schema):
+
+-   datetimes have an attribute: `tz`, which must be one of the Olson Time Zones.
+
+-   strings with an enum constraint also have a attribute: `ordered`, a boolean.
+
+## steward classes
+
+This package uses three related S3 classes:
+
+-   `stw_dict`
+-   `stw_meta`
+-   `stw_dataset`
+
+All of these structures are created in reference to a *data data-frame*, for example: `palmerpenguins::penguins`.
+
+### `stw_dict`
+
+This is a tibble with each row describing a column in the *data data-frame*.
+The columns are:
+
+-   **`name`**: name of the column in the *data data-frame*
+-   **`type`**: type of the column, using [Table Schema types](https://specs.frictionlessdata.io/table-schema/#types-and-formats)
+-   **`description`**: description
+-   **`levels`**: list column. If this is a factor, the levels of the factor.
+
+In the future, I would like for this to hew to the [Table Schema](https://specs.frictionlessdata.io/table-schema) specification, used in CSVY.
+
+The class should be named `stw_fields`; this should be an unnamed list of lists.
+Each element of the list would have:
+
+-   **`name`**: as above (be careful to quote)
+-   **`type`**: as above
+-   **`description`**: as above
+
+Each element of the list could have:
+
+-   **`constraints`**: list that can contain, at most, one item:
+
+    -   **`enum`**: character vector of what R would call levels
+
+-   **`tz`**: if type is datetime, the Olson timezone
+
+-   **`ordered`**: logical describing if factor is ordered or not
+
+The only thing that would not come from the data itself is `description`.
+
+#### context
+
+### `stw_meta`
+
+-   **`name`**: name of the dataset
+-   **`title`**: title to use, say for a man page or a table
+-   **`description`**: longer description
+-   **`sources`**: list of sources
+-   **`n_row`**, **`n_col`**: dimensions of the data frame (perhaps not needed)
+-   **`dict`**: `stw_dict`
+
+I think that this should instead follow the [Tabular Data Resource](https://specs.frictionlessdata.io//tabular-data-resource/):
+
+-   **`profile`**: `tabular-data-resource`
+-   **`name`**: as above
+-   **`description`**:
+-   **`title`**:
+-   **`sources`**:
+-   **`schema`**:\
+    **`fields`**: `stw_fields`
+
+I don't think that we should use CSYV strictly - I mean I don't think that we need to combine the YAML and CSV into one file.
+A YAML file can describe the specification for the data; this specification could apply to many CSV files, not just one CSV file.
+Think daily updates.
+
+### `stw_dataset`
+
+This is a tibble or data frame with an extra class
+
+```{r setup}
+library("steward")
+```
