@@ -33,7 +33,7 @@ stw_dict(...)
 
 \item{type}{\code{character}, type of the variable, see Details}
 
-\item{description}{\code{character}, description of the varaible}
+\item{description}{\code{character}, description of the variable}
 
 \item{levels}{\code{character}, if \code{type} is \code{"factor"}, the levels of the factor}
 
